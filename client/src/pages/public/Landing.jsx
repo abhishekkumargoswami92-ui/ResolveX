@@ -10,13 +10,12 @@ const Landing = () => {
             <h1>
               Campus issues,
               <br />
-              resolved transparently.
+              resolved with clarity.
             </h1>
 
             <p style={{ maxWidth: "560px", marginTop: "16px" }}>
-              ResolveX is a centralized issue resolution platform built for
-              academic institutions. Track issues, monitor progress, and ensure
-              accountability from report to closure.
+              ResolveX is an institution-grade platform for reporting and resolving
+              campus infrastructure issues with transparency and accountability.
             </p>
 
             <div style={{ marginTop: "32px" }}>
