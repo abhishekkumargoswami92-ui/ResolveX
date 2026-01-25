@@ -1,5 +1,7 @@
+import AppRoutes from "./routes";
+
 const App = () => {
-  return <div>ResolveX App Loaded</div>;
+  return <AppRoutes />;
 };
 
 export default App;
