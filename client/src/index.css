@@ -26,12 +26,26 @@ body {
   padding: 96px 0;
 }
 
+/* ===== Top Nav ===== */
+.top-nav {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+}
+
+.top-nav a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-weight: 500;
+}
+
 /* ===== Typography ===== */
 h1 {
-  font-size: 44px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   line-height: 1.25;
+  text-align: center;
 }
 
 h2 {
@@ -43,6 +57,7 @@ p {
   font-size: 15px;
   line-height: 1.6;
   color: #cbd5e1;
+  text-align: center;
 }
 
 /* ===== Soft Glass Surface ===== */
@@ -52,7 +67,7 @@ p {
   -webkit-backdrop-filter: blur(8px);
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 40px;
+  padding: 44px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
@@ -60,17 +75,10 @@ p {
 .btn-primary {
   background: linear-gradient(135deg, #5eead4, #818cf8);
   color: #020617;
-  padding: 14px 28px;
+  padding: 14px 30px;
   border-radius: 999px;
   text-decoration: none;
   font-weight: 600;
-}
-
-.btn-secondary {
-  color: #5eead4;
-  margin-left: 18px;
-  text-decoration: none;
-  font-weight: 500;
 }
 
 /* ===== Footer ===== */
