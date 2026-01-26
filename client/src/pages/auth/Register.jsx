@@ -1,262 +1,223 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { User, Mail, Lock } from "lucide-react";
+import { User, Mail, Lock, MapPin } from "lucide-react";
 import logoPrimary from "../../assets/images/logo-primary.svg";
 
 const Register = () => {
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    college: "",
+    campus: "",
+    block: "",
+    room: "",
+  });
+
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const isPasswordValid = (pwd) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(pwd);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+
+    // All fields required
+    for (const key in form) {
+      if (!form[key]) {
+        setError("All fields are required");
+        return;
+      }
+    }
+
+    // Password rules
+    if (!isPasswordValid(form.password)) {
+      setError(
+        "Password must be at least 8 characters and include uppercase, lowercase, and a number"
+      );
+      return;
+    }
+
+    // Password match
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    // FRONTEND ONLY (mock)
+    alert("Student registered successfully (mock)");
+  };
+
   return (
-    <div>
-      {/* Background Sprinkles */}
-      <div className="background-sprinkles">
-        {Array.from({ length: 40 }).map((_, i) => (
-          <span
-            key={i}
-            style={{
-              width: `${Math.random() * 3 + 2}px`,
-              height: `${Math.random() * 3 + 2}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.6 + 0.2,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Centered Register Card */}
-      <section className="section">
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-          }}
-        >
-          <div
-            className="glass"
-            style={{
-              maxWidth: "460px",
-              width: "100%",
-              padding: "56px 48px",
-            }}
-          >
-            {/* Logo */}
-            <div style={{ textAlign: "center", marginBottom: "28px" }}>
-              <img
-                src={logoPrimary}
-                alt="ResolveX"
-                style={{ height: "48px" }}
-              />
-            </div>
-
-            {/* Heading */}
-            <h2 style={{ textAlign: "center" }}>Create your ResolveX account</h2>
-
-            <p style={{ textAlign: "center", marginTop: "8px" }}>
-              Register to report, track, and follow up on campus issues.
-            </p>
-
-            {/* Form */}
-            <form style={{ marginTop: "32px" }}>
-              {/* Full Name */}
-              <div style={{ marginBottom: "18px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "14px",
-                    marginBottom: "6px",
-                    color: "#e5e7eb",
-                  }}
-                >
-                  Full name
-                </label>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "12px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.14)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                  }}
-                >
-                  <User size={18} />
-                  <input
-                    type="text"
-                    placeholder="Your full name"
-                    style={{
-                      flex: 1,
-                      background: "transparent",
-                      border: "none",
-                      outline: "none",
-                      color: "#f9fafb",
-                      fontSize: "14px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Email */}
-              <div style={{ marginBottom: "18px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "14px",
-                    marginBottom: "6px",
-                    color: "#e5e7eb",
-                  }}
-                >
-                  Email address
-                </label>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "12px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.14)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                  }}
-                >
-                  <Mail size={18} />
-                  <input
-                    type="email"
-                    placeholder="you@university.edu"
-                    style={{
-                      flex: 1,
-                      background: "transparent",
-                      border: "none",
-                      outline: "none",
-                      color: "#f9fafb",
-                      fontSize: "14px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div style={{ marginBottom: "18px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "14px",
-                    marginBottom: "6px",
-                    color: "#e5e7eb",
-                  }}
-                >
-                  Password
-                </label>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "12px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.14)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                  }}
-                >
-                  <Lock size={18} />
-                  <input
-                    type="password"
-                    placeholder="Create a password"
-                    style={{
-                      flex: 1,
-                      background: "transparent",
-                      border: "none",
-                      outline: "none",
-                      color: "#f9fafb",
-                      fontSize: "14px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Confirm Password */}
-              <div style={{ marginBottom: "28px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "14px",
-                    marginBottom: "6px",
-                    color: "#e5e7eb",
-                  }}
-                >
-                  Confirm password
-                </label>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "12px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.14)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                  }}
-                >
-                  <Lock size={18} />
-                  <input
-                    type="password"
-                    placeholder="Re-enter your password"
-                    style={{
-                      flex: 1,
-                      background: "transparent",
-                      border: "none",
-                      outline: "none",
-                      color: "#f9fafb",
-                      fontSize: "14px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Register Button */}
-              <button
-                type="button"
-                className="btn-primary"
-                style={{
-                  width: "100%",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                Create account
-              </button>
-            </form>
-
-            {/* Footer link */}
-            <div
-              style={{
-                marginTop: "28px",
-                textAlign: "center",
-                fontSize: "14px",
-                color: "#cbd5e1",
-              }}
-            >
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                style={{
-                  color: "#5eead4",
-                  textDecoration: "none",
-                  fontWeight: 500,
-                }}
-              >
-                Sign in
-              </Link>
-            </div>
+    <section className="section">
+      <div
+        className="container"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <div className="glass" style={{ maxWidth: "560px", width: "100%" }}>
+          {/* Logo */}
+          <div style={{ textAlign: "center", marginBottom: "24px" }}>
+            <img src={logoPrimary} alt="ResolveX" style={{ height: "48px" }} />
           </div>
+
+          <h2 style={{ textAlign: "center" }}>Student Registration</h2>
+          <p style={{ textAlign: "center", marginTop: "6px" }}>
+            Create an account to report and track campus issues.
+          </p>
+
+          <form onSubmit={handleSubmit} style={{ marginTop: "28px" }}>
+            {/* Full Name */}
+            <div style={{ marginBottom: "16px" }}>
+              <label>Full Name</label>
+              <div className="input-box">
+                <User size={18} />
+                <input
+                  name="fullName"
+                  value={form.fullName}
+                  onChange={handleChange}
+                  placeholder="Your full name"
+                />
+              </div>
+            </div>
+
+            {/* Email */}
+            <div style={{ marginBottom: "16px" }}>
+              <label>Email Address</label>
+              <div className="input-box">
+                <Mail size={18} />
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="you@university.edu"
+                />
+              </div>
+            </div>
+
+            {/* College */}
+            <div style={{ marginBottom: "16px" }}>
+              <label>College / Institute Name</label>
+              <div className="input-box">
+                <MapPin size={18} />
+                <input
+                  name="college"
+                  value={form.college}
+                  onChange={handleChange}
+                  placeholder="Your college or institute"
+                />
+              </div>
+            </div>
+
+            {/* Campus */}
+            <div style={{ marginBottom: "16px" }}>
+              <label>Campus</label>
+              <div className="input-box">
+                <MapPin size={18} />
+                <input
+                  name="campus"
+                  value={form.campus}
+                  onChange={handleChange}
+                  placeholder="Campus name"
+                />
+              </div>
+            </div>
+
+            {/* Block */}
+            <div style={{ marginBottom: "16px" }}>
+              <label>Block / Area</label>
+              <div className="input-box">
+                <MapPin size={18} />
+                <input
+                  name="block"
+                  value={form.block}
+                  onChange={handleChange}
+                  placeholder="Block or area"
+                />
+              </div>
+            </div>
+
+            {/* Room */}
+            <div style={{ marginBottom: "16px" }}>
+              <label>Room / Location ID</label>
+              <div className="input-box">
+                <MapPin size={18} />
+                <input
+                  name="room"
+                  value={form.room}
+                  onChange={handleChange}
+                  placeholder="Room or location identifier"
+                />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div style={{ marginBottom: "16px" }}>
+              <label>Password</label>
+              <div className="input-box">
+                <Lock size={18} />
+                <input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="Create a password"
+                />
+              </div>
+            </div>
+
+            {/* Confirm Password */}
+            <div style={{ marginBottom: "20px" }}>
+              <label>Confirm Password</label>
+              <div className="input-box">
+                <Lock size={18} />
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Re-enter password"
+                />
+              </div>
+            </div>
+
+            {/* Error */}
+            {error && (
+              <p style={{ color: "#fca5a5", fontSize: "14px", marginBottom: "14px" }}>
+                {error}
+              </p>
+            )}
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="btn-primary"
+              style={{ width: "100%" }}
+            >
+              Create Account
+            </button>
+          </form>
+
+          <p style={{ textAlign: "center", marginTop: "20px", fontSize: "14px" }}>
+            Already have an account?{" "}
+            <Link to="/login" style={{ color: "#5eead4" }}>
+              Sign in
+            </Link>
+          </p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
