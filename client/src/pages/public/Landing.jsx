@@ -27,7 +27,9 @@ const Landing = () => {
           <img
             src={logoPrimary}
             alt="ResolveX"
-            style={{ height: "36px" }}
+            style={{
+            height: "100px", width: "auto",
+          }}
           />
         </div>
 
