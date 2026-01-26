@@ -1,182 +1,123 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import logoPrimary from "../../assets/images/logo-primary.svg";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const isValidEmail = (value) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!email || !password) {
+      setError("Invalid email or password");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Invalid email or password");
+      return;
+    }
+
+    setLoading(true);
+
+    // 🔒 FRONTEND-ONLY MOCK LOGIN
+    setTimeout(() => {
+      setLoading(false);
+
+      // Mock role detection
+      const role = email.includes("admin") ? "management" : "student";
+
+      if (role === "student") {
+        navigate("/student/dashboard");
+      } else {
+        navigate("/admin/dashboard");
+      }
+    }, 1200);
+  };
+
   return (
-    <div>
-      {/* Background Sprinkles */}
-      <div className="background-sprinkles">
-        {Array.from({ length: 40 }).map((_, i) => (
-          <span
-            key={i}
-            style={{
-              width: `${Math.random() * 3 + 2}px`,
-              height: `${Math.random() * 3 + 2}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              opacity: Math.random() * 0.6 + 0.2,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Centered Login Card */}
-      <section className="section">
-        <div
-          className="container"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-          }}
-        >
-          <div
-            className="glass"
-            style={{
-              maxWidth: "440px",
-              width: "100%",
-              padding: "56px 48px",
-            }}
-          >
-            {/* Logo */}
-            <div style={{ textAlign: "center", marginBottom: "28px" }}>
-              <img
-                src={logoPrimary}
-                alt="ResolveX"
-                style={{ height: "48px" }}
-              />
-            </div>
-
-            {/* Heading */}
-            <h2 style={{ textAlign: "center" }}>Sign in to ResolveX</h2>
-
-            <p style={{ textAlign: "center", marginTop: "8px" }}>
-              Access the platform to track and manage campus issues.
-            </p>
-
-            {/* Form */}
-            <form style={{ marginTop: "36px" }}>
-              {/* Email */}
-              <div style={{ marginBottom: "20px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "14px",
-                    marginBottom: "6px",
-                    color: "#e5e7eb",
-                  }}
-                >
-                  Email address
-                </label>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "12px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.14)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                  }}
-                >
-                  <Mail size={18} />
-                  <input
-                    type="email"
-                    placeholder="you@university.edu"
-                    style={{
-                      flex: 1,
-                      background: "transparent",
-                      border: "none",
-                      outline: "none",
-                      color: "#f9fafb",
-                      fontSize: "14px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div style={{ marginBottom: "28px" }}>
-                <label
-                  style={{
-                    display: "block",
-                    fontSize: "14px",
-                    marginBottom: "6px",
-                    color: "#e5e7eb",
-                  }}
-                >
-                  Password
-                </label>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    padding: "12px 14px",
-                    borderRadius: "12px",
-                    background: "rgba(255,255,255,0.14)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                  }}
-                >
-                  <Lock size={18} />
-                  <input
-                    type="password"
-                    placeholder="Enter your password"
-                    style={{
-                      flex: 1,
-                      background: "transparent",
-                      border: "none",
-                      outline: "none",
-                      color: "#f9fafb",
-                      fontSize: "14px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Sign In Button */}
-              <button
-                type="button"
-                className="btn-primary"
-                style={{
-                  width: "100%",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                Sign in
-              </button>
-            </form>
-
-            {/* Footer links */}
-            <div
-              style={{
-                marginTop: "28px",
-                textAlign: "center",
-                fontSize: "14px",
-                color: "#cbd5e1",
-              }}
-            >
-              Don’t have an account?{" "}
-              <Link
-                to="/register"
-                style={{
-                  color: "#5eead4",
-                  textDecoration: "none",
-                  fontWeight: 500,
-                }}
-              >
-                Create one
-              </Link>
-            </div>
+    <section className="section">
+      <div className="container" style={{ display: "flex", justifyContent: "center" }}>
+        <div className="glass" style={{ maxWidth: 440, width: "100%" }}>
+          <div style={{ textAlign: "center", marginBottom: 24 }}>
+            <img src={logoPrimary} alt="ResolveX" style={{ height: 48 }} />
           </div>
+
+          <h2 style={{ textAlign: "center" }}>Sign in</h2>
+          <p style={{ textAlign: "center", marginTop: 6 }}>
+            Access your ResolveX account
+          </p>
+
+          <form onSubmit={handleSubmit} style={{ marginTop: 32 }}>
+            {/* Email */}
+            <div style={{ marginBottom: 18 }}>
+              <label>Email</label>
+              <div className="input-box">
+                <Mail size={18} />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@university.edu"
+                />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div style={{ marginBottom: 24 }}>
+              <label>Password</label>
+              <div className="input-box">
+                <Lock size={18} />
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Your password"
+                />
+              </div>
+            </div>
+
+            {error && (
+              <p style={{ color: "#fca5a5", fontSize: 14, marginBottom: 14 }}>
+                {error}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="btn-primary"
+              disabled={loading}
+              style={{ width: "100%" }}
+            >
+              {loading ? "Signing in..." : "Sign in"}
+            </button>
+          </form>
+
+          {/* Google */}
+          <button
+            type="button"
+            className="glass"
+            style={{ width: "100%", marginTop: 16, padding: 12 }}
+          >
+            Sign in with Google
+          </button>
+
+          <p style={{ textAlign: "center", marginTop: 20 }}>
+            Don’t have an account? <Link to="/register">Register</Link>
+          </p>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
