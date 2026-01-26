@@ -188,24 +188,51 @@ footer {
 }
 
 /* ===== Google Button ===== */
-.google-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: 100%;
-  padding: 14px;
-  margin-top: 16px;
-  border-radius: 14px;
-  background: #ffffff;
-  color: #1f2937;
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
+/* =========================
+   Google Sign-In Button
+   (Official Material Style)
+   ========================= */
+
+.gsi-material-button {
+  -webkit-appearance: none;
+  background-color: #ffffff;
+  border: 1px solid #747775;
+  border-radius: 20px;
+  box-sizing: border-box;
+  color: #1f1f1f;
   cursor: pointer;
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 14px;
+  height: 44px;
+  padding: 0 16px;
+  width: 100%;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-.google-btn img {
+.gsi-material-button-content-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+}
+
+.gsi-material-button-icon {
   width: 18px;
   height: 18px;
 }
+
+.gsi-material-button-contents {
+  font-weight: 500;
+  flex: 1;
+  text-align: center;
+}
+
+.gsi-material-button:hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+.gsi-material-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
