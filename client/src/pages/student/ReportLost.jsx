@@ -34,7 +34,6 @@ const ReportLost = () => {
               Report Lost Item
             </h1>
 
-            {/* shifted slightly to the right */}
             <p
               style={{
                 opacity: 0.8,
@@ -61,7 +60,7 @@ const ReportLost = () => {
                 <label className="label">Item name</label>
                 <input
                   type="text"
-                  placeholder="Wallet, ID card, earphones"
+                  placeholder="  Wallet, ID card, earphones"
                   style={inputBase}
                   required
                 />
@@ -72,11 +71,12 @@ const ReportLost = () => {
                 <label className="label">Description</label>
                 <textarea
                   rows="4"
-                  placeholder="Color, brand, identifying marks, contents"
+                  placeholder=" Color, brand, identifying marks, contents"
                   style={{
                     fontSize: "16px",
                     borderRadius: "12px",
                     resize: "none",
+                    paddingTop: "4px",
                   }}
                   required
                 />
@@ -87,7 +87,7 @@ const ReportLost = () => {
                 <label className="label">Last seen location</label>
                 <input
                   type="text"
-                  placeholder="Hostel A, Room 204, common area"
+                  placeholder="  Hostel A, Room 204, common area"
                   style={inputBase}
                   required
                 />
