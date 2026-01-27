@@ -92,7 +92,7 @@ const MyIssues = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "12px",
+              gap: "24px",
               marginBottom: "12px",
             }}
           >
@@ -104,7 +104,6 @@ const MyIssues = () => {
             Track the status of issues you have reported.
           </p>
 
-          {/* Issues */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {issues.map((issue) => {
               const Icon = iconMap[issue.category];
@@ -114,76 +113,56 @@ const MyIssues = () => {
                   to={`/student/issues/${issue.id}`}
                   style={{ textDecoration: "none" }}
                 >
-                  <div
-                    className="glass"
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: "16px",
-                    }}
-                  >
-                    {/* Left */}
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "14px",
-                        flex: 1,
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <Icon
-                        size={18}
-                        color={categoryColors[issue.category]}
-                        style={{ marginTop: "4px" }}
-                      />
+                  <div className="glass" style={{ display: "flex", gap: "16px" }}>
+                    <Icon
+                      size={18}
+                      color={categoryColors[issue.category]}
+                      style={{ marginTop: "4px" }}
+                    />
 
-                      <div>
-                        <span
+                    <div style={{ flex: 1 }}>
+                      <span
+                        style={{
+                          fontSize: "16px",
+                          fontWeight: 600,
+                          color: "#e5e7eb",
+                        }}
+                      >
+                        {issue.category}
+                      </span>
+
+                      <p style={{ fontSize: "14px", opacity: 0.9 }}>
+                        {issue.description}
+                      </p>
+
+                      <p style={{ fontSize: "12px", opacity: 0.7 }}>
+                        Reported on {issue.date}
+                      </p>
+
+                      {issue.visibility === "public" && (
+                        <div
                           style={{
-                            fontSize: "16px",
-                            fontWeight: 600,
-                            color: "#e5e7eb",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            fontSize: "13px",
+                            color: "#cbd5f5",
+                            marginTop: "6px",
                           }}
                         >
-                          {issue.category}
-                        </span>
-
-                        <p style={{ fontSize: "14px", opacity: 0.9 }}>
-                          {issue.description}
-                        </p>
-
-                        <p style={{ fontSize: "12px", opacity: 0.7 }}>
-                          Reported on {issue.date}
-                        </p>
-
-                        {issue.visibility === "public" && (
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "6px",
-                              fontSize: "13px",
-                              color: "#cbd5f5",
-                              marginTop: "6px",
-                            }}
-                          >
-                            <MessageSquare size={14} />
-                            {issue.comments} comment
-                            {issue.comments !== 1 ? "s" : ""}
-                          </div>
-                        )}
-                      </div>
+                          <MessageSquare size={14} />
+                          {issue.comments} comment
+                          {issue.comments !== 1 ? "s" : ""}
+                        </div>
+                      )}
                     </div>
 
-                    {/* Right */}
                     <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "flex-end",
                         gap: "8px",
-                        minWidth: "170px",
                       }}
                     >
                       <span
