@@ -1,124 +1,120 @@
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
 
+const fieldStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+};
+
+const inputStyle = {
+  height: "44px",
+};
+
 const ReportFound = () => {
   return (
     <>
       <Navbar />
 
       <section className="section">
-        <div className="container" style={{ maxWidth: "820px" }}>
+        <div className="container" style={{ maxWidth: "760px" }}>
           {/* HEADER */}
-          <div style={{ marginBottom: "40px" }}>
+          <div style={{ marginBottom: "32px" }}>
             <h1
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "14px",
-                marginBottom: "8px",
+                marginBottom: "10px",
               }}
             >
               <BackButton />
               Report Found Item
             </h1>
 
-            <p style={{ opacity: 0.8, maxWidth: "640px" }}>
-              Use this form to report an item you have found so it can be claimed
-              by its rightful owner.
+            <p style={{ opacity: 0.8, maxWidth: "620px" }}>
+              Provide details of an item you have found so it can be returned to its owner.
             </p>
           </div>
 
+          {/* FORM */}
           <div className="glass" style={{ padding: "36px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "42px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
               
-              <div>
-                <h3 style={{ marginBottom: "20px" }}>Item Details</h3>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
-                  <div>
-                    <label className="label">Item Name</label>
-                    <input
-                      type="text"
-                      placeholder="Bottle, Charger, Watch"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="label">Description</label>
-                    <textarea
-                      rows="4"
-                      placeholder="Describe the item and where it was found"
-                      required
-                    />
-                  </div>
-                </div>
+              {/* ITEM NAME */}
+              <div style={fieldStyle}>
+                <label className="label">Item name</label>
+                <input
+                  type="text"
+                  placeholder="Bottle, charger, watch"
+                  style={inputStyle}
+                  required
+                />
               </div>
 
-              <div>
-                <h3 style={{ marginBottom: "20px" }}>Found Location</h3>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
-                  <div>
-                    <label className="label">Location</label>
-                    <input
-                      type="text"
-                      placeholder="Library · Study Room · Corridor"
-                      required
-                    />
-                  </div>
-
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "1fr 1fr",
-                      gap: "24px",
-                    }}
-                  >
-                    <div>
-                      <label className="label">Date Found</label>
-                      <input type="date" required />
-                    </div>
-
-                    <div>
-                      <label className="label">
-                        Time Found <span style={{ opacity: 0.6 }}>(optional)</span>
-                      </label>
-                      <input type="time" />
-                    </div>
-                  </div>
-                </div>
+              {/* DESCRIPTION */}
+              <div style={fieldStyle}>
+                <label className="label">Description</label>
+                <textarea
+                  rows="4"
+                  placeholder="Describe the item and where you found it"
+                  style={{ resize: "none" }}
+                  required
+                />
               </div>
 
-              <div>
-                <h3 style={{ marginBottom: "20px" }}>Supporting Evidence</h3>
-
-                <div>
-                  <label className="label">
-                    Upload Image <span style={{ opacity: 0.6 }}>(optional)</span>
-                  </label>
-                  <input type="file" accept="image/*" />
-                </div>
+              {/* LOCATION */}
+              <div style={fieldStyle}>
+                <label className="label">Found location</label>
+                <input
+                  type="text"
+                  placeholder="Library, study room, corridor"
+                  style={inputStyle}
+                  required
+                />
               </div>
 
+              {/* DATE & TIME */}
               <div
                 style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  paddingTop: "20px",
-                  borderTop: "1px solid rgba(255,255,255,0.12)",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "24px",
                 }}
               >
-                <button className="btn-primary">
-                  Submit Found Report
+                <div style={fieldStyle}>
+                  <label className="label">Date found</label>
+                  <input type="date" style={inputStyle} required />
+                </div>
+
+                <div style={fieldStyle}>
+                  <label className="label">
+                    Time found <span style={{ opacity: 0.6 }}>(optional)</span>
+                  </label>
+                  <input type="time" style={inputStyle} />
+                </div>
+              </div>
+
+              {/* IMAGE */}
+              <div style={fieldStyle}>
+                <label className="label">Upload image (optional)</label>
+                <input type="file" accept="image/*" />
+                <span style={{ fontSize: "12px", opacity: 0.6 }}>
+                  Supported formats: JPG, PNG
+                </span>
+              </div>
+
+              {/* SUBMIT */}
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "12px" }}>
+                <button className="btn-primary" style={{ minWidth: "220px" }}>
+                  Submit found report
                 </button>
               </div>
             </div>
           </div>
 
           <p style={{ marginTop: "18px", fontSize: "13px", opacity: 0.7 }}>
-            Found items must be reported honestly. Any misuse may lead to
-            penalties.
+            Any misuse of this feature may result in penalties.
           </p>
         </div>
       </section>
