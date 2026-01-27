@@ -7,47 +7,48 @@ const ReportLost = () => {
       <Navbar />
 
       <section className="section">
-        <div className="container" style={{ maxWidth: "720px" }}>
+        <div className="container" style={{ maxWidth: "760px" }}>
           {/* HEADER */}
           <h1
             style={{
               display: "flex",
               alignItems: "center",
               gap: "12px",
-              marginBottom: "6px",
+              marginBottom: "8px",
             }}
           >
             <BackButton />
             Report Lost Item
           </h1>
 
-          <p style={{ opacity: 0.8, marginBottom: "28px" }}>
-            Provide accurate details to help others identify and recover your
+          <p style={{ opacity: 0.8, marginBottom: "36px" }}>
+            Share accurate details so others can help identify and recover your
             lost item.
           </p>
 
-          {/* FORM CARD */}
-          <div className="glass" style={{ padding: "24px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+          {/* FORM */}
+          <div className="glass" style={{ padding: "32px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
               
-              {/* ITEM NAME */}
-              <div>
-                <label className="label">Item Name</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Wallet, ID Card, Earphones"
-                  required
-                />
-              </div>
+              {/* ITEM DETAILS */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
+                <div>
+                  <label className="label">Item Name</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Wallet, ID Card, Earphones"
+                    required
+                  />
+                </div>
 
-              {/* DESCRIPTION */}
-              <div>
-                <label className="label">Description</label>
-                <textarea
-                  rows="4"
-                  placeholder="Color, brand, identifying marks, contents, etc."
-                  required
-                />
+                <div>
+                  <label className="label">Description</label>
+                  <textarea
+                    rows="4"
+                    placeholder="Color, brand, identifying marks, contents, etc."
+                    required
+                  />
+                </div>
               </div>
 
               {/* LOCATION */}
@@ -60,15 +61,32 @@ const ReportLost = () => {
                 />
               </div>
 
-              {/* DATE */}
-              <div>
-                <label className="label">Date Lost</label>
-                <input type="date" required />
+              {/* DATE & TIME */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "20px",
+                }}
+              >
+                <div>
+                  <label className="label">Date Lost</label>
+                  <input type="date" required />
+                </div>
+
+                <div>
+                  <label className="label">
+                    Time Lost <span style={{ opacity: 0.6 }}>(optional)</span>
+                  </label>
+                  <input type="time" />
+                </div>
               </div>
 
               {/* IMAGE */}
               <div>
-                <label className="label">Upload Image (optional)</label>
+                <label className="label">
+                  Upload Image <span style={{ opacity: 0.6 }}>(optional)</span>
+                </label>
                 <input type="file" accept="image/*" />
               </div>
 
@@ -77,7 +95,7 @@ const ReportLost = () => {
                 style={{
                   display: "flex",
                   justifyContent: "flex-end",
-                  marginTop: "10px",
+                  paddingTop: "10px",
                 }}
               >
                 <button className="btn-primary">
@@ -88,7 +106,7 @@ const ReportLost = () => {
           </div>
 
           {/* NOTE */}
-          <p style={{ marginTop: "16px", fontSize: "13px", opacity: 0.7 }}>
+          <p style={{ marginTop: "20px", fontSize: "13px", opacity: 0.7 }}>
             Submitting false or misleading information may result in
             disciplinary action.
           </p>
