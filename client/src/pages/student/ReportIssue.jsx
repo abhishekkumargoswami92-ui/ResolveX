@@ -58,20 +58,18 @@ const ReportIssue = () => {
       <section className="section">
         <div className="container" style={{ maxWidth: "720px" }}>
           {/* HEADER */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
-              lineHeight: "1.2",
-              marginBottom: "8px",
-            }}
-          >
-            <BackButton />
-            <h1 style={{ margin: 0, lineHeight: "1.2" }}>
-              Report an Issue
-            </h1>
-          </div>
+         <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "20px",
+            marginBottom: "10px",
+          }}
+        >
+          <BackButton />
+          <h1 style={{ margin: 0 }}>Report an Issue</h1>
+        </div>
+
 
           <p style={{ marginBottom: "24px" }}>
             Provide accurate details to help resolve the issue quickly.
