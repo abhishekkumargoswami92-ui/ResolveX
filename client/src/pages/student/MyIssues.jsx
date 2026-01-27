@@ -8,6 +8,7 @@ import {
   AlertCircle,
   Eye,
   EyeOff,
+  MessageSquare,
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
@@ -20,6 +21,7 @@ const issues = [
     priority: "High",
     status: "In Progress",
     visibility: "public",
+    comments: 3,
     date: "12 Sep 2025",
   },
   {
@@ -29,6 +31,7 @@ const issues = [
     priority: "Medium",
     status: "Assigned",
     visibility: "public",
+    comments: 1,
     date: "10 Sep 2025",
   },
   {
@@ -38,27 +41,28 @@ const issues = [
     priority: "Low",
     status: "Resolved",
     visibility: "private",
+    comments: 0,
     date: "05 Sep 2025",
   },
 ];
 
 const categoryIcons = {
-  Plumbing: <Droplets size={18} />,
-  Electrical: <Zap size={18} />,
-  Internet: <Wifi size={18} />,
-  Furniture: <Armchair size={18} />,
-  Maintenance: <Wrench size={18} />,
-  Other: <AlertCircle size={18} />,
+  Plumbing: <Droplets size={18} color="#e5e7eb" />,
+  Electrical: <Zap size={18} color="#e5e7eb" />,
+  Internet: <Wifi size={18} color="#e5e7eb" />,
+  Furniture: <Armchair size={18} color="#e5e7eb" />,
+  Maintenance: <Wrench size={18} color="#e5e7eb" />,
+  Other: <AlertCircle size={18} color="#e5e7eb" />,
 };
 
-const priorityColors = {
+const priorityStyles = {
   Low: "#22c55e",
   Medium: "#3b82f6",
   High: "#f59e0b",
   Emergency: "#ef4444",
 };
 
-const statusColors = {
+const statusStyles = {
   Reported: "#64748b",
   Assigned: "#38bdf8",
   "In Progress": "#f59e0b",
@@ -106,9 +110,11 @@ const MyIssues = () => {
                       <h3 style={{ marginBottom: "4px" }}>
                         {issue.category}
                       </h3>
-                      <p style={{ fontSize: "14px", opacity: 0.85 }}>
+
+                      <p style={{ fontSize: "14px", opacity: 0.9 }}>
                         {issue.description}
                       </p>
+
                       <p
                         style={{
                           fontSize: "12px",
@@ -118,6 +124,24 @@ const MyIssues = () => {
                       >
                         Reported on {issue.date}
                       </p>
+
+                      {/* Comments */}
+                      {issue.visibility === "public" && (
+                        <div
+                          style={{
+                            marginTop: "8px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
+                            fontSize: "13px",
+                            color: "#cbd5f5",
+                          }}
+                        >
+                          <MessageSquare size={14} />
+                          {issue.comments} comment
+                          {issue.comments !== 1 ? "s" : ""}
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -128,18 +152,18 @@ const MyIssues = () => {
                       flexDirection: "column",
                       alignItems: "flex-end",
                       gap: "8px",
-                      minWidth: "160px",
+                      minWidth: "170px",
                     }}
                   >
                     {/* Priority */}
                     <span
                       style={{
-                        padding: "4px 10px",
+                        padding: "6px 12px",
                         borderRadius: "999px",
                         fontSize: "12px",
                         fontWeight: 600,
-                        background: priorityColors[issue.priority],
-                        color: "#0f172a",
+                        background: priorityStyles[issue.priority],
+                        color: "#ffffff",
                       }}
                     >
                       {issue.priority}
@@ -148,9 +172,12 @@ const MyIssues = () => {
                     {/* Status */}
                     <span
                       style={{
-                        fontSize: "13px",
+                        padding: "6px 12px",
+                        borderRadius: "999px",
+                        fontSize: "12px",
                         fontWeight: 500,
-                        color: statusColors[issue.status],
+                        background: statusStyles[issue.status],
+                        color: "#ffffff",
                       }}
                     >
                       {issue.status}
@@ -163,7 +190,7 @@ const MyIssues = () => {
                         alignItems: "center",
                         gap: "6px",
                         fontSize: "12px",
-                        opacity: 0.75,
+                        color: "#cbd5f5",
                       }}
                     >
                       {issue.visibility === "public" ? (
@@ -178,16 +205,6 @@ const MyIssues = () => {
               </Link>
             ))}
           </div>
-
-          {/* Empty State (future-ready) */}
-          {issues.length === 0 && (
-            <div className="glass" style={{ textAlign: "center" }}>
-              <h3>No issues reported yet</h3>
-              <p style={{ marginTop: "8px" }}>
-                When you report an issue, it will appear here.
-              </p>
-            </div>
-          )}
         </div>
       </section>
     </>
