@@ -10,26 +10,29 @@ const BackButton = () => {
       onClick={() => navigate(-1)}
       aria-label="Go back"
       style={{
-        /* Button reset */
+        /* Glass styling */
         background: "rgba(255,255,255,0.14)",
         border: "1px solid rgba(255,255,255,0.25)",
         backdropFilter: "blur(10px)",
         borderRadius: "10px",
 
-        /* Size + spacing */
+        /* Size */
         padding: "6px",
-        margin: 0,
 
-        /* Alignment magic */
+        /* Reset */
+        margin: 0,
+        cursor: "pointer",
+
+        /* Alignment */
         display: "inline-flex",
         alignItems: "center",
+        verticalAlign: "baseline",
+
+        /* Optical correction */
+        transform: "translateY(4px)",
 
         /* Visual tone */
         color: "rgba(255,255,255,0.85)",
-        cursor: "pointer",
-
-        /* IMPORTANT */
-        verticalAlign: "baseline",
       }}
     >
       <ArrowLeft size={16} strokeWidth={2} />
