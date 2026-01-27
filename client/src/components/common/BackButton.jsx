@@ -19,6 +19,7 @@ const BackButton = () => {
         borderRadius: "10px",
         color: "#e5e7eb",
         cursor: "pointer",
+        flexShrink: 0,
       }}
     >
       <ArrowLeft size={18} />
