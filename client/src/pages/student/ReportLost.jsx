@@ -1,5 +1,7 @@
+import { useState } from "react";
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
+import SubmitPopup from "../../components/common/SubmitPopup";
 
 const field = {
   display: "flex",
@@ -14,9 +16,17 @@ const inputBase = {
 };
 
 const ReportLost = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
   return (
     <>
       <Navbar />
+
+      <SubmitPopup
+        open={showPopup}
+        onClose={() => setShowPopup(false)}
+        variant="lost"
+      />
 
       <section className="section">
         <div className="container" style={{ maxWidth: "820px" }}>
@@ -48,14 +58,7 @@ const ReportLost = () => {
 
           {/* FORM */}
           <div className="glass" style={{ padding: "40px" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-              }}
-            >
-              {/* ITEM NAME */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
               <div style={field}>
                 <label className="label">Item name</label>
                 <input
@@ -66,7 +69,6 @@ const ReportLost = () => {
                 />
               </div>
 
-              {/* DESCRIPTION */}
               <div style={field}>
                 <label className="label">Description</label>
                 <textarea
@@ -82,7 +84,6 @@ const ReportLost = () => {
                 />
               </div>
 
-              {/* LOCATION */}
               <div style={field}>
                 <label className="label">Last seen location</label>
                 <input
@@ -93,7 +94,6 @@ const ReportLost = () => {
                 />
               </div>
 
-              {/* DATE & TIME */}
               <div
                 style={{
                   display: "grid",
@@ -105,10 +105,14 @@ const ReportLost = () => {
                   <label className="label">Date lost</label>
                   <input
                     type="date"
-                    style={{   ...inputBase, width: "150px" , paddingLeft: "12px", paddingRight: "12px"}}
+                    style={{
+                      ...inputBase,
+                      width: "150px",
+                      paddingLeft: "12px",
+                      paddingRight: "12px",
+                    }}
                     required
                   />
-                  
                 </div>
 
                 <div style={field}>
@@ -117,12 +121,16 @@ const ReportLost = () => {
                   </label>
                   <input
                     type="time"
-                    style={{ ...inputBase, width: "150px" , paddingLeft: "12px", paddingRight: "12px"}}
+                    style={{
+                      ...inputBase,
+                      width: "150px",
+                      paddingLeft: "12px",
+                      paddingRight: "12px",
+                    }}
                   />
                 </div>
               </div>
 
-              {/* IMAGE */}
               <div style={field}>
                 <label className="label">Upload image (optional)</label>
                 <input type="file" accept="image/*" />
@@ -131,14 +139,7 @@ const ReportLost = () => {
                 </span>
               </div>
 
-              {/* SUBMIT */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "16px",
-                }}
-              >
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "16px" }}>
                 <button
                   className="btn-primary"
                   style={{
@@ -146,6 +147,7 @@ const ReportLost = () => {
                     fontSize: "18px",
                     padding: "14px 0",
                   }}
+                  onClick={() => setShowPopup(true)}
                 >
                   Submit lost report
                 </button>
