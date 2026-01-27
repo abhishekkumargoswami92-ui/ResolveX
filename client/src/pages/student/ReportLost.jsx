@@ -6,17 +6,22 @@ import SubmitPopup from "../../components/common/SubmitPopup";
 
 const field = { display: "flex", flexDirection: "column", gap: "10px" };
 
-const input = {
-  height: "52px",
-  fontSize: "16px",
-  paddingLeft: "56px",
+const inputWrap = {
+  position: "relative",
 };
 
 const icon = {
   position: "absolute",
-  top: "44px",
-  left: "18px",
-  opacity: 0.75,
+  left: "16px",
+  top: "50%",
+  transform: "translateY(-50%)",
+  opacity: 0.8,
+};
+
+const input = {
+  height: "54px",
+  fontSize: "16px",
+  paddingLeft: "56px",
 };
 
 const ReportLost = () => {
@@ -28,7 +33,7 @@ const ReportLost = () => {
       <SubmitPopup open={open} onClose={() => setOpen(false)} variant="lost" />
 
       <section className="section">
-        <div className="container" style={{ maxWidth: "860px" }}>
+        <div className="container" style={{ maxWidth: "880px" }}>
           <div style={{ marginBottom: "40px" }}>
             <h1 style={{ display: "flex", gap: "14px", marginBottom: "12px" }}>
               <BackButton />
@@ -39,11 +44,11 @@ const ReportLost = () => {
             </p>
           </div>
 
-          <div className="glass" style={{ padding: "42px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
+          <div className="glass" style={{ padding: "44px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "38px" }}>
               <div style={field}>
                 <label className="label">Item name</label>
-                <input placeholder="Wallet, ID card, earphones" style={input} />
+                <input style={input} placeholder="Wallet, ID card, earphones" />
               </div>
 
               <div style={field}>
@@ -53,31 +58,35 @@ const ReportLost = () => {
 
               <div style={field}>
                 <label className="label">Last seen location</label>
-                <input placeholder="Hostel A, Room 204" style={input} />
+                <input style={input} placeholder="Hostel A, Room 204" />
               </div>
 
               {/* DATE / TIME */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "240px 1fr 240px",
-                  gap: "48px",
+                  gridTemplateColumns: "260px 1fr 260px",
+                  gap: "64px",
                 }}
               >
-                <div style={{ ...field, position: "relative" }}>
+                <div style={field}>
                   <label className="label">Date lost</label>
-                  <Calendar size={22} style={icon} />
-                  <input type="date" style={input} />
+                  <div style={inputWrap}>
+                    <Calendar size={24} style={icon} />
+                    <input type="text" placeholder="DD / MM / YYYY" style={input} />
+                  </div>
                 </div>
 
                 <div />
 
-                <div style={{ ...field, position: "relative" }}>
+                <div style={field}>
                   <label className="label">
                     Time lost <span style={{ opacity: 0.6 }}>(optional)</span>
                   </label>
-                  <Clock size={22} style={icon} />
-                  <input type="time" style={input} />
+                  <div style={inputWrap}>
+                    <Clock size={24} style={icon} />
+                    <input type="text" placeholder="HH : MM" style={input} />
+                  </div>
                 </div>
               </div>
 
@@ -89,7 +98,7 @@ const ReportLost = () => {
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <button
                   className="btn-primary"
-                  style={{ fontSize: "17px", padding: "14px 32px" }}
+                  style={{ fontSize: "18px", padding: "14px 36px" }}
                   onClick={() => setOpen(true)}
                 >
                   Submit lost report
