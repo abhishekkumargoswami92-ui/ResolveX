@@ -14,7 +14,7 @@ import BackButton from "../../components/common/BackButton";
 const items = [
   {
     id: 1,
-    type: "Lost",
+    reportType: "Lost",
     name: "Black Wallet",
     description: "Leather wallet with ID cards inside.",
     location: "Hostel A · Common Room",
@@ -23,7 +23,7 @@ const items = [
   },
   {
     id: 2,
-    type: "Found",
+    reportType: "Found",
     name: "Bluetooth Earbuds",
     description: "Found near the library entrance.",
     location: "Central Library",
@@ -32,7 +32,7 @@ const items = [
   },
   {
     id: 3,
-    type: "Found",
+    reportType: "Found",
     name: "Water Bottle",
     description: "Blue steel bottle left in corridor.",
     location: "Hostel B · Floor 2",
@@ -47,7 +47,7 @@ const LostAndFound = () => {
   const filteredItems =
     filter === "All"
       ? items
-      : items.filter((item) => item.type === filter);
+      : items.filter((item) => item.reportType === filter);
 
   const pillStyle = (active) => ({
     padding: "10px 18px",
@@ -180,6 +180,9 @@ const LostAndFound = () => {
                     <p style={{ fontSize: "12px", opacity: 0.75 }}>
                       {item.location} · {item.date}
                     </p>
+                    <p style={{ fontSize: "12px", opacity: 0.7 }}>
+                      Reported as {item.reportType}
+                    </p>
                   </div>
 
                   {/* STATUS / ACTION */}
@@ -196,7 +199,9 @@ const LostAndFound = () => {
                           cursor: "pointer",
                         }}
                       >
-                        Request Claim
+                        {item.reportType === "Lost"
+                          ? "I Found This Item"
+                          : "This Is Mine"}
                       </button>
                     )}
 
