@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
+import BackButton from "../../components/common/BackButton";
+
 
 const categoryColors = {
   Plumbing: "#38bdf8",
@@ -61,6 +63,7 @@ const ReportIssue = () => {
 
       <section className="section">
         <div className="container" style={{ maxWidth: "720px" }}>
+          <BackButton />
           <h1>Report an Issue</h1>
           <p style={{ marginTop: "6px", marginBottom: "24px" }}>
             Provide accurate details to help resolve the issue quickly.
