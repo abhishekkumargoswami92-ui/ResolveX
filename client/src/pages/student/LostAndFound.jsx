@@ -5,6 +5,7 @@ import {
   PlusCircle,
   CheckCircle2,
   Clock,
+  Hand,
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
@@ -186,24 +187,61 @@ const LostAndFound = () => {
                   </div>
 
                   {/* STATUS / ACTION */}
-                  <div>
-                    {item.status === "Open" && (
-                      <button
-                        style={{
-                          padding: "8px 14px",
-                          borderRadius: "8px",
-                          background: "#22c55e",
-                          color: "#022c22",
-                          fontWeight: 600,
-                          border: "none",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {item.reportType === "Lost"
-                          ? "I Found This Item"
-                          : "This Is Mine"}
-                      </button>
-                    )}
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    {item.status === "Open" &&
+                      item.reportType === "Lost" && (
+                        <>
+                          {/* I FOUND THIS ITEM */}
+                          <button
+                            style={{
+                              padding: "8px 14px",
+                              borderRadius: "8px",
+                              background: "rgba(34,211,238,0.25)",
+                              border: "1px solid rgba(34,211,238,0.6)",
+                              color: "#e5faff",
+                              cursor: "pointer",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "6px",
+                            }}
+                          >
+                            <Hand size={14} />
+                            I Found This Item
+                          </button>
+
+                          {/* CLAIM */}
+                          <button
+                            style={{
+                              padding: "8px 14px",
+                              borderRadius: "8px",
+                              background: "#22c55e",
+                              color: "#022c22",
+                              fontWeight: 600,
+                              border: "none",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Claim
+                          </button>
+                        </>
+                      )}
+
+                    {item.status === "Open" &&
+                      item.reportType === "Found" && (
+                        <button
+                          style={{
+                            padding: "8px 14px",
+                            borderRadius: "8px",
+                            background: "#22c55e",
+                            color: "#022c22",
+                            fontWeight: 600,
+                            border: "none",
+                            cursor: "pointer",
+                          }}
+                        >
+                          This Is Mine
+                        </button>
+                      )}
 
                     {item.status === "Claim Requested" && (
                       <span
