@@ -4,24 +4,33 @@ import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
 import SubmitPopup from "../../components/common/SubmitPopup";
 
-const field = { display: "flex", flexDirection: "column", gap: "10px" };
+const field = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+};
 
-const inputWrap = {
+const input = {
+  height: "52px",
+  fontSize: "16px",
+};
+
+const iconWrap = {
   position: "relative",
 };
 
 const icon = {
   position: "absolute",
-  left: "16px",
+  left: "14px",
   top: "50%",
   transform: "translateY(-50%)",
-  opacity: 0.8,
+  opacity: 0.7,
+  pointerEvents: "none",
 };
 
-const input = {
-  height: "54px",
-  fontSize: "16px",
-  paddingLeft: "56px",
+const paddedInput = {
+  ...input,
+  paddingLeft: "44px",
 };
 
 const ReportLost = () => {
@@ -33,8 +42,9 @@ const ReportLost = () => {
       <SubmitPopup open={open} onClose={() => setOpen(false)} variant="lost" />
 
       <section className="section">
-        <div className="container" style={{ maxWidth: "880px" }}>
-          <div style={{ marginBottom: "40px" }}>
+        <div className="container" style={{ maxWidth: "860px" }}>
+          {/* HEADER */}
+          <div style={{ marginBottom: "36px" }}>
             <h1 style={{ display: "flex", gap: "14px", marginBottom: "12px" }}>
               <BackButton />
               Report Lost Item
@@ -44,8 +54,10 @@ const ReportLost = () => {
             </p>
           </div>
 
-          <div className="glass" style={{ padding: "44px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "38px" }}>
+          {/* FORM */}
+          <div className="glass" style={{ padding: "40px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
+              
               <div style={field}>
                 <label className="label">Item name</label>
                 <input style={input} placeholder="Wallet, ID card, earphones" />
@@ -61,31 +73,33 @@ const ReportLost = () => {
                 <input style={input} placeholder="Hostel A, Room 204" />
               </div>
 
-              {/* DATE / TIME */}
+              {/* DATE & TIME */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "260px 1fr 260px",
-                  gap: "64px",
+                  gridTemplateColumns: "240px 1fr 240px",
+                  gap: "48px",
                 }}
               >
+                {/* DATE */}
                 <div style={field}>
                   <label className="label">Date lost</label>
-                  <div style={inputWrap}>
-                    <Calendar size={24} style={icon} />
-                    <input type="text" placeholder="DD / MM / YYYY" style={input} />
+                  <div style={iconWrap}>
+                    <Calendar size={20} style={icon} />
+                    <input type="date" style={paddedInput} />
                   </div>
                 </div>
 
                 <div />
 
+                {/* TIME */}
                 <div style={field}>
                   <label className="label">
                     Time lost <span style={{ opacity: 0.6 }}>(optional)</span>
                   </label>
-                  <div style={inputWrap}>
-                    <Clock size={24} style={icon} />
-                    <input type="text" placeholder="HH : MM" style={input} />
+                  <div style={iconWrap}>
+                    <Clock size={20} style={icon} />
+                    <input type="time" style={paddedInput} />
                   </div>
                 </div>
               </div>
