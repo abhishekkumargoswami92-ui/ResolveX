@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
+import BackButton from "../../components/common/BackButton";
 
 /* Mock data (API later) */
 const items = [
@@ -19,6 +20,7 @@ const items = [
     location: "Hostel A · Common Room",
     date: "12 Sep 2025",
     status: "Open",
+    image: null,
   },
   {
     id: 2,
@@ -28,6 +30,7 @@ const items = [
     location: "Central Library",
     date: "11 Sep 2025",
     status: "Claim Requested",
+    image: null,
   },
   {
     id: 3,
@@ -37,14 +40,9 @@ const items = [
     location: "Hostel B · Floor 2",
     date: "08 Sep 2025",
     status: "Claim Approved",
+    image: null,
   },
 ];
-
-const statusIcon = {
-  Open: Clock,
-  "Claim Requested": Clock,
-  "Claim Approved": CheckCircle2,
-};
 
 const LostAndFound = () => {
   const [filter, setFilter] = useState("All");
@@ -53,6 +51,18 @@ const LostAndFound = () => {
     filter === "All"
       ? items
       : items.filter((item) => item.type === filter);
+
+  const pillStyle = (active) => ({
+    padding: "8px 14px",
+    borderRadius: "999px",
+    background: active
+      ? "rgba(34,211,238,0.35)"
+      : "rgba(255,255,255,0.12)",
+    border: active
+      ? "1px solid rgba(34,211,238,0.6)"
+      : "1px solid rgba(255,255,255,0.25)",
+    cursor: "pointer",
+  });
 
   return (
     <>
@@ -65,12 +75,23 @@ const LostAndFound = () => {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "16px",
+              alignItems: "flex-start",
+              marginBottom: "20px",
             }}
           >
             <div>
-              <h1 style={{ marginBottom: "6px" }}>Lost & Found</h1>
+              <h1
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "14px",
+                  margin: 0,
+                  marginBottom: "6px",
+                }}
+              >
+                <BackButton />
+                Lost & Found
+              </h1>
               <p style={{ opacity: 0.75 }}>
                 Report lost items or claim items found on campus.
               </p>
@@ -78,102 +99,138 @@ const LostAndFound = () => {
 
             {/* ACTIONS */}
             <div style={{ display: "flex", gap: "10px" }}>
-              <button className="btn-secondary">
-                <Search size={16} /> Report Lost
+              <button
+                style={{
+                  padding: "10px 14px",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(255,255,255,0.35)",
+                  background: "rgba(255,255,255,0.18)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <Search size={16} />
+                Report Lost
               </button>
-              <button className="btn-primary">
-                <PlusCircle size={16} /> Report Found
+
+              <button
+                style={{
+                  padding: "10px 14px",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(255,255,255,0.35)",
+                  background: "rgba(255,255,255,0.18)",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <PlusCircle size={16} />
+                Report Found
               </button>
             </div>
           </div>
 
-          {/* FILTER */}
-          <div
-            className="glass"
-            style={{
-              display: "flex",
-              gap: "12px",
-              marginBottom: "24px",
-            }}
-          >
+          {/* FILTER PILLS */}
+          <div style={{ display: "flex", gap: "10px", marginBottom: "24px" }}>
             {["All", "Lost", "Found"].map((f) => (
               <button
                 key={f}
                 onClick={() => setFilter(f)}
-                style={{
-                  padding: "8px 14px",
-                  borderRadius: "999px",
-                  background:
-                    filter === f
-                      ? "rgba(255,255,255,0.25)"
-                      : "rgba(255,255,255,0.12)",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  cursor: "pointer",
-                }}
+                style={pillStyle(filter === f)}
               >
                 {f}
               </button>
             ))}
           </div>
 
-          {/* LIST */}
-          {filteredItems.length === 0 ? (
-            <div className="glass">
-              <p style={{ opacity: 0.7 }}>
-                No items available for the selected filter.
-              </p>
-            </div>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "16px",
-              }}
-            >
-              {filteredItems.map((item) => {
-                const Icon = statusIcon[item.status] || Package;
+          {/* ITEMS */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+            {filteredItems.map((item) => (
+              <div
+                key={item.id}
+                className="glass"
+                style={{
+                  padding: "14px",
+                  background: "rgba(255,255,255,0.12)",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "14px",
+                    alignItems: "center",
+                  }}
+                >
+                  {/* IMAGE */}
+                  <div
+                    style={{
+                      width: "64px",
+                      height: "64px",
+                      borderRadius: "10px",
+                      background: "rgba(255,255,255,0.15)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Package size={28} />
+                  </div>
 
-                return (
-                  <div key={item.id} className="glass">
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        gap: "16px",
-                      }}
-                    >
-                      <div>
-                        <strong>{item.name}</strong>
-                        <p style={{ margin: "4px 0", opacity: 0.85 }}>
-                          {item.description}
-                        </p>
+                  {/* INFO */}
+                  <div style={{ flex: 1 }}>
+                    <strong>{item.name}</strong>
+                    <p style={{ fontSize: "14px", opacity: 0.85 }}>
+                      {item.description}
+                    </p>
+                    <p style={{ fontSize: "12px", opacity: 0.7 }}>
+                      {item.location} · {item.date}
+                    </p>
+                  </div>
 
-                        <p style={{ fontSize: "13px", opacity: 0.7 }}>
-                          {item.location}
-                        </p>
-                        <p style={{ fontSize: "12px", opacity: 0.6 }}>
-                          {item.type} · {item.date}
-                        </p>
-                      </div>
-
-                      <div
+                  {/* ACTION */}
+                  <div>
+                    {item.status === "Open" && (
+                      <button className="btn-secondary">
+                        Request Claim
+                      </button>
+                    )}
+                    {item.status === "Claim Requested" && (
+                      <span style={{ opacity: 0.75 }}>
+                        Claim Requested
+                      </span>
+                    )}
+                    {item.status === "Claim Approved" && (
+                      <span
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "8px",
-                          fontSize: "14px",
+                          gap: "6px",
                         }}
                       >
-                        <Icon size={18} />
-                        {item.status}
-                      </div>
-                    </div>
+                        <CheckCircle2 size={16} />
+                        Approved
+                      </span>
+                    )}
                   </div>
-                );
-              })}
-            </div>
-          )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* DISCLAIMER */}
+          <p
+            style={{
+              marginTop: "24px",
+              fontSize: "13px",
+              opacity: 0.7,
+            }}
+          >
+            Any wrongful claim or false information may lead to disciplinary
+            action as per campus policies.
+          </p>
         </div>
       </section>
     </>
