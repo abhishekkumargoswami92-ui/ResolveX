@@ -1,6 +1,5 @@
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
-import { Calendar, Clock, MapPin, Image } from "lucide-react";
 
 const field = {
   display: "flex",
@@ -12,23 +11,6 @@ const inputBase = {
   height: "52px",
   fontSize: "16px",
   borderRadius: "12px",
-};
-
-const iconBox = {
-  width: "52px",
-  height: "52px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  background: "rgba(255,255,255,0.12)",
-  border: "1px solid rgba(255,255,255,0.25)",
-  borderRadius: "12px",
-};
-
-const inputGroup = {
-  display: "flex",
-  gap: "12px",
-  alignItems: "center",
 };
 
 const ReportLost = () => {
@@ -52,7 +34,14 @@ const ReportLost = () => {
               Report Lost Item
             </h1>
 
-            <p style={{ opacity: 0.8, maxWidth: "640px" }}>
+            {/* shifted slightly to the right */}
+            <p
+              style={{
+                opacity: 0.8,
+                maxWidth: "640px",
+                marginLeft: "42px",
+              }}
+            >
               Use this form to report an item you have lost. Accurate details help
               others identify and recover it.
             </p>
@@ -60,8 +49,13 @@ const ReportLost = () => {
 
           {/* FORM */}
           <div className="glass" style={{ padding: "40px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
-              
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "36px",
+              }}
+            >
               {/* ITEM NAME */}
               <div style={field}>
                 <label className="label">Item name</label>
@@ -91,75 +85,59 @@ const ReportLost = () => {
               {/* LOCATION */}
               <div style={field}>
                 <label className="label">Last seen location</label>
-                <div style={inputGroup}>
-                  <div style={iconBox}>
-                    <MapPin size={20} />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Hostel A, Room 204, common area"
-                    style={{ ...inputBase, flex: 1 }}
-                    required
-                  />
-                </div>
+                <input
+                  type="text"
+                  placeholder="Hostel A, Room 204, common area"
+                  style={inputBase}
+                  required
+                />
               </div>
 
               {/* DATE & TIME */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
+                  gridTemplateColumns: "200px 200px",
                   gap: "48px",
                 }}
               >
-                {/* DATE */}
                 <div style={field}>
                   <label className="label">Date lost</label>
-                  <div style={inputGroup}>
-                    <div style={iconBox}>
-                      <Calendar size={20} />
-                    </div>
-                    <input
-                      type="date"
-                      style={{ ...inputBase, flex: 1 }}
-                      required
-                    />
-                  </div>
+                  <input
+                    type="date"
+                    style={{ ...inputBase, width: "200px" }}
+                    required
+                  />
                 </div>
 
-                {/* TIME */}
                 <div style={field}>
                   <label className="label">
                     Time lost <span style={{ opacity: 0.6 }}>(optional)</span>
                   </label>
-                  <div style={inputGroup}>
-                    <div style={iconBox}>
-                      <Clock size={20} />
-                    </div>
-                    <input
-                      type="time"
-                      style={{ ...inputBase, flex: 1 }}
-                    />
-                  </div>
+                  <input
+                    type="time"
+                    style={{ ...inputBase, width: "200px" }}
+                  />
                 </div>
               </div>
 
               {/* IMAGE */}
               <div style={field}>
                 <label className="label">Upload image (optional)</label>
-                <div style={inputGroup}>
-                  <div style={iconBox}>
-                    <Image size={20} />
-                  </div>
-                  <input type="file" accept="image/*" />
-                </div>
+                <input type="file" accept="image/*" />
                 <span style={{ fontSize: "12px", opacity: 0.6 }}>
                   Supported formats: JPG, PNG
                 </span>
               </div>
 
               {/* SUBMIT */}
-              <div style={{ display: "flex", justifyContent: "center", marginTop: "16px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "16px",
+                }}
+              >
                 <button
                   className="btn-primary"
                   style={{
