@@ -14,8 +14,8 @@ import MyIssues from "./pages/student/MyIssues";
 import IssueDetail from "./pages/student/IssueDetail";
 import StudentAnnouncements from "./pages/student/Announcements";
 import LostAndFound from "./pages/student/LostAndFound";
-import ReportLost from "./pages/student/lostAndFound/ReportLost";
-import ReportFound from "./pages/student/lostAndFound/ReportFound";
+import ReportLost from "./pages/student/ReportLost";
+import ReportFound from "./pages/student/ReportFound";
 
 const AppRoutes = () => {
   return (
