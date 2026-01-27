@@ -86,14 +86,19 @@ const MyIssues = () => {
 
       <section className="section">
         <div className="container" style={{ maxWidth: "900px" }}>
-          <h1>My Issues</h1>
-          <p style={{ margin: "6px 0 28px" }}>
-            Track the status of issues you have reported.
-          </p>
+          {/* Header */}
+          <div style={{ marginBottom: "28px" }}>
+            <h1>My Issues</h1>
+            <p style={{ marginTop: "6px" }}>
+              Track the status of issues you have reported.
+            </p>
+          </div>
 
+          {/* Issues List */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {issues.map((issue) => {
               const Icon = iconMap[issue.category];
+
               return (
                 <Link
                   key={issue.id}
@@ -110,29 +115,72 @@ const MyIssues = () => {
                     }}
                   >
                     {/* LEFT */}
-                    <div style={{ display: "flex", gap: "14px", flex: 1 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: "14px",
+                        flex: 1,
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      {/* Icon */}
                       <Icon
                         size={18}
                         color={categoryColors[issue.category]}
+                        style={{ marginTop: "4px" }}
                       />
+
+                      {/* Text */}
                       <div>
-                        <h3>{issue.category}</h3>
-                        <p style={{ fontSize: "14px", opacity: 0.9 }}>
+                        {/* Category title aligned with icon */}
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: "16px",
+                              fontWeight: 600,
+                              color: "#e5e7eb",
+                            }}
+                          >
+                            {issue.category}
+                          </span>
+                        </div>
+
+                        <p
+                          style={{
+                            fontSize: "14px",
+                            opacity: 0.9,
+                            marginTop: "4px",
+                          }}
+                        >
                           {issue.description}
                         </p>
-                        <p style={{ fontSize: "12px", opacity: 0.7 }}>
+
+                        <p
+                          style={{
+                            fontSize: "12px",
+                            opacity: 0.7,
+                            marginTop: "6px",
+                          }}
+                        >
                           Reported on {issue.date}
                         </p>
 
+                        {/* Comments (public only) */}
                         {issue.visibility === "public" && (
                           <div
                             style={{
+                              marginTop: "8px",
                               display: "flex",
                               alignItems: "center",
                               gap: "6px",
                               fontSize: "13px",
                               color: "#cbd5f5",
-                              marginTop: "6px",
                             }}
                           >
                             <MessageSquare size={14} />
@@ -153,10 +201,11 @@ const MyIssues = () => {
                         minWidth: "170px",
                       }}
                     >
+                      {/* Priority */}
                       <span
                         style={{
                           background: priorityColors[issue.priority],
-                          color: "#fff",
+                          color: "#ffffff",
                           padding: "6px 12px",
                           borderRadius: "999px",
                           fontSize: "12px",
@@ -166,10 +215,11 @@ const MyIssues = () => {
                         {issue.priority}
                       </span>
 
+                      {/* Status */}
                       <span
                         style={{
                           background: statusColors[issue.status],
-                          color: "#fff",
+                          color: "#ffffff",
                           padding: "6px 12px",
                           borderRadius: "999px",
                           fontSize: "12px",
@@ -178,6 +228,7 @@ const MyIssues = () => {
                         {issue.status}
                       </span>
 
+                      {/* Visibility */}
                       <span
                         style={{
                           display: "flex",
