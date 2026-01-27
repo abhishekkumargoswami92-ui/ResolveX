@@ -4,6 +4,7 @@ import {
   ClipboardList,
   Megaphone,
   PlusCircle,
+  Search,
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
@@ -17,32 +18,54 @@ const StudentDashboard = () => {
         <div className="container" style={{ maxWidth: "1100px" }}>
           {/* HEADER */}
           <div style={{ marginBottom: "36px" }}>
-            <h1>Student Dashboard</h1>
-            <p style={{ marginTop: "6px", opacity: 0.85 }}>
-              Track issues, stay informed, and report problems across campus.
+            <h1 style={{ marginBottom: "8px" }}>Student Dashboard</h1>
+            <p
+              style={{
+                maxWidth: "520px",
+                opacity: 0.85,
+              }}
+            >
+              Track issues, stay informed, and take action across the campus.
             </p>
           </div>
 
-          {/* PRIMARY ACTION */}
+          {/* PRIMARY ACTION — COMPACT */}
           <div
             className="glass"
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              gap: "20px",
+              gap: "16px",
+              padding: "18px 22px",
               marginBottom: "40px",
+
+              /* subtle 3D depth */
+              boxShadow:
+                "0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15)",
             }}
           >
             <div>
-              <h2 style={{ marginBottom: "6px" }}>Report an Issue</h2>
-              <p style={{ opacity: 0.85 }}>
-                Notice a problem? Submit an issue for quick resolution.
+              <h2 style={{ marginBottom: "4px", fontSize: "18px" }}>
+                Report an Issue
+              </h2>
+              <p style={{ opacity: 0.85, fontSize: "14px" }}>
+                Submit an infrastructure issue for resolution.
               </p>
             </div>
 
-            <Link to="/student/report" className="btn-primary">
-              <PlusCircle size={18} />
+            <Link
+              to="/student/report"
+              className="btn-primary"
+              style={{
+                padding: "10px 16px",
+                fontSize: "14px",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <PlusCircle size={16} />
               Report Issue
             </Link>
           </div>
@@ -57,39 +80,73 @@ const StudentDashboard = () => {
             }}
           >
             {/* My Issues */}
-            <div className="glass">
+            <div
+              className="glass"
+              style={{
+                boxShadow:
+                  "0 8px 24px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.12)",
+              }}
+            >
               <ClipboardList size={26} />
               <h3 style={{ marginTop: "12px" }}>My Issues</h3>
               <p style={{ marginTop: "6px", opacity: 0.85 }}>
-                Track the status and progress of issues you’ve reported.
+                Track the progress of issues you have reported.
               </p>
               <Link
                 to="/student/issues"
                 className="btn-secondary"
-                style={{ marginTop: "16px", display: "inline-block" }}
+                style={{ marginTop: "14px", display: "inline-block" }}
               >
                 View My Issues
               </Link>
             </div>
 
             {/* Announcements */}
-            <div className="glass">
+            <div
+              className="glass"
+              style={{
+                boxShadow:
+                  "0 8px 24px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.12)",
+              }}
+            >
               <Megaphone size={26} />
               <h3 style={{ marginTop: "12px" }}>Announcements</h3>
               <p style={{ marginTop: "6px", opacity: 0.85 }}>
-                Official notices and updates from campus management.
+                Official notices from campus management.
               </p>
               <Link
                 to="/student/announcements"
                 className="btn-secondary"
-                style={{ marginTop: "16px", display: "inline-block" }}
+                style={{ marginTop: "14px", display: "inline-block" }}
               >
                 View Announcements
               </Link>
             </div>
+
+            {/* Lost & Found */}
+            <div
+              className="glass"
+              style={{
+                boxShadow:
+                  "0 8px 24px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.12)",
+              }}
+            >
+              <Search size={26} />
+              <h3 style={{ marginTop: "12px" }}>Lost & Found</h3>
+              <p style={{ marginTop: "6px", opacity: 0.85 }}>
+                Report lost items or claim items found on campus.
+              </p>
+              <Link
+                to="/student/lost-found"
+                className="btn-secondary"
+                style={{ marginTop: "14px", display: "inline-block" }}
+              >
+                Open Lost & Found
+              </Link>
+            </div>
           </div>
 
-          {/* OVERVIEW SECTION */}
+          {/* OVERVIEW */}
           <div
             style={{
               display: "grid",
@@ -98,7 +155,13 @@ const StudentDashboard = () => {
             }}
           >
             {/* Issue Overview */}
-            <div className="glass">
+            <div
+              className="glass"
+              style={{
+                boxShadow:
+                  "0 6px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)",
+              }}
+            >
               <h3>Issue Overview</h3>
               <ul style={{ marginTop: "14px", lineHeight: "1.8", opacity: 0.9 }}>
                 <li>
@@ -113,8 +176,14 @@ const StudentDashboard = () => {
               </ul>
             </div>
 
-            {/* Recent Alerts */}
-            <div className="glass">
+            {/* Alerts */}
+            <div
+              className="glass"
+              style={{
+                boxShadow:
+                  "0 6px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1)",
+              }}
+            >
               <div
                 style={{
                   display: "flex",
