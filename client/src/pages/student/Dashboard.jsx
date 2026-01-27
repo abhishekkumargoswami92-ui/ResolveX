@@ -11,51 +11,57 @@ import Navbar from "../../components/common/Navbar";
 const StudentDashboard = () => {
   return (
     <>
-      {/* Global Navbar (Logo + App Name) */}
       <Navbar />
 
-      {/* Main Content */}
       <section className="section">
-        <div className="container">
-          {/* Page Header */}
-          <div style={{ marginBottom: "32px" }}>
+        <div className="container" style={{ maxWidth: "1100px" }}>
+          {/* HEADER */}
+          <div style={{ marginBottom: "36px" }}>
             <h1>Student Dashboard</h1>
-            <p style={{ marginTop: "6px" }}>
-              Track reported issues, view announcements, and take action.
+            <p style={{ marginTop: "6px", opacity: 0.85 }}>
+              Track issues, stay informed, and report problems across campus.
             </p>
           </div>
 
-          {/* Quick Actions */}
+          {/* PRIMARY ACTION */}
+          <div
+            className="glass"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: "20px",
+              marginBottom: "40px",
+            }}
+          >
+            <div>
+              <h2 style={{ marginBottom: "6px" }}>Report an Issue</h2>
+              <p style={{ opacity: 0.85 }}>
+                Notice a problem? Submit an issue for quick resolution.
+              </p>
+            </div>
+
+            <Link to="/student/report" className="btn-primary">
+              <PlusCircle size={18} />
+              Report Issue
+            </Link>
+          </div>
+
+          {/* SECONDARY ACTIONS */}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
               gap: "20px",
-              marginBottom: "36px",
+              marginBottom: "40px",
             }}
           >
-            {/* Report Issue */}
-            <div className="glass">
-              <PlusCircle size={28} />
-              <h3 style={{ marginTop: "12px" }}>Report an Issue</h3>
-              <p style={{ marginTop: "6px" }}>
-                Quickly report a new infrastructure issue.
-              </p>
-              <Link
-                to="/student/report"
-                className="btn-primary"
-                style={{ marginTop: "16px", display: "inline-block" }}
-              >
-                Report Issue
-              </Link>
-            </div>
-
             {/* My Issues */}
             <div className="glass">
-              <ClipboardList size={28} />
+              <ClipboardList size={26} />
               <h3 style={{ marginTop: "12px" }}>My Issues</h3>
-              <p style={{ marginTop: "6px" }}>
-                View status updates on issues you’ve reported.
+              <p style={{ marginTop: "6px", opacity: 0.85 }}>
+                Track the status and progress of issues you’ve reported.
               </p>
               <Link
                 to="/student/issues"
@@ -68,10 +74,10 @@ const StudentDashboard = () => {
 
             {/* Announcements */}
             <div className="glass">
-              <Megaphone size={28} />
+              <Megaphone size={26} />
               <h3 style={{ marginTop: "12px" }}>Announcements</h3>
-              <p style={{ marginTop: "6px" }}>
-                Important notices from campus management.
+              <p style={{ marginTop: "6px", opacity: 0.85 }}>
+                Official notices and updates from campus management.
               </p>
               <Link
                 to="/student/announcements"
@@ -83,19 +89,18 @@ const StudentDashboard = () => {
             </div>
           </div>
 
-          {/* Overview Section */}
+          {/* OVERVIEW SECTION */}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
               gap: "20px",
             }}
           >
-            {/* Issue Summary */}
+            {/* Issue Overview */}
             <div className="glass">
               <h3>Issue Overview</h3>
-
-              <ul style={{ marginTop: "14px", lineHeight: "1.8" }}>
+              <ul style={{ marginTop: "14px", lineHeight: "1.8", opacity: 0.9 }}>
                 <li>
                   <strong>2</strong> issues currently in progress
                 </li>
@@ -108,7 +113,7 @@ const StudentDashboard = () => {
               </ul>
             </div>
 
-            {/* Alerts */}
+            {/* Recent Alerts */}
             <div className="glass">
               <div
                 style={{
@@ -121,7 +126,7 @@ const StudentDashboard = () => {
                 <h3>Recent Alerts</h3>
               </div>
 
-              <p style={{ marginTop: "12px" }}>
+              <p style={{ marginTop: "12px", opacity: 0.9 }}>
                 Water maintenance scheduled tomorrow in Hostel B.
               </p>
 
@@ -129,7 +134,7 @@ const StudentDashboard = () => {
                 style={{
                   marginTop: "8px",
                   fontSize: "14px",
-                  opacity: 0.8,
+                  opacity: 0.75,
                 }}
               >
                 Posted by Management · 3 hours ago
