@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Search,
   Package,
@@ -107,31 +108,35 @@ const LostAndFound = () => {
 
             {/* ACTION BUTTONS */}
             <div style={{ display: "flex", gap: "12px" }}>
-              <button
+              <Link
+                to="/student/lost-found/report-lost"
                 className="btn-primary"
                 style={{
                   padding: "10px 16px",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
+                  textDecoration: "none",
                 }}
               >
                 <Search size={16} />
                 Report Lost
-              </button>
+              </Link>
 
-              <button
+              <Link
+                to="/student/lost-found/report-found"
                 className="btn-primary"
                 style={{
                   padding: "10px 16px",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "10px",
+                  textDecoration: "none",
                 }}
               >
                 <PlusCircle size={16} />
                 Report Found
-              </button>
+              </Link>
             </div>
           </div>
 
