@@ -13,6 +13,15 @@ import {
 
 import Navbar from "../../components/common/Navbar";
 
+const categoryColors = {
+  Plumbing: "#38bdf8",
+  Electrical: "#facc15",
+  Internet: "#a78bfa",
+  Furniture: "#2dd4bf",
+  Maintenance: "#fb923c",
+  Other: "#cbd5f5",
+};
+
 const issues = [
   {
     id: 1,
@@ -46,28 +55,28 @@ const issues = [
   },
 ];
 
-const categoryIcons = {
-  Plumbing: <Droplets size={18} color="#e5e7eb" />,
-  Electrical: <Zap size={18} color="#e5e7eb" />,
-  Internet: <Wifi size={18} color="#e5e7eb" />,
-  Furniture: <Armchair size={18} color="#e5e7eb" />,
-  Maintenance: <Wrench size={18} color="#e5e7eb" />,
-  Other: <AlertCircle size={18} color="#e5e7eb" />,
-};
-
-const priorityStyles = {
+const priorityColors = {
   Low: "#22c55e",
   Medium: "#3b82f6",
   High: "#f59e0b",
   Emergency: "#ef4444",
 };
 
-const statusStyles = {
+const statusColors = {
   Reported: "#64748b",
   Assigned: "#38bdf8",
   "In Progress": "#f59e0b",
   Resolved: "#22c55e",
   Closed: "#94a3b8",
+};
+
+const iconMap = {
+  Plumbing: Droplets,
+  Electrical: Zap,
+  Internet: Wifi,
+  Furniture: Armchair,
+  Maintenance: Wrench,
+  Other: AlertCircle,
 };
 
 const MyIssues = () => {
@@ -77,133 +86,119 @@ const MyIssues = () => {
 
       <section className="section">
         <div className="container" style={{ maxWidth: "900px" }}>
-          {/* Header */}
-          <div style={{ marginBottom: "28px" }}>
-            <h1>My Issues</h1>
-            <p style={{ marginTop: "6px" }}>
-              Track the status of issues you have reported.
-            </p>
-          </div>
+          <h1>My Issues</h1>
+          <p style={{ margin: "6px 0 28px" }}>
+            Track the status of issues you have reported.
+          </p>
 
-          {/* Issues List */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            {issues.map((issue) => (
-              <Link
-                key={issue.id}
-                to={`/student/issues/${issue.id}`}
-                style={{ textDecoration: "none" }}
-              >
-                <div
-                  className="glass"
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: "16px",
-                    alignItems: "center",
-                  }}
+            {issues.map((issue) => {
+              const Icon = iconMap[issue.category];
+              return (
+                <Link
+                  key={issue.id}
+                  to={`/student/issues/${issue.id}`}
+                  style={{ textDecoration: "none" }}
                 >
-                  {/* Left */}
-                  <div style={{ display: "flex", gap: "14px", flex: 1 }}>
-                    <div>{categoryIcons[issue.category]}</div>
-
-                    <div>
-                      <h3 style={{ marginBottom: "4px" }}>
-                        {issue.category}
-                      </h3>
-
-                      <p style={{ fontSize: "14px", opacity: 0.9 }}>
-                        {issue.description}
-                      </p>
-
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          opacity: 0.7,
-                          marginTop: "6px",
-                        }}
-                      >
-                        Reported on {issue.date}
-                      </p>
-
-                      {/* Comments */}
-                      {issue.visibility === "public" && (
-                        <div
-                          style={{
-                            marginTop: "8px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            fontSize: "13px",
-                            color: "#cbd5f5",
-                          }}
-                        >
-                          <MessageSquare size={14} />
-                          {issue.comments} comment
-                          {issue.comments !== 1 ? "s" : ""}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Right */}
                   <div
+                    className="glass"
                     style={{
                       display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-end",
-                      gap: "8px",
-                      minWidth: "170px",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      gap: "16px",
                     }}
                   >
-                    {/* Priority */}
-                    <span
-                      style={{
-                        padding: "6px 12px",
-                        borderRadius: "999px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        background: priorityStyles[issue.priority],
-                        color: "#ffffff",
-                      }}
-                    >
-                      {issue.priority}
-                    </span>
+                    {/* LEFT */}
+                    <div style={{ display: "flex", gap: "14px", flex: 1 }}>
+                      <Icon
+                        size={18}
+                        color={categoryColors[issue.category]}
+                      />
+                      <div>
+                        <h3>{issue.category}</h3>
+                        <p style={{ fontSize: "14px", opacity: 0.9 }}>
+                          {issue.description}
+                        </p>
+                        <p style={{ fontSize: "12px", opacity: 0.7 }}>
+                          Reported on {issue.date}
+                        </p>
 
-                    {/* Status */}
-                    <span
-                      style={{
-                        padding: "6px 12px",
-                        borderRadius: "999px",
-                        fontSize: "12px",
-                        fontWeight: 500,
-                        background: statusStyles[issue.status],
-                        color: "#ffffff",
-                      }}
-                    >
-                      {issue.status}
-                    </span>
+                        {issue.visibility === "public" && (
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "6px",
+                              fontSize: "13px",
+                              color: "#cbd5f5",
+                              marginTop: "6px",
+                            }}
+                          >
+                            <MessageSquare size={14} />
+                            {issue.comments} comment
+                            {issue.comments !== 1 ? "s" : ""}
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
-                    {/* Visibility */}
-                    <span
+                    {/* RIGHT */}
+                    <div
                       style={{
                         display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        fontSize: "12px",
-                        color: "#cbd5f5",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                        gap: "8px",
+                        minWidth: "170px",
                       }}
                     >
-                      {issue.visibility === "public" ? (
-                        <Eye size={14} />
-                      ) : (
-                        <EyeOff size={14} />
-                      )}
-                      {issue.visibility === "public" ? "Public" : "Private"}
-                    </span>
+                      <span
+                        style={{
+                          background: priorityColors[issue.priority],
+                          color: "#fff",
+                          padding: "6px 12px",
+                          borderRadius: "999px",
+                          fontSize: "12px",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {issue.priority}
+                      </span>
+
+                      <span
+                        style={{
+                          background: statusColors[issue.status],
+                          color: "#fff",
+                          padding: "6px 12px",
+                          borderRadius: "999px",
+                          fontSize: "12px",
+                        }}
+                      >
+                        {issue.status}
+                      </span>
+
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          fontSize: "12px",
+                          color: "#cbd5f5",
+                        }}
+                      >
+                        {issue.visibility === "public" ? (
+                          <Eye size={14} />
+                        ) : (
+                          <EyeOff size={14} />
+                        )}
+                        {issue.visibility === "public" ? "Public" : "Private"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
