@@ -1,145 +1,90 @@
+import { useState } from "react";
+import { Calendar, Clock } from "lucide-react";
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
-import { Calendar, Clock } from "lucide-react";
+import SubmitPopup from "../../components/common/SubmitPopup";
 
-const fieldStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-};
-
-const inputStyle = {
-  height: "48px",
-  paddingLeft: "50px",
-  fontSize: "15px",
-};
-
-const iconStyle = {
-  position: "absolute",
-  top: "42px",
-  left: "14px",
-  opacity: 0.7,
-};
+const field = { display: "flex", flexDirection: "column", gap: "10px" };
+const input = { height: "52px", fontSize: "16px", paddingLeft: "56px" };
+const icon = { position: "absolute", top: "44px", left: "18px", opacity: 0.75 };
 
 const ReportFound = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Navbar />
+      <SubmitPopup open={open} onClose={() => setOpen(false)} variant="found" />
 
       <section className="section">
-        <div className="container" style={{ maxWidth: "820px" }}>
-          {/* HEADER */}
-          <div style={{ marginBottom: "36px" }}>
-            <h1
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "14px",
-                marginBottom: "12px",
-              }}
-            >
+        <div className="container" style={{ maxWidth: "860px" }}>
+          <div style={{ marginBottom: "40px" }}>
+            <h1 style={{ display: "flex", gap: "14px", marginBottom: "12px" }}>
               <BackButton />
               Report Found Item
             </h1>
-
-            <p style={{ opacity: 0.8, maxWidth: "640px" }}>
-              Use this form to report an item you have found so it can be claimed
-              by its rightful owner.
+            <p style={{ opacity: 0.8 }}>
+              Submit details of an item you found so it can be returned.
             </p>
           </div>
 
-          {/* FORM */}
-          <div className="glass" style={{ padding: "40px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
-              
-              {/* ITEM NAME */}
-              <div style={fieldStyle}>
+          <div className="glass" style={{ padding: "42px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
+              <div style={field}>
                 <label className="label">Item name</label>
-                <input
-                  type="text"
-                  placeholder="Bottle, charger, watch"
-                  style={{ height: "48px", fontSize: "15px" }}
-                  required
-                />
+                <input placeholder="Bottle, charger, watch" style={input} />
               </div>
 
-              {/* DESCRIPTION */}
-              <div style={fieldStyle}>
+              <div style={field}>
                 <label className="label">Description</label>
-                <textarea
-                  rows="4"
-                  placeholder="Describe the item and where you found it"
-                  style={{ resize: "none", fontSize: "15px" }}
-                  required
-                />
+                <textarea rows="4" style={{ fontSize: "16px" }} />
               </div>
 
-              {/* LOCATION */}
-              <div style={fieldStyle}>
+              <div style={field}>
                 <label className="label">Found location</label>
-                <input
-                  type="text"
-                  placeholder="Library, study room, corridor"
-                  style={{ height: "48px", fontSize: "15px" }}
-                  required
-                />
+                <input placeholder="Library, study room" style={input} />
               </div>
 
-              {/* DATE & TIME */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "220px 1fr 220px",
-                  gap: "36px",
+                  gridTemplateColumns: "240px 1fr 240px",
+                  gap: "48px",
                 }}
               >
-                {/* DATE */}
-                <div style={{ ...fieldStyle, position: "relative" }}>
+                <div style={{ ...field, position: "relative" }}>
                   <label className="label">Date found</label>
-                  <Calendar size={20} style={iconStyle} />
-                  <input type="date" style={inputStyle} required />
+                  <Calendar size={22} style={icon} />
+                  <input type="date" style={input} />
                 </div>
 
-                {/* spacer */}
+                <div />
 
-                {/* TIME */}
-                <div style={{ ...fieldStyle, position: "relative" }}>
+                <div style={{ ...field, position: "relative" }}>
                   <label className="label">
                     Time found <span style={{ opacity: 0.6 }}>(optional)</span>
                   </label>
-                  <Clock size={20} style={iconStyle} />
-                  <input type="time" style={inputStyle} />
+                  <Clock size={22} style={icon} />
+                  <input type="time" style={input} />
                 </div>
               </div>
 
-              {/* IMAGE */}
-              <div style={fieldStyle}>
+              <div style={field}>
                 <label className="label">Upload image (optional)</label>
-                <input type="file" accept="image/*" />
-                <span style={{ fontSize: "12px", opacity: 0.6 }}>
-                  Supported formats: JPG, PNG
-                </span>
+                <input type="file" />
               </div>
 
-              {/* SUBMIT */}
-              <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <button
                   className="btn-primary"
-                  style={{
-                    minWidth: "260px",
-                    fontSize: "17px",
-                    padding: "14px 0",
-                  }}
+                  style={{ fontSize: "17px", padding: "14px 32px" }}
+                  onClick={() => setOpen(true)}
                 >
                   Submit found report
                 </button>
               </div>
             </div>
           </div>
-
-          <p style={{ marginTop: "20px", fontSize: "13px", opacity: 0.7 }}>
-            Any misuse of this feature may result in penalties.
-          </p>
         </div>
       </section>
     </>
