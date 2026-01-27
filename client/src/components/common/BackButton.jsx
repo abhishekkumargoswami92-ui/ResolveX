@@ -23,7 +23,13 @@ const BackButton = () => {
         flexShrink: 0,
       }}
     >
-      <ArrowLeft size={20} />
+      {/* 🔑 OPTICAL ALIGNMENT (REAL-WORLD FIX) */}
+      <ArrowLeft
+        size={20}
+        style={{
+          transform: "translateY(3px)",
+        }}
+      />
     </button>
   );
 };
