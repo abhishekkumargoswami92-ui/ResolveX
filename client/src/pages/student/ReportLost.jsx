@@ -52,7 +52,7 @@ const ReportLost = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "36px",
+                gap: "18px",
               }}
             >
               {/* ITEM NAME */}
