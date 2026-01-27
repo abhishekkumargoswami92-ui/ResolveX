@@ -96,8 +96,18 @@ const MyIssues = () => {
               marginBottom: "10px",
             }}
           >
+           <h1
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "14px",
+              margin: 0,
+            }}
+          >
             <BackButton />
-            <h1 style={{ margin: 0 }}>My Issues</h1>
+            My Issues
+          </h1>
+
           </div>
 
           <p style={{ marginBottom: "28px" }}>
