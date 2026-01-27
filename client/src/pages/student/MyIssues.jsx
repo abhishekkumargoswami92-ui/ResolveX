@@ -88,19 +88,26 @@ const MyIssues = () => {
       <section className="section">
         <div className="container" style={{ maxWidth: "900px" }}>
           {/* Header */}
-          <div style={{ marginBottom: "28px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              marginBottom: "12px",
+            }}
+          >
             <BackButton />
-            <h1>My Issues</h1>
-            <p style={{ marginTop: "6px" }}>
-              Track the status of issues you have reported.
-            </p>
+            <h1 style={{ margin: 0 }}>My Issues</h1>
           </div>
 
-          {/* Issues List */}
+          <p style={{ marginBottom: "28px" }}>
+            Track the status of issues you have reported.
+          </p>
+
+          {/* Issues */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {issues.map((issue) => {
               const Icon = iconMap[issue.category];
-
               return (
                 <Link
                   key={issue.id}
@@ -116,7 +123,7 @@ const MyIssues = () => {
                       gap: "16px",
                     }}
                   >
-                    {/* LEFT */}
+                    {/* Left */}
                     <div
                       style={{
                         display: "flex",
@@ -125,64 +132,40 @@ const MyIssues = () => {
                         alignItems: "flex-start",
                       }}
                     >
-                      {/* Icon */}
                       <Icon
                         size={18}
                         color={categoryColors[issue.category]}
                         style={{ marginTop: "4px" }}
                       />
 
-                      {/* Text */}
                       <div>
-                        {/* Category title aligned with icon */}
-                        <div
+                        <span
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
+                            fontSize: "16px",
+                            fontWeight: 600,
+                            color: "#e5e7eb",
                           }}
                         >
-                          <span
-                            style={{
-                              fontSize: "16px",
-                              fontWeight: 600,
-                              color: "#e5e7eb",
-                            }}
-                          >
-                            {issue.category}
-                          </span>
-                        </div>
+                          {issue.category}
+                        </span>
 
-                        <p
-                          style={{
-                            fontSize: "14px",
-                            opacity: 0.9,
-                            marginTop: "4px",
-                          }}
-                        >
+                        <p style={{ fontSize: "14px", opacity: 0.9 }}>
                           {issue.description}
                         </p>
 
-                        <p
-                          style={{
-                            fontSize: "12px",
-                            opacity: 0.7,
-                            marginTop: "6px",
-                          }}
-                        >
+                        <p style={{ fontSize: "12px", opacity: 0.7 }}>
                           Reported on {issue.date}
                         </p>
 
-                        {/* Comments (public only) */}
                         {issue.visibility === "public" && (
                           <div
                             style={{
-                              marginTop: "8px",
                               display: "flex",
                               alignItems: "center",
                               gap: "6px",
                               fontSize: "13px",
                               color: "#cbd5f5",
+                              marginTop: "6px",
                             }}
                           >
                             <MessageSquare size={14} />
@@ -193,7 +176,7 @@ const MyIssues = () => {
                       </div>
                     </div>
 
-                    {/* RIGHT */}
+                    {/* Right */}
                     <div
                       style={{
                         display: "flex",
@@ -203,11 +186,10 @@ const MyIssues = () => {
                         minWidth: "170px",
                       }}
                     >
-                      {/* Priority */}
                       <span
                         style={{
                           background: priorityColors[issue.priority],
-                          color: "#ffffff",
+                          color: "#fff",
                           padding: "6px 12px",
                           borderRadius: "999px",
                           fontSize: "12px",
@@ -217,11 +199,10 @@ const MyIssues = () => {
                         {issue.priority}
                       </span>
 
-                      {/* Status */}
                       <span
                         style={{
                           background: statusColors[issue.status],
-                          color: "#ffffff",
+                          color: "#fff",
                           padding: "6px 12px",
                           borderRadius: "999px",
                           fontSize: "12px",
@@ -230,7 +211,6 @@ const MyIssues = () => {
                         {issue.status}
                       </span>
 
-                      {/* Visibility */}
                       <span
                         style={{
                           display: "flex",
