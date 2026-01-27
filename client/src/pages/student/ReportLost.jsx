@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { Calendar, Clock } from "lucide-react";
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
-import SubmitPopup from "../../components/common/SubmitPopup";
+import { Calendar, Clock, MapPin, Image } from "lucide-react";
 
 const field = {
   display: "flex",
@@ -10,116 +8,176 @@ const field = {
   gap: "10px",
 };
 
-const input = {
+const inputBase = {
   height: "52px",
   fontSize: "16px",
+  borderRadius: "12px",
 };
 
-const iconWrap = {
-  position: "relative",
+const iconBox = {
+  width: "52px",
+  height: "52px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "rgba(255,255,255,0.12)",
+  border: "1px solid rgba(255,255,255,0.25)",
+  borderRadius: "12px",
 };
 
-const icon = {
-  position: "absolute",
-  left: "14px",
-  top: "50%",
-  transform: "translateY(-50%)",
-  opacity: 0.7,
-  pointerEvents: "none",
-};
-
-const paddedInput = {
-  ...input,
-  paddingLeft: "44px",
+const inputGroup = {
+  display: "flex",
+  gap: "12px",
+  alignItems: "center",
 };
 
 const ReportLost = () => {
-  const [open, setOpen] = useState(false);
-
   return (
     <>
       <Navbar />
-      <SubmitPopup open={open} onClose={() => setOpen(false)} variant="lost" />
 
       <section className="section">
-        <div className="container" style={{ maxWidth: "860px" }}>
+        <div className="container" style={{ maxWidth: "820px" }}>
           {/* HEADER */}
           <div style={{ marginBottom: "36px" }}>
-            <h1 style={{ display: "flex", gap: "14px", marginBottom: "12px" }}>
+            <h1
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "14px",
+                marginBottom: "12px",
+              }}
+            >
               <BackButton />
               Report Lost Item
             </h1>
-            <p style={{ opacity: 0.8 }}>
-              Provide accurate details to help others identify your lost item.
+
+            <p style={{ opacity: 0.8, maxWidth: "640px" }}>
+              Use this form to report an item you have lost. Accurate details help
+              others identify and recover it.
             </p>
           </div>
 
           {/* FORM */}
           <div className="glass" style={{ padding: "40px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "34px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "36px" }}>
               
+              {/* ITEM NAME */}
               <div style={field}>
                 <label className="label">Item name</label>
-                <input style={input} placeholder="Wallet, ID card, earphones" />
+                <input
+                  type="text"
+                  placeholder="Wallet, ID card, earphones"
+                  style={inputBase}
+                  required
+                />
               </div>
 
+              {/* DESCRIPTION */}
               <div style={field}>
                 <label className="label">Description</label>
-                <textarea rows="4" style={{ fontSize: "16px" }} />
+                <textarea
+                  rows="4"
+                  placeholder="Color, brand, identifying marks, contents"
+                  style={{
+                    fontSize: "16px",
+                    borderRadius: "12px",
+                    resize: "none",
+                  }}
+                  required
+                />
               </div>
 
+              {/* LOCATION */}
               <div style={field}>
                 <label className="label">Last seen location</label>
-                <input style={input} placeholder="Hostel A, Room 204" />
+                <div style={inputGroup}>
+                  <div style={iconBox}>
+                    <MapPin size={20} />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Hostel A, Room 204, common area"
+                    style={{ ...inputBase, flex: 1 }}
+                    required
+                  />
+                </div>
               </div>
 
               {/* DATE & TIME */}
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "240px 1fr 240px",
+                  gridTemplateColumns: "1fr 1fr",
                   gap: "48px",
                 }}
               >
                 {/* DATE */}
                 <div style={field}>
                   <label className="label">Date lost</label>
-                  <div style={iconWrap}>
-                    <Calendar size={20} style={icon} />
-                    <input type="date" style={paddedInput} />
+                  <div style={inputGroup}>
+                    <div style={iconBox}>
+                      <Calendar size={20} />
+                    </div>
+                    <input
+                      type="date"
+                      style={{ ...inputBase, flex: 1 }}
+                      required
+                    />
                   </div>
                 </div>
-
-                <div />
 
                 {/* TIME */}
                 <div style={field}>
                   <label className="label">
                     Time lost <span style={{ opacity: 0.6 }}>(optional)</span>
                   </label>
-                  <div style={iconWrap}>
-                    <Clock size={20} style={icon} />
-                    <input type="time" style={paddedInput} />
+                  <div style={inputGroup}>
+                    <div style={iconBox}>
+                      <Clock size={20} />
+                    </div>
+                    <input
+                      type="time"
+                      style={{ ...inputBase, flex: 1 }}
+                    />
                   </div>
                 </div>
               </div>
 
+              {/* IMAGE */}
               <div style={field}>
                 <label className="label">Upload image (optional)</label>
-                <input type="file" />
+                <div style={inputGroup}>
+                  <div style={iconBox}>
+                    <Image size={20} />
+                  </div>
+                  <input type="file" accept="image/*" />
+                </div>
+                <span style={{ fontSize: "12px", opacity: 0.6 }}>
+                  Supported formats: JPG, PNG
+                </span>
               </div>
 
-              <div style={{ display: "flex", justifyContent: "center" }}>
+              {/* SUBMIT */}
+              <div style={{ display: "flex", justifyContent: "center", marginTop: "16px" }}>
                 <button
                   className="btn-primary"
-                  style={{ fontSize: "18px", padding: "14px 36px" }}
-                  onClick={() => setOpen(true)}
+                  style={{
+                    minWidth: "260px",
+                    fontSize: "18px",
+                    padding: "14px 0",
+                  }}
                 >
                   Submit lost report
                 </button>
               </div>
             </div>
           </div>
+
+          <p style={{ marginTop: "20px", fontSize: "13px", opacity: 0.7 }}>
+            Submitting false or misleading information may lead to disciplinary
+            action.
+          </p>
         </div>
       </section>
     </>

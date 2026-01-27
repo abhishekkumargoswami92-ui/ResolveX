@@ -21,7 +21,7 @@ const iconStyle = {
   opacity: 0.7,
 };
 
-const ReportLost = () => {
+const ReportFound = () => {
   return (
     <>
       <Navbar />
@@ -39,12 +39,12 @@ const ReportLost = () => {
               }}
             >
               <BackButton />
-              Report Lost Item
+              Report Found Item
             </h1>
 
             <p style={{ opacity: 0.8, maxWidth: "640px" }}>
-              Use this form to report an item you have lost. Accurate details help
-              others identify and recover it.
+              Use this form to report an item you have found so it can be claimed
+              by its rightful owner.
             </p>
           </div>
 
@@ -57,7 +57,7 @@ const ReportLost = () => {
                 <label className="label">Item name</label>
                 <input
                   type="text"
-                  placeholder="Wallet, ID card, earphones"
+                  placeholder="Bottle, charger, watch"
                   style={{ height: "48px", fontSize: "15px" }}
                   required
                 />
@@ -68,7 +68,7 @@ const ReportLost = () => {
                 <label className="label">Description</label>
                 <textarea
                   rows="4"
-                  placeholder="Color, brand, identifying marks, contents"
+                  placeholder="Describe the item and where you found it"
                   style={{ resize: "none", fontSize: "15px" }}
                   required
                 />
@@ -76,10 +76,10 @@ const ReportLost = () => {
 
               {/* LOCATION */}
               <div style={fieldStyle}>
-                <label className="label">Last seen location</label>
+                <label className="label">Found location</label>
                 <input
                   type="text"
-                  placeholder="Hostel A, Room 204, common area"
+                  placeholder="Library, study room, corridor"
                   style={{ height: "48px", fontSize: "15px" }}
                   required
                 />
@@ -95,7 +95,7 @@ const ReportLost = () => {
               >
                 {/* DATE */}
                 <div style={{ ...fieldStyle, position: "relative" }}>
-                  <label className="label">Date lost</label>
+                  <label className="label">Date found</label>
                   <Calendar size={20} style={iconStyle} />
                   <input type="date" style={inputStyle} required />
                 </div>
@@ -105,7 +105,7 @@ const ReportLost = () => {
                 {/* TIME */}
                 <div style={{ ...fieldStyle, position: "relative" }}>
                   <label className="label">
-                    Time lost <span style={{ opacity: 0.6 }}>(optional)</span>
+                    Time found <span style={{ opacity: 0.6 }}>(optional)</span>
                   </label>
                   <Clock size={20} style={iconStyle} />
                   <input type="time" style={inputStyle} />
@@ -131,15 +131,14 @@ const ReportLost = () => {
                     padding: "14px 0",
                   }}
                 >
-                  Submit lost report
+                  Submit found report
                 </button>
               </div>
             </div>
           </div>
 
           <p style={{ marginTop: "20px", fontSize: "13px", opacity: 0.7 }}>
-            Submitting false or misleading information may lead to disciplinary
-            action.
+            Any misuse of this feature may result in penalties.
           </p>
         </div>
       </section>
@@ -147,4 +146,4 @@ const ReportLost = () => {
   );
 };
 
-export default ReportLost;
+export default ReportFound;
