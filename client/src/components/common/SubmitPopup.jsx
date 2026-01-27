@@ -5,14 +5,14 @@ const SubmitPopup = ({ open, onClose, variant }) => {
     lost: {
       title: "Lost Item Reported",
       message:
-        "Your lost item has been reported successfully. Other students can now help you recover it.",
-      accent: "linear-gradient(135deg, #38bdf8, #6366f1)",
+        "Your report has been published. If someone finds your item, you’ll be notified immediately.",
+      gradient: "linear-gradient(135deg, #38bdf8, #6366f1)",
     },
     found: {
       title: "Found Item Submitted",
       message:
-        "Thank you for reporting a found item. The rightful owner will be notified.",
-      accent: "linear-gradient(135deg, #22c55e, #16a34a)",
+        "Great job! The owner can now claim this item after verification.",
+      gradient: "linear-gradient(135deg, #22c55e, #16a34a)",
     },
   };
 
@@ -23,7 +23,7 @@ const SubmitPopup = ({ open, onClose, variant }) => {
       style={{
         position: "fixed",
         inset: 0,
-        background: "rgba(0,0,0,0.6)",
+        background: "rgba(0,0,0,0.7)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -31,30 +31,34 @@ const SubmitPopup = ({ open, onClose, variant }) => {
       }}
     >
       <div
-        className="glass"
         style={{
-          width: "420px",
-          padding: "28px",
-          textAlign: "center",
+          width: "460px",
+          borderRadius: "20px",
+          background: data.gradient,
+          padding: "3px",
         }}
       >
         <div
+          className="glass"
           style={{
-            height: "6px",
-            borderRadius: "999px",
-            marginBottom: "18px",
-            background: data.accent,
+            padding: "32px",
+            textAlign: "center",
+            background: "rgba(0,0,0,0.75)",
           }}
-        />
+        >
+          <h2 style={{ marginBottom: "12px" }}>{data.title}</h2>
+          <p style={{ opacity: 0.9, fontSize: "15px", marginBottom: "24px" }}>
+            {data.message}
+          </p>
 
-        <h2 style={{ marginBottom: "10px" }}>{data.title}</h2>
-        <p style={{ opacity: 0.85, marginBottom: "22px" }}>
-          {data.message}
-        </p>
-
-        <button className="btn-primary" onClick={onClose}>
-          Close
-        </button>
+          <button
+            className="btn-primary"
+            style={{ fontSize: "16px", padding: "12px 28px" }}
+            onClick={onClose}
+          >
+            Got it
+          </button>
+        </div>
       </div>
     </div>
   );
