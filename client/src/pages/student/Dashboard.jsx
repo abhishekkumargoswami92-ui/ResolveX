@@ -9,6 +9,17 @@ import {
 
 import Navbar from "../../components/common/Navbar";
 
+const actionButtonStyle = {
+  marginTop: "14px",
+  display: "inline-block",
+  padding: "8px 14px",
+  borderRadius: "10px",
+  border: "1px solid rgba(255,255,255,0.25)",
+  background: "rgba(255,255,255,0.08)",
+  textDecoration: "none",
+  color: "inherit",
+};
+
 const StudentDashboard = () => {
   return (
     <>
@@ -17,12 +28,7 @@ const StudentDashboard = () => {
       <section className="section">
         <div className="container" style={{ maxWidth: "1100px" }}>
           {/* HEADER */}
-          <div
-            style={{
-              textAlign: "center",
-              marginBottom: "40px",
-            }}
-          >
+          <div style={{ textAlign: "center", marginBottom: "40px" }}>
             <h1 style={{ marginBottom: "8px" }}>Student Dashboard</h1>
             <p style={{ opacity: 0.85 }}>
               Track reported issues, view announcements, and take action.
@@ -80,22 +86,10 @@ const StudentDashboard = () => {
               <ClipboardList size={26} />
               <h3 style={{ marginTop: "12px" }}>My Issues</h3>
               <p style={{ marginTop: "6px", opacity: 0.85 }}>
-                Track the progress of issues you have reported.
+                View status updates on issues you’ve reported.
               </p>
-
-              <Link
-                to="/student/issues"
-                style={{
-                  marginTop: "14px",
-                  display: "inline-block",
-                  padding: "8px 14px",
-                  borderRadius: "10px",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  background: "rgba(255,255,255,0.08)",
-                  textDecoration: "none",
-                }}
-              >
-                Open
+              <Link to="/student/issues" style={actionButtonStyle}>
+                View My Issues
               </Link>
             </div>
 
@@ -106,20 +100,8 @@ const StudentDashboard = () => {
               <p style={{ marginTop: "6px", opacity: 0.85 }}>
                 Important notices from campus management.
               </p>
-
-              <Link
-                to="/student/announcements"
-                style={{
-                  marginTop: "14px",
-                  display: "inline-block",
-                  padding: "8px 14px",
-                  borderRadius: "10px",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  background: "rgba(255,255,255,0.08)",
-                  textDecoration: "none",
-                }}
-              >
-                Open
+              <Link to="/student/announcements" style={actionButtonStyle}>
+                View Announcements
               </Link>
             </div>
 
@@ -130,20 +112,8 @@ const StudentDashboard = () => {
               <p style={{ marginTop: "6px", opacity: 0.85 }}>
                 Report lost items or claim items found on campus.
               </p>
-
-              <Link
-                to="/student/lost-found"
-                style={{
-                  marginTop: "14px",
-                  display: "inline-block",
-                  padding: "8px 14px",
-                  borderRadius: "10px",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  background: "rgba(255,255,255,0.08)",
-                  textDecoration: "none",
-                }}
-              >
-                Open
+              <Link to="/student/lost-found" style={actionButtonStyle}>
+                Open Lost & Found
               </Link>
             </div>
           </div>
