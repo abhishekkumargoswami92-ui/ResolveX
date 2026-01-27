@@ -10,27 +10,29 @@ const BackButton = () => {
       onClick={() => navigate(-1)}
       aria-label="Go back"
       style={{
-        /* Reset button */
-        background: "transparent",
-        border: "none",
-        padding: 0,
-        margin: 0,
-        cursor: "pointer",
+        /* Button reset */
+        background: "rgba(255,255,255,0.14)",
+        border: "1px solid rgba(255,255,255,0.25)",
+        backdropFilter: "blur(10px)",
+        borderRadius: "10px",
 
-        /* Alignment */
+        /* Size + spacing */
+        padding: "6px",
+        margin: 0,
+
+        /* Alignment magic */
         display: "inline-flex",
         alignItems: "center",
 
-        /* Visual balance */
-        color: "rgba(255,255,255,0.75)",
-        lineHeight: "1",
+        /* Visual tone */
+        color: "rgba(255,255,255,0.85)",
+        cursor: "pointer",
+
+        /* IMPORTANT */
+        verticalAlign: "baseline",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
-      onMouseLeave={(e) =>
-        (e.currentTarget.style.color = "rgba(255,255,255,0.75)")
-      }
     >
-      <ArrowLeft size={18} strokeWidth={2} />
+      <ArrowLeft size={16} strokeWidth={2} />
     </button>
   );
 };
