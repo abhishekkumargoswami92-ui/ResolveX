@@ -5,7 +5,6 @@ import {
   PlusCircle,
   CheckCircle2,
   Clock,
-  Dot,
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
@@ -54,13 +53,13 @@ const LostAndFound = () => {
     padding: "10px 16px",
     borderRadius: "999px",
     fontSize: "14px",
+    cursor: "pointer",
     background: active
       ? "rgba(34,211,238,0.45)"
       : "rgba(255,255,255,0.15)",
     border: active
       ? "1px solid rgba(34,211,238,0.7)"
       : "1px solid rgba(255,255,255,0.25)",
-    cursor: "pointer",
   });
 
   return (
@@ -83,52 +82,27 @@ const LostAndFound = () => {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: "10px",
+                  gap: "12px",
                   margin: 0,
                   marginBottom: "6px",
                 }}
               >
                 <BackButton />
                 Lost & Found
-                <Dot size={18} />
               </h1>
               <p style={{ opacity: 0.8 }}>
                 Report lost items or claim items found on campus.
               </p>
             </div>
 
-            {/* ACTIONS */}
+            {/* ACTION BUTTONS */}
             <div style={{ display: "flex", gap: "8px" }}>
-              <button
-                style={{
-                  padding: "8px 12px",
-                  borderRadius: "8px",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                  background: "rgba(255,255,255,0.18)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  fontSize: "14px",
-                  cursor: "pointer",
-                }}
-              >
+              <button className="btn-primary" style={{ padding: "8px 12px" }}>
                 <Search size={14} />
                 Report Lost
               </button>
 
-              <button
-                style={{
-                  padding: "8px 12px",
-                  borderRadius: "8px",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                  background: "rgba(255,255,255,0.18)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  fontSize: "14px",
-                  cursor: "pointer",
-                }}
-              >
+              <button className="btn-primary" style={{ padding: "8px 12px" }}>
                 <PlusCircle size={14} />
                 Report Found
               </button>
@@ -156,7 +130,7 @@ const LostAndFound = () => {
                 className="glass"
                 style={{
                   padding: "16px",
-                  background: "rgba(0,0,0,0.35)",
+                  background: "rgba(0,0,0,0.38)",
                 }}
               >
                 <div
@@ -199,8 +173,10 @@ const LostAndFound = () => {
                         style={{
                           padding: "8px 14px",
                           borderRadius: "8px",
-                          border: "1px solid rgba(255,255,255,0.35)",
-                          background: "rgba(255,255,255,0.2)",
+                          background: "#22c55e",
+                          color: "#022c22",
+                          fontWeight: 600,
+                          border: "none",
                           cursor: "pointer",
                         }}
                       >
@@ -214,7 +190,7 @@ const LostAndFound = () => {
                           display: "inline-flex",
                           alignItems: "center",
                           gap: "6px",
-                          opacity: 0.85,
+                          opacity: 0.9,
                         }}
                       >
                         <Clock size={16} />
@@ -228,6 +204,7 @@ const LostAndFound = () => {
                           display: "inline-flex",
                           alignItems: "center",
                           gap: "6px",
+                          fontWeight: 500,
                         }}
                       >
                         <CheckCircle2 size={16} />
