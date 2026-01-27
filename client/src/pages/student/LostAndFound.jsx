@@ -50,7 +50,7 @@ const LostAndFound = () => {
       : items.filter((item) => item.type === filter);
 
   const pillStyle = (active) => ({
-    padding: "10px 16px",
+    padding: "10px 18px",
     borderRadius: "999px",
     fontSize: "14px",
     cursor: "pointer",
@@ -96,14 +96,30 @@ const LostAndFound = () => {
             </div>
 
             {/* ACTION BUTTONS */}
-            <div style={{ display: "flex", gap: "8px" }}>
-              <button className="btn-primary" style={{ padding: "8px 12px" }}>
-                <Search size={14} />
+            <div style={{ display: "flex", gap: "12px" }}>
+              <button
+                className="btn-primary"
+                style={{
+                  padding: "10px 16px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <Search size={16} />
                 Report Lost
               </button>
 
-              <button className="btn-primary" style={{ padding: "8px 12px" }}>
-                <PlusCircle size={14} />
+              <button
+                className="btn-primary"
+                style={{
+                  padding: "10px 16px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <PlusCircle size={16} />
                 Report Found
               </button>
             </div>
@@ -136,7 +152,7 @@ const LostAndFound = () => {
                 <div
                   style={{
                     display: "flex",
-                    gap: "14px",
+                    gap: "16px",
                     alignItems: "center",
                   }}
                 >
@@ -189,7 +205,7 @@ const LostAndFound = () => {
                         style={{
                           display: "inline-flex",
                           alignItems: "center",
-                          gap: "6px",
+                          gap: "8px",
                           opacity: 0.9,
                         }}
                       >
@@ -203,7 +219,7 @@ const LostAndFound = () => {
                         style={{
                           display: "inline-flex",
                           alignItems: "center",
-                          gap: "6px",
+                          gap: "8px",
                           fontWeight: 500,
                         }}
                       >
