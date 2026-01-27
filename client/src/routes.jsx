@@ -13,6 +13,7 @@ import ReportIssue from "./pages/student/ReportIssue";
 import MyIssues from "./pages/student/MyIssues";
 import IssueDetail from "./pages/student/IssueDetail";
 import StudentAnnouncements from "./pages/student/Announcements";
+import LostAndFound from "./pages/student/LostAndFound";
 
 
 const AppRoutes = () => {
@@ -31,6 +32,8 @@ const AppRoutes = () => {
       <Route path="/student/issues" element={<MyIssues />} />
       <Route path="/student/issues/:id" element={<IssueDetail />} />
       <Route path="/student/announcements" element={<StudentAnnouncements />} />
+      <Route path="/student/lost-found" element={<LostAndFound />} />
+
 
     </Routes>
   );
