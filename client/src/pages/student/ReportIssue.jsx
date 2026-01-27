@@ -62,13 +62,14 @@ const ReportIssue = () => {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "12px",
+              gap: "14px",
               margin: 0,
             }}
           >
             <BackButton />
             Report an Issue
           </h1>
+
 
           <p style={{ margin: "12px 0 24px" }}>
             Provide accurate details to help campus management resolve the issue
