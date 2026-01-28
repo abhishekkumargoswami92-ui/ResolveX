@@ -4,11 +4,42 @@ import {
   Wifi,
   Armchair,
   Wrench,
-  AlertCircle,
   AlertTriangle,
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
+import BackButton from "../../components/common/BackButton";
+
+/* Mock issues */
+const issues = [
+  {
+    id: 1,
+    category: "Plumbing",
+    description: "Water leakage near washbasin in Room 204.",
+    location: "Hostel A · Room 204",
+    priority: "High",
+    status: "In Progress",
+    date: "12 Sep 2025",
+  },
+  {
+    id: 2,
+    category: "Electrical",
+    description: "Corridor lights not functioning.",
+    location: "Hostel B · Floor 1",
+    priority: "Emergency",
+    status: "Reported",
+    date: "13 Sep 2025",
+  },
+  {
+    id: 3,
+    category: "Internet",
+    description: "WiFi disconnects frequently at night.",
+    location: "Hostel C",
+    priority: "Medium",
+    status: "Assigned",
+    date: "10 Sep 2025",
+  },
+];
 
 const categoryIcon = {
   Plumbing: Droplets,
@@ -16,7 +47,6 @@ const categoryIcon = {
   Internet: Wifi,
   Furniture: Armchair,
   Maintenance: Wrench,
-  Other: AlertCircle,
 };
 
 const priorityColor = {
@@ -26,38 +56,13 @@ const priorityColor = {
   Emergency: "#ef4444",
 };
 
-const issues = [
-  {
-    id: 1,
-    title: "Water leakage in Hostel A",
-    category: "Plumbing",
-    priority: "High",
-    location: "Hostel A · Room 204",
-    student: "Rahul Sharma",
-    status: "In Progress",
-    time: "15 mins ago",
-  },
-  {
-    id: 2,
-    title: "Power outage in Block C",
-    category: "Electrical",
-    priority: "Emergency",
-    location: "Block C · Floor 1",
-    student: "Ankit Verma",
-    status: "Reported",
-    time: "32 mins ago",
-  },
-  {
-    id: 3,
-    title: "WiFi slow in Library",
-    category: "Internet",
-    priority: "Medium",
-    location: "Central Library",
-    student: "Neha Gupta",
-    status: "Assigned",
-    time: "1 hour ago",
-  },
-];
+const statusColor = {
+  Reported: "#64748b",
+  Assigned: "#38bdf8",
+  "In Progress": "#f59e0b",
+  Resolved: "#22c55e",
+  Closed: "#94a3b8",
+};
 
 const ManageIssues = () => {
   return (
@@ -65,117 +70,140 @@ const ManageIssues = () => {
       <Navbar />
 
       <section className="section">
-        <div className="container" style={{ maxWidth: "1200px" }}>
+        <div className="container" style={{ maxWidth: "1100px" }}>
           {/* HEADER */}
-          <div style={{ marginBottom: "32px" }}>
-            <h1 style={{ marginBottom: "6px" }}>Manage Issues</h1>
-            <p style={{ opacity: 0.85 }}>
-              Review, prioritize, and take action on reported campus issues.
+          <div style={{ marginBottom: "28px" }}>
+            <h1
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "14px",
+                marginBottom: "8px",
+              }}
+            >
+              <BackButton />
+              Manage Issues
+            </h1>
+
+            <p style={{ opacity: 0.8 }}>
+              Review, assign, and track all reported campus issues.
             </p>
           </div>
 
           {/* ISSUE LIST */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {issues.map((issue) => {
-              const Icon = categoryIcon[issue.category];
+              const Icon = categoryIcon[issue.category] || AlertTriangle;
 
               return (
                 <div
                   key={issue.id}
                   className="glass"
                   style={{
-                    padding: "18px 20px",
-                    border:
-                      issue.priority === "Emergency"
-                        ? "1px solid rgba(239,68,68,0.45)"
-                        : "1px solid rgba(255,255,255,0.15)",
-                    background:
-                      issue.priority === "Emergency"
-                        ? "rgba(239,68,68,0.12)"
-                        : "rgba(255,255,255,0.08)",
+                    padding: "20px",
+                    borderLeft: `4px solid ${priorityColor[issue.priority]}`,
                   }}
                 >
                   <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      gap: "20px",
-                      alignItems: "center",
+                      gap: "18px",
                     }}
                   >
                     {/* LEFT */}
-                    <div style={{ display: "flex", gap: "14px" }}>
-                      <Icon size={22} />
+                    <div style={{ flex: 1 }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                          marginBottom: "6px",
+                        }}
+                      >
+                        <Icon size={18} />
+                        <strong>{issue.category}</strong>
 
-                      <div>
-                        <strong style={{ fontSize: "15px" }}>
-                          {issue.title}
-                        </strong>
-
-                        <p
-                          style={{
-                            fontSize: "13px",
-                            opacity: 0.8,
-                            marginTop: "2px",
-                          }}
-                        >
-                          {issue.location}
-                        </p>
-
-                        <p
-                          style={{
-                            fontSize: "12px",
-                            opacity: 0.65,
-                            marginTop: "4px",
-                          }}
-                        >
-                          Reported by {issue.student} · {issue.time}
-                        </p>
+                        {issue.priority === "Emergency" && (
+                          <span
+                            style={{
+                              background: "#ef4444",
+                              color: "#fff",
+                              padding: "4px 10px",
+                              borderRadius: "999px",
+                              fontSize: "11px",
+                              fontWeight: 600,
+                            }}
+                          >
+                            EMERGENCY
+                          </span>
+                        )}
                       </div>
+
+                      <p style={{ fontSize: "14px", opacity: 0.9 }}>
+                        {issue.description}
+                      </p>
+
+                      <p
+                        style={{
+                          fontSize: "13px",
+                          opacity: 0.75,
+                          marginTop: "6px",
+                        }}
+                      >
+                        {issue.location} · Reported on {issue.date}
+                      </p>
                     </div>
 
                     {/* RIGHT */}
                     <div
                       style={{
                         display: "flex",
-                        alignItems: "center",
-                        gap: "14px",
+                        flexDirection: "column",
+                        alignItems: "flex-end",
+                        gap: "10px",
+                        minWidth: "160px",
                       }}
                     >
-                      {/* PRIORITY */}
                       <span
                         style={{
-                          padding: "6px 12px",
-                          borderRadius: "999px",
-                          fontSize: "12px",
                           background: priorityColor[issue.priority],
                           color: "#fff",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
+                          padding: "6px 14px",
+                          borderRadius: "999px",
+                          fontSize: "12px",
+                          fontWeight: 600,
                         }}
                       >
-                        {issue.priority === "Emergency" && (
-                          <AlertTriangle size={14} />
-                        )}
                         {issue.priority}
                       </span>
 
-                      {/* STATUS */}
-                      <select
-                        defaultValue={issue.status}
+                      <span
                         style={{
-                          padding: "8px 10px",
-                          borderRadius: "10px",
-                          fontSize: "13px",
+                          background: statusColor[issue.status],
+                          color: "#fff",
+                          padding: "6px 14px",
+                          borderRadius: "999px",
+                          fontSize: "12px",
                         }}
                       >
-                        <option>Reported</option>
-                        <option>Assigned</option>
-                        <option>In Progress</option>
-                        <option>Resolved</option>
-                        <option>Closed</option>
-                      </select>
+                        {issue.status}
+                      </span>
+
+                      <button
+                        style={{
+                          marginTop: "6px",
+                          fontSize: "13px",
+                          background: "transparent",
+                          border: "1px solid rgba(255,255,255,0.25)",
+                          padding: "6px 12px",
+                          borderRadius: "8px",
+                          cursor: "pointer",
+                          color: "#e5e7eb",
+                        }}
+                      >
+                        View Details
+                      </button>
                     </div>
                   </div>
                 </div>
