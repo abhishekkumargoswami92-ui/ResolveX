@@ -226,7 +226,7 @@ const MyAccount = () => {
               </svg>
             </div>
             <span className="gsi-material-button-contents">
-              Sign in with Google
+              Link your Google Account
             </span>
           </div>
         </button>
