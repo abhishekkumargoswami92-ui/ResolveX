@@ -19,7 +19,7 @@ import ReportFound from "./pages/student/ReportFound";
 import IssuesFeed from "./pages/student/IssuesFeed";
 import MyAccount from "./pages/student/MyAccount";
 import AdminDashboard from "./pages/admin/Dashboard";
-
+import ManageIssues from "./pages/admin/ManageIssues";
 
 
 const AppRoutes = () => {
@@ -46,6 +46,7 @@ const AppRoutes = () => {
 
       {/* Admin */}
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/manage-issues" element={<ManageIssues />} />
     </Routes>
   );
 };
