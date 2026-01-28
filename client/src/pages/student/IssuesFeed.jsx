@@ -279,6 +279,7 @@ const IssuesFeed = () => {
                             height: "46px",
                             borderRadius: "10px",
                             fontSize: "14px",
+                            paddingLeft: "12px"
                           }}
                         />
                         <p style={{ fontSize: "12px", opacity: 0.6 }}>
