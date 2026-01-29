@@ -16,7 +16,7 @@ import {
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
 
-/* COLORS */
+/* COLORS — UNCHANGED */
 const categoryColors = {
   Plumbing: "#38bdf8",
   Electrical: "#facc15",
@@ -50,7 +50,7 @@ const iconMap = {
   Other: AlertCircle,
 };
 
-/* MOCK ISSUES */
+/* MOCK ISSUES — UNCHANGED */
 const issues = [
   {
     id: 1,
@@ -170,6 +170,7 @@ const MyIssues = () => {
                     right: 0,
                     top: "48px",
                     minWidth: "220px",
+                    padding: "14px",
                     zIndex: 10,
                   }}
                 >
@@ -188,18 +189,14 @@ const MyIssues = () => {
                         type="checkbox"
                         checked={statusFilters.includes(status)}
                         onChange={() =>
-                          toggleFilter(
-                            status,
-                            statusFilters,
-                            setStatusFilters
-                          )
+                          toggleFilter(status, statusFilters, setStatusFilters)
                         }
                       />
                       {status}
                     </label>
                   ))}
 
-                  <hr style={{ margin: "10px 0", opacity: 0.2 }} />
+                  <hr style={{ margin: "12px 0", opacity: 0.25 }} />
 
                   <strong>Visibility</strong>
                   {["public", "private"].map((v) => (
@@ -235,7 +232,7 @@ const MyIssues = () => {
             Track the status of issues you have reported.
           </p>
 
-          {/* ISSUE LIST */}
+          {/* LIST */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {filteredIssues.map((issue) => {
               const Icon = iconMap[issue.category];
@@ -251,17 +248,27 @@ const MyIssues = () => {
                     style={{
                       display: "flex",
                       gap: "16px",
-                      transition: "transform 0.15s ease",
+                      padding: "16px 18px",
+                      background:
+                        "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))",
                     }}
                   >
-                    <Icon
-                      size={18}
-                      color={categoryColors[issue.category]}
-                      style={{ marginTop: "4px" }}
-                    />
+                    <div
+                      style={{
+                        background: `${categoryColors[issue.category]}22`,
+                        borderRadius: "10px",
+                        padding: "8px",
+                        height: "fit-content",
+                      }}
+                    >
+                      <Icon
+                        size={18}
+                        color={categoryColors[issue.category]}
+                      />
+                    </div>
 
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: "16px", fontWeight: 600 }}>
+                      <div style={{ fontWeight: 600, fontSize: "16px" }}>
                         {issue.category}
                       </div>
 
