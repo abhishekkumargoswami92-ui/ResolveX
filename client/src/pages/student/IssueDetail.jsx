@@ -5,12 +5,37 @@ import {
   MessageSquare,
   Eye,
   EyeOff,
+  Droplets,
+  Zap,
+  Wifi,
+  Armchair,
+  Wrench,
+  AlertCircle,
 } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
 
-/* MOCK DATA — simulates API response */
+/* CATEGORY COLORS (same family as MyIssues) */
+const categoryColors = {
+  Plumbing: "#38bdf8",
+  Electrical: "#facc15",
+  Internet: "#a78bfa",
+  Furniture: "#2dd4bf",
+  Maintenance: "#fb923c",
+  Other: "#cbd5f5",
+};
+
+const iconMap = {
+  Plumbing: Droplets,
+  Electrical: Zap,
+  Internet: Wifi,
+  Furniture: Armchair,
+  Maintenance: Wrench,
+  Other: AlertCircle,
+};
+
+/* MOCK DATA */
 const ISSUES = {
   "1": {
     id: "1",
@@ -40,28 +65,6 @@ const ISSUES = {
       },
     ],
   },
-
-  "2": {
-    id: "2",
-    title: "Tube light not working",
-    category: "Electrical",
-    description:
-      "Tube light in the corridor outside Room 210 is not functioning.",
-    priority: "Medium",
-    visibility: "private",
-    status: "Assigned",
-    reportedOn: "10 Sep 2025, 09:15 PM",
-    location: "Hostel A · Corridor",
-    remarks: null,
-    timeline: [
-      { label: "Reported", time: "10 Sep 2025, 09:15 PM", done: true },
-      { label: "Assigned", time: "11 Sep 2025, 10:00 AM", done: true },
-      { label: "In Progress", time: null, done: false },
-      { label: "Resolved", time: null, done: false },
-      { label: "Closed", time: null, done: false },
-    ],
-    comments: [],
-  },
 };
 
 const IssueDetail = () => {
@@ -80,6 +83,9 @@ const IssueDetail = () => {
       </>
     );
   }
+
+  const Icon = iconMap[issue.category] || AlertCircle;
+  const accent = categoryColors[issue.category];
 
   return (
     <>
@@ -100,32 +106,39 @@ const IssueDetail = () => {
             <h1 style={{ margin: 0 }}>Issue Details</h1>
           </div>
 
-          {/* SUMMARY */}
+          {/* SUMMARY CARD (matches MyIssues card style) */}
           <div
             className="glass"
             style={{
+              padding: "20px",
               marginBottom: "28px",
-              padding: "22px 24px",
+              background:
+                "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: "20px",
-                flexWrap: "wrap",
-              }}
-            >
+            <div style={{ display: "flex", gap: "16px" }}>
+              {/* ICON */}
+              <div
+                style={{
+                  background: `${accent}22`,
+                  borderRadius: "12px",
+                  padding: "10px",
+                  height: "fit-content",
+                }}
+              >
+                <Icon size={22} color={accent} />
+              </div>
+
+              {/* CONTENT */}
               <div style={{ flex: 1 }}>
-                <h2 style={{ margin: "0 0 8px" }}>{issue.title}</h2>
+                <h2 style={{ margin: "0 0 6px" }}>{issue.title}</h2>
                 <p style={{ opacity: 0.9 }}>{issue.description}</p>
 
                 <div
                   style={{
-                    marginTop: "14px",
+                    marginTop: "10px",
                     fontSize: "14px",
-                    opacity: 0.85,
-                    lineHeight: 1.6,
+                    opacity: 0.8,
                   }}
                 >
                   <div>
@@ -140,44 +153,21 @@ const IssueDetail = () => {
               {/* META */}
               <div
                 style={{
-                  minWidth: "160px",
-                  textAlign: "right",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-end",
+                  gap: "8px",
                 }}
               >
-                <span
-                  style={{
-                    display: "inline-block",
-                    padding: "6px 14px",
-                    borderRadius: "999px",
-                    fontSize: "12px",
-                    fontWeight: 600,
-                    background: "#f59e0b",
-                    color: "#fff",
-                  }}
-                >
-                  {issue.priority}
-                </span>
-                <br />
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginTop: "8px",
-                    padding: "6px 14px",
-                    borderRadius: "999px",
-                    fontSize: "12px",
-                    background: "rgba(255,255,255,0.18)",
-                  }}
-                >
-                  {issue.status}
-                </span>
+                <span className="badge">{issue.priority}</span>
+                <span className="badge secondary">{issue.status}</span>
 
-                <div
+                <span
                   style={{
-                    display: "inline-flex",
+                    display: "flex",
                     alignItems: "center",
                     gap: "6px",
-                    marginTop: "10px",
-                    fontSize: "13px",
+                    fontSize: "12px",
                     opacity: 0.85,
                   }}
                 >
@@ -190,13 +180,13 @@ const IssueDetail = () => {
                       <EyeOff size={14} /> Private
                     </>
                   )}
-                </div>
+                </span>
               </div>
             </div>
           </div>
 
           {/* TIMELINE */}
-          <div className="glass" style={{ marginBottom: "28px", padding: "22px" }}>
+          <div className="glass" style={{ padding: "20px", marginBottom: "28px" }}>
             <h3 style={{ marginTop: 0, marginBottom: "16px" }}>
               Issue Timeline
             </h3>
@@ -206,10 +196,9 @@ const IssueDetail = () => {
                 key={idx}
                 style={{
                   display: "flex",
-                  alignItems: "flex-start",
-                  gap: "14px",
+                  gap: "12px",
+                  marginBottom: "12px",
                   opacity: step.done ? 1 : 0.45,
-                  marginBottom: "14px",
                 }}
               >
                 {step.done ? (
@@ -219,7 +208,7 @@ const IssueDetail = () => {
                 )}
 
                 <div>
-                  <div style={{ fontWeight: 600 }}>{step.label}</div>
+                  <strong>{step.label}</strong>
                   {step.time && (
                     <div style={{ fontSize: "13px", opacity: 0.7 }}>
                       {step.time}
@@ -231,7 +220,7 @@ const IssueDetail = () => {
           </div>
 
           {/* REMARKS */}
-          <div className="glass" style={{ marginBottom: "28px", padding: "22px" }}>
+          <div className="glass" style={{ padding: "20px", marginBottom: "28px" }}>
             <h3 style={{ marginTop: 0 }}>Management Remarks</h3>
             {issue.remarks ? (
               <p style={{ opacity: 0.9 }}>{issue.remarks}</p>
@@ -242,7 +231,7 @@ const IssueDetail = () => {
 
           {/* COMMENTS */}
           {issue.visibility === "public" && (
-            <div className="glass" style={{ padding: "22px" }}>
+            <div className="glass" style={{ padding: "20px" }}>
               <h3
                 style={{
                   marginTop: 0,
