@@ -25,4 +25,10 @@ const announcementRoutes = require("./routes/announcement.routes");
 
 app.use("/announcements", announcementRoutes);
 
+//LOST AND FOUND ROUTES
+const lostFoundRoutes = require("./routes/lostFound.routes");
+
+app.use("/lost-found", lostFoundRoutes);
+
+
 
