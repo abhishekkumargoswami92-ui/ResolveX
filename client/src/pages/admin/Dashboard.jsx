@@ -36,7 +36,14 @@ const AdminDashboard = () => {
             <h1 style={{ marginBottom: "10px", fontSize: "28px" }}>
               Management Dashboard
             </h1>
-            <p style={{ opacity: 0.85, maxWidth: "700px" }}>
+            <p
+  style={{
+                opacity: 0.85,
+                maxWidth: "700px",
+                margin: "0 auto",
+                textAlign: "center",
+              }}
+            >
               Central control panel to monitor campus issues, announcements,
               and operational performance.
             </p>
