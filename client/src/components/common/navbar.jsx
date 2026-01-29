@@ -86,7 +86,6 @@ const Navbar = () => {
             }}
           >
             <LogOut size={18} />
-            Logout
           </button>
         </div>
       </div>
