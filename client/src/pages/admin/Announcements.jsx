@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PlusCircle, Megaphone, Archive } from "lucide-react";
 
 import Navbar from "../../components/common/Navbar";
@@ -68,7 +69,9 @@ const AdminAnnouncements = () => {
               </p>
             </div>
 
-            <button
+            {/* ✅ FIX: Button → Link (UI IDENTICAL) */}
+            <Link
+              to="/admin/announcements/add"
               className="btn-primary"
               style={{
                 display: "inline-flex",
@@ -76,11 +79,12 @@ const AdminAnnouncements = () => {
                 gap: "8px",
                 padding: "10px 18px",
                 fontSize: "14px",
+                textDecoration: "none",
               }}
             >
               <PlusCircle size={16} />
               Create Announcement
-            </button>
+            </Link>
           </div>
 
           {/* ANNOUNCEMENT LIST */}
