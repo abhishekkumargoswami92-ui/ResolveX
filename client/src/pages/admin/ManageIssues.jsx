@@ -108,6 +108,18 @@ const ManageIssues = () => {
                       padding: "20px",
                       borderLeft: `4px solid ${priorityColor[issue.priority]}`,
                       cursor: "pointer",
+                      background:
+                        "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))",
+                      transition: "transform 0.15s ease, box-shadow 0.15s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow =
+                        "0 10px 30px rgba(0,0,0,0.25)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "none";
                     }}
                   >
                     <div
@@ -128,17 +140,21 @@ const ManageIssues = () => {
                           }}
                         >
                           <Icon size={18} />
-                          <strong>{issue.category}</strong>
+                          <strong style={{ fontSize: "15px" }}>
+                            {issue.category}
+                          </strong>
 
                           {issue.priority === "Emergency" && (
                             <span
                               style={{
-                                background: "#ef4444",
+                                background:
+                                  "linear-gradient(135deg,#ef4444,#dc2626)",
                                 color: "#fff",
                                 padding: "4px 10px",
                                 borderRadius: "999px",
                                 fontSize: "11px",
-                                fontWeight: 600,
+                                fontWeight: 700,
+                                letterSpacing: "0.3px",
                               }}
                             >
                               EMERGENCY
@@ -146,14 +162,14 @@ const ManageIssues = () => {
                           )}
                         </div>
 
-                        <p style={{ fontSize: "14px", opacity: 0.9 }}>
+                        <p style={{ fontSize: "14px", opacity: 0.92 }}>
                           {issue.description}
                         </p>
 
                         <p
                           style={{
                             fontSize: "13px",
-                            opacity: 0.75,
+                            opacity: 0.7,
                             marginTop: "6px",
                           }}
                         >
@@ -199,8 +215,9 @@ const ManageIssues = () => {
                         <span
                           style={{
                             fontSize: "13px",
-                            opacity: 0.8,
+                            opacity: 0.85,
                             marginTop: "6px",
+                            fontWeight: 500,
                           }}
                         >
                           View Details →
