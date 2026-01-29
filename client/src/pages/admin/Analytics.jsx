@@ -45,37 +45,65 @@ const Analytics = () => {
               marginBottom: "36px",
             }}
           >
-            <div className="glass">
-              <TrendingUp size={22} />
+            <div
+              className="glass"
+              style={{
+                borderLeft: "4px solid #38bdf8",
+                background:
+                  "linear-gradient(180deg, rgba(56,189,248,0.18), rgba(255,255,255,0.04))",
+              }}
+            >
+              <TrendingUp size={22} color="#38bdf8" />
               <h3 style={{ marginTop: "10px" }}>Total Issues</h3>
-              <p style={{ fontSize: "26px", fontWeight: 600 }}>128</p>
+              <p style={{ fontSize: "28px", fontWeight: 600 }}>128</p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>
                 Last 30 days
               </p>
             </div>
 
-            <div className="glass">
-              <CheckCircle2 size={22} />
+            <div
+              className="glass"
+              style={{
+                borderLeft: "4px solid #22c55e",
+                background:
+                  "linear-gradient(180deg, rgba(34,197,94,0.18), rgba(255,255,255,0.04))",
+              }}
+            >
+              <CheckCircle2 size={22} color="#22c55e" />
               <h3 style={{ marginTop: "10px" }}>Resolved</h3>
-              <p style={{ fontSize: "26px", fontWeight: 600 }}>96</p>
+              <p style={{ fontSize: "28px", fontWeight: 600 }}>96</p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>
                 75% resolution rate
               </p>
             </div>
 
-            <div className="glass">
-              <Clock size={22} />
+            <div
+              className="glass"
+              style={{
+                borderLeft: "4px solid #3b82f6",
+                background:
+                  "linear-gradient(180deg, rgba(59,130,246,0.18), rgba(255,255,255,0.04))",
+              }}
+            >
+              <Clock size={22} color="#3b82f6" />
               <h3 style={{ marginTop: "10px" }}>Avg. Resolution Time</h3>
-              <p style={{ fontSize: "26px", fontWeight: 600 }}>18 hrs</p>
+              <p style={{ fontSize: "28px", fontWeight: 600 }}>18 hrs</p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>
                 From report to closure
               </p>
             </div>
 
-            <div className="glass">
-              <AlertTriangle size={22} />
+            <div
+              className="glass"
+              style={{
+                borderLeft: "4px solid #ef4444",
+                background:
+                  "linear-gradient(180deg, rgba(239,68,68,0.18), rgba(255,255,255,0.04))",
+              }}
+            >
+              <AlertTriangle size={22} color="#ef4444" />
               <h3 style={{ marginTop: "10px" }}>Emergency Issues</h3>
-              <p style={{ fontSize: "26px", fontWeight: 600, color: "#ef4444" }}>
+              <p style={{ fontSize: "28px", fontWeight: 600, color: "#ef4444" }}>
                 6
               </p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>
@@ -102,7 +130,7 @@ const Analytics = () => {
                   marginBottom: "12px",
                 }}
               >
-                <BarChart3 size={20} />
+                <BarChart3 size={20} color="#38bdf8" />
                 <h3 style={{ margin: 0 }}>Top Issue Categories</h3>
               </div>
 
@@ -125,7 +153,7 @@ const Analytics = () => {
                   marginBottom: "12px",
                 }}
               >
-                <MapPin size={20} />
+                <MapPin size={20} color="#f59e0b" />
                 <h3 style={{ margin: 0 }}>Issue Density by Area</h3>
               </div>
 
@@ -138,7 +166,13 @@ const Analytics = () => {
             </div>
 
             {/* PERFORMANCE */}
-            <div className="glass">
+            <div
+              className="glass"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(34,211,238,0.12), rgba(255,255,255,0.04))",
+              }}
+            >
               <h3>Operational Performance</h3>
 
               <p style={{ marginTop: "12px", opacity: 0.85 }}>
