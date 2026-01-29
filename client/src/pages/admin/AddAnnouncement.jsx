@@ -14,6 +14,7 @@ const inputStyle = {
   height: "48px",
   fontSize: "15px",
   borderRadius: "10px",
+  padding: "0 14px",
 };
 
 const AddAnnouncement = () => {
@@ -37,32 +38,38 @@ const AddAnnouncement = () => {
       <section className="section">
         <div className="container" style={{ maxWidth: "760px" }}>
           {/* HEADER */}
-          <div style={{ marginBottom: "32px" }}>
+          <div style={{ marginBottom: "36px" }}>
             <h1
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: "14px",
-                marginBottom: "10px",
+                marginBottom: "8px",
               }}
             >
               <BackButton />
               Create Announcement
             </h1>
 
-            <p style={{ opacity: 0.8 }}>
+            <p style={{ opacity: 0.85, maxWidth: "560px" }}>
               Publish an official notice for students or specific campus areas.
             </p>
           </div>
 
           {/* FORM */}
           <form onSubmit={handleSubmit}>
-            <div className="glass" style={{ padding: "36px" }}>
+            <div
+              className="glass"
+              style={{
+                padding: "40px",
+                borderLeft: "4px solid #22d3ee",
+              }}
+            >
               <div
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "22px",
+                  gap: "26px",
                 }}
               >
                 {/* TITLE */}
@@ -95,7 +102,7 @@ const AddAnnouncement = () => {
                       fontSize: "15px",
                       borderRadius: "10px",
                       resize: "none",
-                      padding: "12px",
+                      padding: "14px",
                     }}
                   />
                 </div>
@@ -114,11 +121,12 @@ const AddAnnouncement = () => {
                             setForm({ ...form, audience: a })
                           }
                           style={{
-                            padding: "10px 18px",
+                            padding: "10px 20px",
                             borderRadius: "999px",
+                            fontSize: "14px",
                             cursor: "pointer",
                             background: active
-                              ? "#22d3ee"
+                              ? "linear-gradient(135deg, #22d3ee, #38bdf8)"
                               : "rgba(255,255,255,0.12)",
                             color: active ? "#022c22" : "#e5e7eb",
                             border: active
@@ -136,7 +144,8 @@ const AddAnnouncement = () => {
                 {/* LOCATION */}
                 <div style={field}>
                   <label className="label">
-                    Target location <span style={{ opacity: 0.6 }}>(optional)</span>
+                    Target location{" "}
+                    <span style={{ opacity: 0.6 }}>(optional)</span>
                   </label>
                   <input
                     type="text"
@@ -150,18 +159,24 @@ const AddAnnouncement = () => {
                 </div>
 
                 {/* SUBMIT */}
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    marginTop: "10px",
+                  }}
+                >
                   <button
                     type="submit"
                     className="btn-primary"
                     style={{
-                      minWidth: "240px",
-                      fontSize: "16px",
+                      minWidth: "260px",
+                      fontSize: "17px",
                       padding: "14px 0",
                       display: "inline-flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "8px",
+                      gap: "10px",
                     }}
                   >
                     <Megaphone size={18} />
