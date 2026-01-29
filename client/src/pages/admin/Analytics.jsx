@@ -36,7 +36,7 @@ const Analytics = () => {
             </p>
           </div>
 
-          {/* KPI CARDS */}
+          {/* KPI CARDS — UNCHANGED */}
           <div
             style={{
               display: "grid",
@@ -45,29 +45,15 @@ const Analytics = () => {
               marginBottom: "36px",
             }}
           >
-            <div
-              className="glass"
-              style={{
-                borderLeft: "4px solid #38bdf8",
-                background:
-                  "linear-gradient(180deg, rgba(56,189,248,0.14), rgba(255,255,255,0.04))",
-              }}
-            >
-              <TrendingUp size={22} color="#38bdf8" />
+            <div className="glass">
+              <TrendingUp size={22} />
               <h3 style={{ marginTop: "10px" }}>Total Issues</h3>
               <p style={{ fontSize: "26px", fontWeight: 600 }}>128</p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>Last 30 days</p>
             </div>
 
-            <div
-              className="glass"
-              style={{
-                borderLeft: "4px solid #22c55e",
-                background:
-                  "linear-gradient(180deg, rgba(34,197,94,0.14), rgba(255,255,255,0.04))",
-              }}
-            >
-              <CheckCircle2 size={22} color="#22c55e" />
+            <div className="glass">
+              <CheckCircle2 size={22} />
               <h3 style={{ marginTop: "10px" }}>Resolved</h3>
               <p style={{ fontSize: "26px", fontWeight: 600 }}>96</p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>
@@ -75,15 +61,8 @@ const Analytics = () => {
               </p>
             </div>
 
-            <div
-              className="glass"
-              style={{
-                borderLeft: "4px solid #3b82f6",
-                background:
-                  "linear-gradient(180deg, rgba(59,130,246,0.14), rgba(255,255,255,0.04))",
-              }}
-            >
-              <Clock size={22} color="#3b82f6" />
+            <div className="glass">
+              <Clock size={22} />
               <h3 style={{ marginTop: "10px" }}>Avg. Resolution Time</h3>
               <p style={{ fontSize: "26px", fontWeight: 600 }}>18 hrs</p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>
@@ -91,23 +70,10 @@ const Analytics = () => {
               </p>
             </div>
 
-            <div
-              className="glass"
-              style={{
-                borderLeft: "4px solid #ef4444",
-                background:
-                  "linear-gradient(180deg, rgba(239,68,68,0.12), rgba(255,255,255,0.04))",
-              }}
-            >
-              <AlertTriangle size={22} color="#ef4444" />
+            <div className="glass">
+              <AlertTriangle size={22} />
               <h3 style={{ marginTop: "10px" }}>Emergency Issues</h3>
-              <p
-                style={{
-                  fontSize: "26px",
-                  fontWeight: 600,
-                  color: "#fecaca",
-                }}
-              >
+              <p style={{ fontSize: "26px", fontWeight: 600, color: "#ef4444" }}>
                 6
               </p>
               <p style={{ fontSize: "13px", opacity: 0.75 }}>
@@ -116,7 +82,7 @@ const Analytics = () => {
             </div>
           </div>
 
-          {/* INSIGHTS */}
+          {/* INSIGHTS — 🔥 EYECATCHING FIX 🔥 */}
           <div
             style={{
               display: "grid",
@@ -125,7 +91,14 @@ const Analytics = () => {
             }}
           >
             {/* CATEGORY BREAKDOWN */}
-            <div className="glass">
+            <div
+              className="glass"
+              style={{
+                borderLeft: "4px solid #38bdf8",
+                background:
+                  "linear-gradient(180deg, rgba(56,189,248,0.18), rgba(255,255,255,0.04))",
+              }}
+            >
               <div
                 style={{
                   display: "flex",
@@ -134,11 +107,11 @@ const Analytics = () => {
                   marginBottom: "12px",
                 }}
               >
-                <BarChart3 size={20} />
+                <BarChart3 size={22} color="#38bdf8" />
                 <h3 style={{ margin: 0 }}>Top Issue Categories</h3>
               </div>
 
-              <ul style={{ lineHeight: "1.9", opacity: 0.9 }}>
+              <ul style={{ lineHeight: "1.9", opacity: 0.95 }}>
                 <li>Plumbing — 34%</li>
                 <li>Electrical — 26%</li>
                 <li>Internet — 18%</li>
@@ -148,7 +121,14 @@ const Analytics = () => {
             </div>
 
             {/* LOCATION HEAT */}
-            <div className="glass">
+            <div
+              className="glass"
+              style={{
+                borderLeft: "4px solid #a78bfa",
+                background:
+                  "linear-gradient(180deg, rgba(167,139,250,0.18), rgba(255,255,255,0.04))",
+              }}
+            >
               <div
                 style={{
                   display: "flex",
@@ -157,11 +137,11 @@ const Analytics = () => {
                   marginBottom: "12px",
                 }}
               >
-                <MapPin size={20} />
+                <MapPin size={22} color="#a78bfa" />
                 <h3 style={{ margin: 0 }}>Issue Density by Area</h3>
               </div>
 
-              <ul style={{ lineHeight: "1.9", opacity: 0.9 }}>
+              <ul style={{ lineHeight: "1.9", opacity: 0.95 }}>
                 <li>Hostel A — High</li>
                 <li>Hostel B — Medium</li>
                 <li>Hostel C — Medium</li>
@@ -170,10 +150,17 @@ const Analytics = () => {
             </div>
 
             {/* PERFORMANCE */}
-            <div className="glass">
-              <h3>Operational Performance</h3>
+            <div
+              className="glass"
+              style={{
+                borderLeft: "4px solid #22c55e",
+                background:
+                  "linear-gradient(180deg, rgba(34,197,94,0.18), rgba(255,255,255,0.04))",
+              }}
+            >
+              <h3 style={{ marginBottom: "10px" }}>Operational Performance</h3>
 
-              <p style={{ marginTop: "12px", opacity: 0.85 }}>
+              <p style={{ opacity: 0.95, lineHeight: "1.7" }}>
                 • 82% of issues are assigned within 2 hours
                 <br />
                 • Emergency issues are addressed within 30 minutes
