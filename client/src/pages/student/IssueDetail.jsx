@@ -16,7 +16,7 @@ import {
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
 
-/* CATEGORY COLORS (same family as MyIssues) */
+/* SAME COLOR SYSTEM AS MyIssues */
 const categoryColors = {
   Plumbing: "#38bdf8",
   Electrical: "#facc15",
@@ -93,31 +93,31 @@ const IssueDetail = () => {
 
       <section className="section">
         <div className="container" style={{ maxWidth: "900px" }}>
-          {/* HEADER */}
+          {/* HEADER (same feel as MyIssues) */}
           <div
             style={{
               display: "flex",
               alignItems: "center",
               gap: "14px",
-              marginBottom: "24px",
+              marginBottom: "28px",
             }}
           >
             <BackButton />
             <h1 style={{ margin: 0 }}>Issue Details</h1>
           </div>
 
-          {/* SUMMARY CARD (matches MyIssues card style) */}
+          {/* MAIN SUMMARY — LARGE MyIssues CARD */}
           <div
             className="glass"
             style={{
-              padding: "20px",
+              padding: "22px",
               marginBottom: "28px",
               background:
                 "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))",
             }}
           >
             <div style={{ display: "flex", gap: "16px" }}>
-              {/* ICON */}
+              {/* ICON CHIP */}
               <div
                 style={{
                   background: `${accent}22`,
@@ -136,7 +136,7 @@ const IssueDetail = () => {
 
                 <div
                   style={{
-                    marginTop: "10px",
+                    marginTop: "12px",
                     fontSize: "14px",
                     opacity: 0.8,
                   }}
@@ -186,7 +186,7 @@ const IssueDetail = () => {
           </div>
 
           {/* TIMELINE */}
-          <div className="glass" style={{ padding: "20px", marginBottom: "28px" }}>
+          <div className="glass" style={{ padding: "22px", marginBottom: "28px" }}>
             <h3 style={{ marginTop: 0, marginBottom: "16px" }}>
               Issue Timeline
             </h3>
@@ -220,7 +220,7 @@ const IssueDetail = () => {
           </div>
 
           {/* REMARKS */}
-          <div className="glass" style={{ padding: "20px", marginBottom: "28px" }}>
+          <div className="glass" style={{ padding: "22px", marginBottom: "28px" }}>
             <h3 style={{ marginTop: 0 }}>Management Remarks</h3>
             {issue.remarks ? (
               <p style={{ opacity: 0.9 }}>{issue.remarks}</p>
@@ -231,7 +231,7 @@ const IssueDetail = () => {
 
           {/* COMMENTS */}
           {issue.visibility === "public" && (
-            <div className="glass" style={{ padding: "20px" }}>
+            <div className="glass" style={{ padding: "22px" }}>
               <h3
                 style={{
                   marginTop: 0,
