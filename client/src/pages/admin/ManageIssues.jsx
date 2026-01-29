@@ -42,12 +42,12 @@ const issues = [
   },
 ];
 
-const categoryIcon = {
-  Plumbing: Droplets,
-  Electrical: Zap,
-  Internet: Wifi,
-  Furniture: Armchair,
-  Maintenance: Wrench,
+const categoryConfig = {
+  Plumbing: { icon: Droplets, color: "#38bdf8" },
+  Electrical: { icon: Zap, color: "#facc15" },
+  Internet: { icon: Wifi, color: "#a78bfa" },
+  Furniture: { icon: Armchair, color: "#2dd4bf" },
+  Maintenance: { icon: Wrench, color: "#fb923c" },
 };
 
 const priorityColor = {
@@ -94,7 +94,9 @@ const ManageIssues = () => {
           {/* ISSUE LIST */}
           <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             {issues.map((issue) => {
-              const Icon = categoryIcon[issue.category] || AlertTriangle;
+              const cfg = categoryConfig[issue.category];
+              const Icon = cfg?.icon || AlertTriangle;
+              const iconColor = cfg?.color || "#e5e7eb";
 
               return (
                 <Link
@@ -139,7 +141,7 @@ const ManageIssues = () => {
                             marginBottom: "6px",
                           }}
                         >
-                          <Icon size={18} />
+                          <Icon size={18} color={iconColor} />
                           <strong style={{ fontSize: "15px" }}>
                             {issue.category}
                           </strong>
