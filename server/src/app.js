@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 
 // Routes
-const authRoutes = require("./routes/auth.routes.js");
-const issueRoutes = require("./routes/issue.routes.js");
-const adminRoutes = require("./routes/admin.routes.js");
-const announcementRoutes = require("./routes/announcement.routes.js");
-const lostFoundRoutes = require("./routes/lostFound.routes.js");
-const analyticsRoutes = require("./routes/analytics.routes.js");
+import authRoutes from "./routes/auth.routes.js";
+import issueRoutes from "./routes/issue.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
+import announcementRoutes from "./routes/announcement.routes.js";
+import lostFoundRoutes from "./routes/lostFound.routes.js";
+import analyticsRoutes from "./routes/analytics.routes.js";
 
 const app = express();
 
@@ -31,4 +31,4 @@ app.use("/lost-found", lostFoundRoutes);
 app.use("/admin", adminRoutes);
 app.use("/admin/analytics", analyticsRoutes);
 
-module.exports = app;
+export default app;
