@@ -15,6 +15,7 @@ import {
 
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
+import api from "../../services/api";
 
 /* COLORS — UNCHANGED */
 const categoryColors = {
@@ -34,11 +35,11 @@ const priorityColors = {
 };
 
 const statusColors = {
-  Reported: "#64748b",
-  Assigned: "#38bdf8",
-  "In Progress": "#f59e0b",
-  Resolved: "#22c55e",
-  Closed: "#94a3b8",
+  reported: "#64748b",
+  assigned: "#38bdf8",
+  "in-progress": "#f59e0b",
+  resolved: "#22c55e",
+  closed: "#94a3b8",
 };
 
 const iconMap = {
@@ -50,46 +51,26 @@ const iconMap = {
   Other: AlertCircle,
 };
 
-/* MOCK ISSUES — UNCHANGED */
-const issues = [
-  {
-    id: 1,
-    category: "Plumbing",
-    description: "Water leakage from the washroom tap.",
-    priority: "High",
-    status: "In Progress",
-    visibility: "public",
-    comments: 3,
-    date: "12 Sep 2025",
-  },
-  {
-    id: 2,
-    category: "Electrical",
-    description: "Tube light not working in the corridor.",
-    priority: "Medium",
-    status: "Assigned",
-    visibility: "public",
-    comments: 1,
-    date: "10 Sep 2025",
-  },
-  {
-    id: 3,
-    category: "Internet",
-    description: "WiFi disconnects frequently during night hours.",
-    priority: "Low",
-    status: "Resolved",
-    visibility: "private",
-    comments: 0,
-    date: "05 Sep 2025",
-  },
-];
-
 const MyIssues = () => {
+  const [issues, setIssues] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   const [statusFilters, setStatusFilters] = useState([]);
   const [visibilityFilters, setVisibilityFilters] = useState([]);
 
   const filterRef = useRef(null);
+
+  useEffect(() => {
+    const fetchMyIssues = async () => {
+      try {
+        const res = await api.get("/issues/my");
+        setIssues(res.data);
+      } catch (err) {
+        console.error("Failed to fetch my issues");
+      }
+    };
+
+    fetchMyIssues();
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -220,7 +201,7 @@ const MyIssues = () => {
                           )
                         }
                       />
-                      {v.charAt(0).toUpperCase() + v.slice(1)}
+                      {v}
                     </label>
                   ))}
                 </div>
@@ -239,114 +220,59 @@ const MyIssues = () => {
 
               return (
                 <Link
-                  key={issue.id}
-                  to={`/student/issues/${issue.id}`}
-                  style={{ textDecoration: "none", color: "inherit" }} // ✅ FIX
+                  key={issue._id}
+                  to={`/student/issues/${issue._id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <div
-                    className="glass"
-                    style={{
-                      display: "flex",
-                      gap: "16px",
-                      padding: "16px 18px",
-                      background:
-                        "linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04))",
-                    }}
-                  >
-                    <div
-                      style={{
-                        background: `${categoryColors[issue.category]}22`,
-                        borderRadius: "10px",
-                        padding: "8px",
-                        height: "fit-content",
-                      }}
-                    >
+                  <div className="glass" style={{ padding: "16px 18px" }}>
+                    <div style={{ display: "flex", gap: "16px" }}>
                       <Icon
                         size={18}
                         color={categoryColors[issue.category]}
                       />
-                    </div>
 
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontWeight: 600, fontSize: "16px" }}>
-                        {issue.category}
+                      <div style={{ flex: 1 }}>
+                        <strong>{issue.category}</strong>
+                        <p>{issue.description}</p>
+                        <small>
+                          {new Date(issue.createdAt).toLocaleDateString()}
+                        </small>
                       </div>
 
-                      <p style={{ fontSize: "14px", opacity: 0.9 }}>
-                        {issue.description}
-                      </p>
-
-                      <p style={{ fontSize: "12px", opacity: 0.7 }}>
-                        Reported on {issue.date}
-                      </p>
-
-                      {issue.visibility === "public" && (
-                        <div
+                      <div style={{ textAlign: "right" }}>
+                        <span
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            fontSize: "13px",
-                            color: "#cbd5f5",
-                            marginTop: "6px",
+                            background: priorityColors[issue.priority],
+                            padding: "4px 10px",
+                            borderRadius: "999px",
+                            color: "#fff",
+                            fontSize: "12px",
                           }}
                         >
-                          <MessageSquare size={14} />
-                          {issue.comments} comment
-                          {issue.comments !== 1 ? "s" : ""}
+                          {issue.priority}
+                        </span>
+
+                        <div
+                          style={{
+                            marginTop: "6px",
+                            background: statusColors[issue.status],
+                            padding: "4px 10px",
+                            borderRadius: "999px",
+                            color: "#fff",
+                            fontSize: "12px",
+                          }}
+                        >
+                          {issue.status}
                         </div>
-                      )}
-                    </div>
 
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "flex-end",
-                        gap: "8px",
-                      }}
-                    >
-                      <span
-                        style={{
-                          background: priorityColors[issue.priority],
-                          color: "#fff",
-                          padding: "6px 12px",
-                          borderRadius: "999px",
-                          fontSize: "12px",
-                          fontWeight: 600,
-                        }}
-                      >
-                        {issue.priority}
-                      </span>
-
-                      <span
-                        style={{
-                          background: statusColors[issue.status],
-                          color: "#fff",
-                          padding: "6px 12px",
-                          borderRadius: "999px",
-                          fontSize: "12px",
-                        }}
-                      >
-                        {issue.status}
-                      </span>
-
-                      <span
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          fontSize: "12px",
-                          color: "#cbd5f5",
-                        }}
-                      >
-                        {issue.visibility === "public" ? (
-                          <Eye size={14} />
-                        ) : (
-                          <EyeOff size={14} />
-                        )}
-                        {issue.visibility === "public" ? "Public" : "Private"}
-                      </span>
+                        <div style={{ marginTop: "6px" }}>
+                          {issue.visibility === "public" ? (
+                            <Eye size={14} />
+                          ) : (
+                            <EyeOff size={14} />
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Link>
