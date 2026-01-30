@@ -1,8 +1,8 @@
-const express = require("express");
-const { protect } = require("../middlewares/auth.middleware.js");
-const { requireAdmin } = require("../middlewares/role.middleware.js");
+import express from "express";
+import { protect } from "../middlewares/auth.middleware.js";
+import { requireAdmin } from "../middlewares/role.middleware.js";
 
-const {
+import {
   reportLost,
   reportFound,
   getApprovedItems,
@@ -11,7 +11,7 @@ const {
   approveItem,
   rejectItem,
   markClaimed
-} = require("../controllers/lostFound.controller.js");
+} from "../controllers/lostFound.controller.js";
 
 const router = express.Router();
 
@@ -31,4 +31,4 @@ router.patch("/:id/approve", protect, requireAdmin, approveItem);
 router.patch("/:id/reject", protect, requireAdmin, rejectItem);
 router.patch("/:id/mark-claimed", protect, requireAdmin, markClaimed);
 
-module.exports = router;
+export default router;
