@@ -1,12 +1,12 @@
-import express from "express";
+const express = require("express");
 
 // Routes
-import authRoutes from "./routes/auth.routes.js";
-import issueRoutes from "./routes/issue.routes.js";
-import adminRoutes from "./routes/admin.routes.js";
-import announcementRoutes from "./routes/announcement.routes.js";
-import lostFoundRoutes from "./routes/lostFound.routes.js";
-import analyticsRoutes from "./routes/analytics.routes.js";
+const authRoutes = require("./routes/auth.routes");
+const issueRoutes = require("./routes/issue.routes");
+const adminRoutes = require("./routes/admin.routes");
+const announcementRoutes = require("./routes/announcement.routes");
+const lostFoundRoutes = require("./routes/lostFound.routes");
+const analyticsRoutes = require("./routes/analytics.routes");
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use("/auth", authRoutes);
 // Student issues
 app.use("/issues", issueRoutes);
 
-// Announcements (student + admin read)
+// Announcements
 app.use("/announcements", announcementRoutes);
 
 // Lost & Found
@@ -31,5 +31,4 @@ app.use("/lost-found", lostFoundRoutes);
 app.use("/admin", adminRoutes);
 app.use("/admin/analytics", analyticsRoutes);
 
-/* ---------------- EXPORT ---------------- */
-export default app;
+module.exports = app;
