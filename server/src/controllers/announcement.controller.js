@@ -1,21 +1,39 @@
-const Announcement = require("../models/Announcement.js");
+import Announcement from "../models/Announcement.js";
 
 /**
- * POST /announcements
- * ADMIN ONLY
+ * STUDENT: GET /announcements
  */
-exports.createAnnouncement = async (req, res) => {
+const getAnnouncements = async (req, res) => {
   try {
-    const { title, message, target } = req.body;
+    const { campus, block } = req.user.location;
 
-    if (!title || !message) {
-      return res.status(400).json({ message: "Title and message required" });
-    }
+    const announcements = await Announcement.find({
+      $or: [
+        { target: "all" },
+        { targetCampus: campus },
+        { targetBlock: block }
+      ]
+    }).sort({ createdAt: -1 });
+
+    res.json(announcements);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch announcements" });
+  }
+};
+
+/**
+ * ADMIN: POST /announcements/admin
+ */
+const createAnnouncement = async (req, res) => {
+  try {
+    const { title, message, target, targetCampus, targetBlock } = req.body;
 
     const announcement = await Announcement.create({
       title,
       message,
       target,
+      targetCampus,
+      targetBlock,
       createdBy: req.user._id
     });
 
@@ -26,10 +44,9 @@ exports.createAnnouncement = async (req, res) => {
 };
 
 /**
- * GET /announcements/admin
- * ADMIN ONLY
+ * ADMIN: GET /announcements/admin
  */
-exports.getAllAnnouncements = async (req, res) => {
+const getAdminAnnouncements = async (req, res) => {
   try {
     const announcements = await Announcement.find()
       .sort({ createdAt: -1 });
@@ -41,10 +58,9 @@ exports.getAllAnnouncements = async (req, res) => {
 };
 
 /**
- * DELETE /announcements/:id
- * ADMIN ONLY
+ * ADMIN: DELETE /announcements/admin/:id
  */
-exports.deleteAnnouncement = async (req, res) => {
+const deleteAnnouncement = async (req, res) => {
   try {
     await Announcement.findByIdAndDelete(req.params.id);
     res.json({ message: "Announcement deleted" });
@@ -53,27 +69,9 @@ exports.deleteAnnouncement = async (req, res) => {
   }
 };
 
-/**
- * GET /announcements
- * STUDENT
- */
-exports.getStudentAnnouncements = async (req, res) => {
-  try {
-    const { campus, block } = req.user.location;
-
-    const announcements = await Announcement.find({
-      $or: [
-        { target: {} }, // global
-        { "target.campus": campus },
-        {
-          "target.campus": campus,
-          "target.block": block
-        }
-      ]
-    }).sort({ createdAt: -1 });
-
-    res.json(announcements);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to fetch announcements" });
-  }
+export {
+  getAnnouncements,
+  createAnnouncement,
+  getAdminAnnouncements,
+  deleteAnnouncement
 };
