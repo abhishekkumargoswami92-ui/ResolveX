@@ -36,8 +36,8 @@ const Login = () => {
     const data = await loginUser({ email, password });
 
     // store auth
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("user", JSON.stringify(data.user));
+  login(data);
+
 
     if (data.user.role === "admin") {
       navigate("/admin/dashboard");
