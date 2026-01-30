@@ -1,7 +1,6 @@
 import Issue from "../models/Issue.js";
 import Comment from "../models/Comment.js";
 
-
 /**
  * POST /issues
  * Student reports an issue
@@ -27,7 +26,8 @@ const createIssue = async (req, res) => {
         {
           status: "reported",
           remark: "Issue reported",
-          updatedBy: req.user._id
+          updatedBy: req.user._id,
+          timestamp: new Date()
         }
       ]
     });
@@ -41,7 +41,7 @@ const createIssue = async (req, res) => {
 /**
  * GET /issues/my
  */
-exports.getMyIssues = async (req, res) => {
+const getMyIssues = async (req, res) => {
   try {
     const issues = await Issue.find({ reportedBy: req.user._id })
       .sort({ createdAt: -1 });
@@ -55,7 +55,7 @@ exports.getMyIssues = async (req, res) => {
 /**
  * GET /issues/public
  */
-exports.getPublicIssues = async (req, res) => {
+const getPublicIssues = async (req, res) => {
   try {
     const issues = await Issue.find({ visibility: "public" })
       .populate("reportedBy", "name")
@@ -70,7 +70,7 @@ exports.getPublicIssues = async (req, res) => {
 /**
  * GET /issues/:id
  */
-exports.getIssueById = async (req, res) => {
+const getIssueById = async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id)
       .populate("reportedBy", "name email");
@@ -79,7 +79,7 @@ exports.getIssueById = async (req, res) => {
       return res.status(404).json({ message: "Issue not found" });
     }
 
-    // private issue protection
+    // Private issue protection
     if (
       issue.visibility === "private" &&
       issue.reportedBy._id.toString() !== req.user._id.toString()
@@ -97,7 +97,7 @@ exports.getIssueById = async (req, res) => {
  * POST /issues/:id/comments
  * Public issues only
  */
-exports.addComment = async (req, res) => {
+const addComment = async (req, res) => {
   try {
     const issue = await Issue.findById(req.params.id);
 
@@ -120,7 +120,7 @@ exports.addComment = async (req, res) => {
 /**
  * GET /issues/:id/comments
  */
-exports.getComments = async (req, res) => {
+const getComments = async (req, res) => {
   try {
     const comments = await Comment.find({ issue: req.params.id })
       .populate("user", "name")
