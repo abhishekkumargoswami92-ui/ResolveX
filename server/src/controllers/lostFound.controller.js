@@ -5,13 +5,17 @@ const LostItem = require("../models/LostItem");
  */
 exports.reportLost = async (req, res) => {
   try {
-    const { itemName, description } = req.body;
+    const { title, description, location } = req.body;
+
+    if (!title || !description || !location) {
+      return res.status(400).json({ message: "All fields required" });
+    }
 
     const item = await LostItem.create({
-      itemName,
-      description,
       type: "lost",
-      location: req.user.location,
+      title,
+      description,
+      location,
       reportedBy: req.user._id
     });
 
@@ -26,13 +30,17 @@ exports.reportLost = async (req, res) => {
  */
 exports.reportFound = async (req, res) => {
   try {
-    const { itemName, description } = req.body;
+    const { title, description, location } = req.body;
+
+    if (!title || !description || !location) {
+      return res.status(400).json({ message: "All fields required" });
+    }
 
     const item = await LostItem.create({
-      itemName,
-      description,
       type: "found",
-      location: req.user.location,
+      title,
+      description,
+      location,
       reportedBy: req.user._id
     });
 
