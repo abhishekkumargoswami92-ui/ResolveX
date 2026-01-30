@@ -1,12 +1,12 @@
 const express = require("express");
 
 // Routes
-const authRoutes = require("./routes/auth.routes");
-const issueRoutes = require("./routes/issue.routes");
-const adminRoutes = require("./routes/admin.routes");
-const announcementRoutes = require("./routes/announcement.routes");
-const lostFoundRoutes = require("./routes/lostFound.routes");
-const analyticsRoutes = require("./routes/analytics.routes");
+const authRoutes = require("./routes/auth.routes.js");
+const issueRoutes = require("./routes/issue.routes.js");
+const adminRoutes = require("./routes/admin.routes.js");
+const announcementRoutes = require("./routes/announcement.routes.js");
+const lostFoundRoutes = require("./routes/lostFound.routes.js");
+const analyticsRoutes = require("./routes/analytics.routes.js");
 
 const app = express();
 
