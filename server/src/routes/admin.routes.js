@@ -11,7 +11,6 @@ const {
 
 const router = express.Router();
 
-// admin-only
 router.use(protect, requireAdmin);
 
 router.get("/issues", getAllIssues);
