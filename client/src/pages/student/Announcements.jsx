@@ -1,36 +1,28 @@
+import { useEffect, useState } from "react";
 import Navbar from "../../components/common/Navbar";
 import BackButton from "../../components/common/BackButton";
 import { Megaphone, Calendar } from "lucide-react";
-
-/* Mock announcements (API later) */
-const announcements = [
-  {
-    id: 1,
-    title: "Water Supply Interruption",
-    message:
-      "Water supply will be temporarily unavailable from 2:00 PM to 5:00 PM today due to scheduled maintenance work.",
-    date: "Today · 11:30 AM",
-    target: "Hostel B",
-  },
-  {
-    id: 2,
-    title: "Internet Maintenance",
-    message:
-      "Internet connectivity may be unstable between 12:00 AM and 2:00 AM tonight due to network upgrades.",
-    date: "Yesterday · 6:10 PM",
-    target: "All Campuses",
-  },
-  {
-    id: 3,
-    title: "Cleaning Schedule Update",
-    message:
-      "Deep cleaning of common washrooms will take place tomorrow morning. Please cooperate with the housekeeping staff.",
-    date: "14 Sep 2025 · 9:00 AM",
-    target: "Hostel A",
-  },
-];
+import { getStudentAnnouncements } from "../../services/announcement.service";
 
 const StudentAnnouncements = () => {
+  const [announcements, setAnnouncements] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAnnouncements = async () => {
+      try {
+        const res = await getStudentAnnouncements();
+        setAnnouncements(res.data);
+      } catch (err) {
+        console.error("Failed to fetch announcements");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAnnouncements();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -65,7 +57,11 @@ const StudentAnnouncements = () => {
           </p>
 
           {/* ANNOUNCEMENTS LIST */}
-          {announcements.length === 0 ? (
+          {loading ? (
+            <div className="glass">
+              <p style={{ opacity: 0.7 }}>Loading announcements…</p>
+            </div>
+          ) : announcements.length === 0 ? (
             <div className="glass">
               <p style={{ opacity: 0.7 }}>
                 No announcements available at the moment.
@@ -81,7 +77,7 @@ const StudentAnnouncements = () => {
             >
               {announcements.map((a) => (
                 <div
-                  key={a.id}
+                  key={a._id}
                   className="glass"
                   style={{
                     padding: "18px 20px",
@@ -126,7 +122,7 @@ const StudentAnnouncements = () => {
                       }}
                     >
                       <Calendar size={14} />
-                      {a.date}
+                      {new Date(a.createdAt).toLocaleString()}
                     </span>
 
                     <span
@@ -139,7 +135,7 @@ const StudentAnnouncements = () => {
                         color: "#e5faff",
                       }}
                     >
-                      {a.target}
+                      {a.target || "All"}
                     </span>
                   </div>
                 </div>
