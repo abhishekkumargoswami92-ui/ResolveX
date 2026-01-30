@@ -1,26 +1,10 @@
 import mongoose from "mongoose";
 
-const locationSchema = new mongoose.Schema({
-  campus: {
-    type: String,
-    required: true,
-  },
-  block: {
-    type: String,
-    required: true,
-  },
-  room: {
-    type: String,
-    required: true,
-  },
-});
-
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-      trim: true,
     },
 
     email: {
@@ -28,13 +12,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
-      trim: true,
     },
 
     password: {
       type: String,
       required: true,
-      select: false, // important for security
     },
 
     role: {
@@ -49,33 +31,12 @@ const userSchema = new mongoose.Schema(
     },
 
     location: {
-      type: locationSchema,
-      required: true,
-    },
-
-    /* 🔽 PROFILE EXTENSIONS (for MyAccount) */
-
-    phone: {
-      type: String,
-      default: null,
-    },
-
-    emergencyContact: {
-      type: String,
-      default: null,
-    },
-
-    bloodGroup: {
-      type: String,
-      enum: ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
-      default: null,
+      campus: { type: String },
+      block: { type: String },
+      room: { type: String },
     },
   },
-  {
-    timestamps: true, // adds createdAt & updatedAt
-  }
+  { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
-
-export default User;
+export default mongoose.model("User", userSchema);
