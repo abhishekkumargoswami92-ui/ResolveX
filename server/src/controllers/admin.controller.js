@@ -1,76 +1,130 @@
-const Announcement = require("../models/Announcement");
+const Issue = require("../models/Issue");
 
 /**
- * GET /announcements
- * Student: view announcements
+ * GET /admin/issues
+ * Admin: view all issues
  */
-exports.getAnnouncements = async (req, res) => {
+exports.getAllIssues = async (req, res) => {
   try {
-    const { campus, block } = req.user.location || {};
-
-    const announcements = await Announcement.find({
-      $or: [
-        { target: "All" },
-        { target: campus },
-        { target: block }
-      ]
-    }).sort({ createdAt: -1 });
-
-    res.json(announcements);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to fetch announcements" });
-  }
-};
-
-/**
- * POST /admin/announcements
- * Admin: create announcement
- */
-exports.createAnnouncement = async (req, res) => {
-  try {
-    const { title, message, target } = req.body;
-
-    if (!title || !message) {
-      return res.status(400).json({ message: "Title and message required" });
-    }
-
-    const announcement = await Announcement.create({
-      title,
-      message,
-      target: target || "All",
-      createdBy: req.user._id
-    });
-
-    res.status(201).json(announcement);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to create announcement" });
-  }
-};
-
-/**
- * GET /admin/announcements
- * Admin: view all announcements
- */
-exports.getAdminAnnouncements = async (req, res) => {
-  try {
-    const announcements = await Announcement.find()
+    const issues = await Issue.find()
+      .populate("reportedBy", "name email")
       .sort({ createdAt: -1 });
 
-    res.json(announcements);
+    res.json(issues);
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch announcements" });
+    res.status(500).json({ message: "Failed to fetch issues" });
   }
 };
 
 /**
- * DELETE /admin/announcements/:id
- * Admin: delete announcement
+ * PATCH /admin/issues/:id/assign
+ * Admin assigns issue to staff (string-based for hackathon)
  */
-exports.deleteAnnouncement = async (req, res) => {
+exports.assignIssue = async (req, res) => {
   try {
-    await Announcement.findByIdAndDelete(req.params.id);
-    res.json({ message: "Announcement deleted" });
+    const { assignedTo } = req.body;
+
+    if (!assignedTo) {
+      return res.status(400).json({ message: "assignedTo required" });
+    }
+
+    const issue = await Issue.findById(req.params.id);
+    if (!issue) {
+      return res.status(404).json({ message: "Issue not found" });
+    }
+
+    issue.assignedTo = assignedTo;
+    issue.status = "assigned";
+    issue.statusHistory.push({
+      status: "assigned",
+      remark: `Assigned to ${assignedTo}`,
+      updatedBy: req.user._id
+    });
+
+    await issue.save();
+    res.json(issue);
   } catch (err) {
-    res.status(500).json({ message: "Failed to delete announcement" });
+    res.status(500).json({ message: "Assignment failed" });
+  }
+};
+
+/**
+ * PATCH /admin/issues/:id/status
+ * reported → assigned → in-progress → resolved → closed
+ */
+exports.updateIssueStatus = async (req, res) => {
+  try {
+    const { status, remark } = req.body;
+
+    const allowed = [
+      "reported",
+      "assigned",
+      "in-progress",
+      "resolved",
+      "closed"
+    ];
+
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    const issue = await Issue.findById(req.params.id);
+    if (!issue) {
+      return res.status(404).json({ message: "Issue not found" });
+    }
+
+    issue.status = status;
+    issue.statusHistory.push({
+      status,
+      remark: remark || `Status updated to ${status}`,
+      updatedBy: req.user._id
+    });
+
+    await issue.save();
+    res.json(issue);
+  } catch (err) {
+    res.status(500).json({ message: "Status update failed" });
+  }
+};
+
+/**
+ * PATCH /admin/issues/:id/merge
+ * Merge duplicate issues into parent
+ */
+exports.mergeIssues = async (req, res) => {
+  try {
+    const { duplicateIds } = req.body;
+
+    if (!Array.isArray(duplicateIds) || duplicateIds.length === 0) {
+      return res.status(400).json({ message: "duplicateIds required" });
+    }
+
+    const parent = await Issue.findById(req.params.id);
+    if (!parent) {
+      return res.status(404).json({ message: "Parent issue not found" });
+    }
+
+    const duplicates = await Issue.find({ _id: { $in: duplicateIds } });
+
+    duplicates.forEach((dup) => {
+      dup.reporters.forEach((r) => {
+        if (!parent.reporters.includes(r)) {
+          parent.reporters.push(r);
+        }
+      });
+      dup.status = "closed";
+      dup.statusHistory.push({
+        status: "closed",
+        remark: "Merged into another issue",
+        updatedBy: req.user._id
+      });
+    });
+
+    await parent.save();
+    await Promise.all(duplicates.map((d) => d.save()));
+
+    res.json({ message: "Issues merged successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Merge failed" });
   }
 };
