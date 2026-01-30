@@ -18,6 +18,19 @@ import BackButton from "../../components/common/BackButton";
 
 
 const [issues, setIssues] = useState([]);
+useEffect(() => {
+  const fetchIssues = async () => {
+    try {
+      const res = await api.get("/issues/public");
+      setIssues(res.data);
+    } catch (err) {
+      console.error("Failed to fetch public issues");
+    }
+  };
+
+  fetchIssues();
+}, []);
+
 
 
 /* ---------------- CONFIG ---------------- */
