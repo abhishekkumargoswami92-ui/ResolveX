@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../services/auth.service";
 
 
+const navigate = useNavigate();
+
+
 const hostelOptions = [
   "Hostel A",
   "Hostel B",
