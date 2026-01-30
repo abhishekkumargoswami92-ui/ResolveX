@@ -131,3 +131,12 @@ exports.getComments = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch comments" });
   }
 };
+
+export {
+  createIssue,
+  getMyIssues,
+  getPublicIssues,
+  getIssueById,
+  addComment,
+  getComments
+};
