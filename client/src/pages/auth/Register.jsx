@@ -37,32 +37,54 @@ const Register = () => {
   const isPasswordValid = (pwd) =>
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(pwd);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError("");
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
 
-    for (const key in form) {
-      if (!form[key]) {
-        setError("All fields are required");
-        return;
-      }
-    }
-
-    if (!isPasswordValid(form.password)) {
-      setError(
-        "Password must be at least 8 characters and include uppercase, lowercase, and a number"
-      );
+  for (const key in form) {
+    if (!form[key]) {
+      setError("All fields are required");
       return;
     }
+  }
 
-    if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+  if (!isPasswordValid(form.password)) {
+    setError(
+      "Password must be at least 8 characters and include uppercase, lowercase, and a number"
+    );
+    return;
+  }
 
-    // FRONTEND ONLY (mock)
-    alert("Student registered successfully (mock)");
-  };
+  if (form.password !== form.confirmPassword) {
+    setError("Passwords do not match");
+    return;
+  }
+
+  try {
+    const payload = {
+      name: form.fullName,
+      email: form.email,
+      password: form.password,
+      collegeName: "Your College Name", // you can make this dynamic later
+      location: {
+        campus: "Main Campus", // or derive later
+        block: form.hostel,
+        room: form.roomNo,
+      },
+    };
+
+    const data = await registerUser(payload);
+
+    // store auth
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+
+    navigate("/student/dashboard");
+  } catch (err) {
+    setError(err.response?.data?.message || "Registration failed");
+  }
+};
+
 
   return (
     <section className="section">
