@@ -47,9 +47,6 @@ const ReportIssue = () => {
     otherLocation: "",
   });
 
-  // mocked user location (later from profile)
-  const userRoom = "Hostel A · Room 204";
-
  const handleSubmit = async (e) => {
   e.preventDefault();
 
