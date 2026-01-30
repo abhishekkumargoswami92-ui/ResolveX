@@ -1,6 +1,6 @@
 const express = require("express");
-const { protect } = require("../middlewares/auth.middleware");
-const { requireAdmin } = require("../middlewares/role.middleware");
+const { protect } = require("../middlewares/auth.middleware.js");
+const { requireAdmin } = require("../middlewares/role.middleware.js");
 
 const {
   reportLost,
@@ -11,7 +11,7 @@ const {
   approveItem,
   rejectItem,
   markClaimed
-} = require("../controllers/lostFound.controller");
+} = require("../controllers/lostFound.controller.js");
 
 const router = express.Router();
 
