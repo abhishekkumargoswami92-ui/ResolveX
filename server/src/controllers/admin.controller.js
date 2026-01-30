@@ -1,100 +1,76 @@
-const Issue = require("../models/Issue");
+const Announcement = require("../models/Announcement");
 
 /**
- * GET /admin/issues
+ * GET /announcements
+ * Student: view announcements
  */
-exports.getAllIssues = async (req, res) => {
+exports.getAnnouncements = async (req, res) => {
   try {
-    const issues = await Issue.find()
-      .populate("reportedBy", "name email")
-      .populate("assignedTo", "name email")
+    const { campus, block } = req.user.location || {};
+
+    const announcements = await Announcement.find({
+      $or: [
+        { target: "All" },
+        { target: campus },
+        { target: block }
+      ]
+    }).sort({ createdAt: -1 });
+
+    res.json(announcements);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch announcements" });
+  }
+};
+
+/**
+ * POST /admin/announcements
+ * Admin: create announcement
+ */
+exports.createAnnouncement = async (req, res) => {
+  try {
+    const { title, message, target } = req.body;
+
+    if (!title || !message) {
+      return res.status(400).json({ message: "Title and message required" });
+    }
+
+    const announcement = await Announcement.create({
+      title,
+      message,
+      target: target || "All",
+      createdBy: req.user._id
+    });
+
+    res.status(201).json(announcement);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to create announcement" });
+  }
+};
+
+/**
+ * GET /admin/announcements
+ * Admin: view all announcements
+ */
+exports.getAdminAnnouncements = async (req, res) => {
+  try {
+    const announcements = await Announcement.find()
       .sort({ createdAt: -1 });
 
-    res.json(issues);
+    res.json(announcements);
   } catch (err) {
-    res.status(500).json({ message: "Failed to fetch issues" });
+    res.status(500).json({ message: "Failed to fetch announcements" });
   }
 };
 
 /**
- * PATCH /admin/issues/:id/assign
+ * DELETE /admin/announcements/:id
+ * Admin: delete announcement
  */
-exports.assignIssue = async (req, res) => {
+exports.deleteAnnouncement = async (req, res) => {
   try {
-    const issue = await Issue.findById(req.params.id);
-    if (!issue) {
-      return res.status(404).json({ message: "Issue not found" });
-    }
-
-    issue.assignedTo = req.body.adminId;
-    issue.status = "assigned";
-
-    issue.statusHistory.push({
-      status: "assigned",
-      remark: "Issue assigned to admin",
-      updatedBy: req.user._id
-    });
-
-    await issue.save();
-    res.json(issue);
+    await Announcement.findByIdAndDelete(req.params.id);
+    res.json({ message: "Announcement deleted" });
   } catch (err) {
-    res.status(500).json({ message: "Assignment failed" });
-  }
-};
-
-/**
- * PATCH /admin/issues/:id/status
- */
-exports.updateIssueStatus = async (req, res) => {
-  try {
-    const { status, remark } = req.body;
-
-    const issue = await Issue.findById(req.params.id);
-    if (!issue) {
-      return res.status(404).json({ message: "Issue not found" });
-    }
-
-    issue.status = status;
-    issue.statusHistory.push({
-      status,
-      remark,
-      updatedBy: req.user._id
-    });
-
-    await issue.save();
-    res.json(issue);
-  } catch (err) {
-    res.status(500).json({ message: "Status update failed" });
-  }
-};
-
-/**
- * PATCH /admin/issues/:id/merge
- */
-exports.mergeIssues = async (req, res) => {
-  try {
-    const { parentIssueId } = req.body;
-
-    const issue = await Issue.findById(req.params.id);
-    const parent = await Issue.findById(parentIssueId);
-
-    if (!issue || !parent) {
-      return res.status(404).json({ message: "Issue not found" });
-    }
-
-    issue.isDuplicate = true;
-    issue.parentIssue = parent._id;
-
-    // preserve reporters
-    parent.reporters = Array.from(
-      new Set([...parent.reporters, ...issue.reporters])
-    );
-
-    await issue.save();
-    await parent.save();
-
-    res.json({ message: "Issue merged successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Merge failed" });
+    res.status(500).json({ message: "Failed to delete announcement" });
   }
 };
