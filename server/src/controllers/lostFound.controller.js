@@ -1,21 +1,17 @@
-const LostItem = require("../models/LostItem.js");
+import LostItem from "../models/LostItem.js";
 
 /**
  * POST /lost-found/lost
  */
-exports.reportLost = async (req, res) => {
+const reportLost = async (req, res) => {
   try {
-    const { title, description, location } = req.body;
-
-    if (!title || !description || !location) {
-      return res.status(400).json({ message: "All fields required" });
-    }
+    const { itemName, description } = req.body;
 
     const item = await LostItem.create({
-      type: "lost",
-      title,
+      itemName,
       description,
-      location,
+      type: "lost",
+      location: req.user.location,
       reportedBy: req.user._id
     });
 
@@ -28,19 +24,15 @@ exports.reportLost = async (req, res) => {
 /**
  * POST /lost-found/found
  */
-exports.reportFound = async (req, res) => {
+const reportFound = async (req, res) => {
   try {
-    const { title, description, location } = req.body;
-
-    if (!title || !description || !location) {
-      return res.status(400).json({ message: "All fields required" });
-    }
+    const { itemName, description } = req.body;
 
     const item = await LostItem.create({
-      type: "found",
-      title,
+      itemName,
       description,
-      location,
+      type: "found",
+      location: req.user.location,
       reportedBy: req.user._id
     });
 
@@ -52,9 +44,9 @@ exports.reportFound = async (req, res) => {
 
 /**
  * GET /lost-found
- * STUDENT – approved only
+ * Student – approved only
  */
-exports.getApprovedItems = async (req, res) => {
+const getApprovedItems = async (req, res) => {
   try {
     const items = await LostItem.find({ status: "approved" })
       .sort({ createdAt: -1 });
@@ -68,7 +60,7 @@ exports.getApprovedItems = async (req, res) => {
 /**
  * GET /lost-found/my
  */
-exports.getMyItems = async (req, res) => {
+const getMyItems = async (req, res) => {
   try {
     const items = await LostItem.find({ reportedBy: req.user._id })
       .sort({ createdAt: -1 });
@@ -82,7 +74,7 @@ exports.getMyItems = async (req, res) => {
 /**
  * ADMIN: GET /lost-found/admin
  */
-exports.adminGetAll = async (req, res) => {
+const adminGetAll = async (req, res) => {
   try {
     const items = await LostItem.find()
       .populate("reportedBy", "name email")
@@ -95,9 +87,9 @@ exports.adminGetAll = async (req, res) => {
 };
 
 /**
- * PATCH /lost-found/:id/approve
+ * ADMIN ACTIONS
  */
-exports.approveItem = async (req, res) => {
+const approveItem = async (req, res) => {
   try {
     const item = await LostItem.findById(req.params.id);
     item.status = "approved";
@@ -108,10 +100,7 @@ exports.approveItem = async (req, res) => {
   }
 };
 
-/**
- * PATCH /lost-found/:id/reject
- */
-exports.rejectItem = async (req, res) => {
+const rejectItem = async (req, res) => {
   try {
     const item = await LostItem.findById(req.params.id);
     item.status = "rejected";
@@ -122,10 +111,7 @@ exports.rejectItem = async (req, res) => {
   }
 };
 
-/**
- * PATCH /lost-found/:id/mark-claimed
- */
-exports.markClaimed = async (req, res) => {
+const markClaimed = async (req, res) => {
   try {
     const item = await LostItem.findById(req.params.id);
     item.status = "claimed";
@@ -134,4 +120,15 @@ exports.markClaimed = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Mark claimed failed" });
   }
+};
+
+export {
+  reportLost,
+  reportFound,
+  getApprovedItems,
+  getMyItems,
+  adminGetAll,
+  approveItem,
+  rejectItem,
+  markClaimed
 };
