@@ -1,29 +1,49 @@
-const express = require("express");
-const { protect } = require("../middlewares/auth.middleware");
-const {
+import express from "express";
+import { protect } from "../middlewares/auth.middleware.js";
+import {
   createIssue,
   getMyIssues,
   getPublicIssues,
   getIssueById,
   addComment,
-  getComments
-} = require("../controllers/issue.controller");
+  getComments,
+} from "../controllers/issue.controller.js";
 
 const router = express.Router();
 
-// student must be logged in
+/**
+ * All issue routes require authentication
+ */
 router.use(protect);
 
-// report issue
+/**
+ * Student reports an issue
+ * POST /issues
+ */
 router.post("/", createIssue);
 
-// view issues
+/**
+ * Student views own issues
+ * GET /issues/my
+ */
 router.get("/my", getMyIssues);
+
+/**
+ * View public issues
+ * GET /issues/public
+ */
 router.get("/public", getPublicIssues);
+
+/**
+ * Get issue details
+ * GET /issues/:id
+ */
 router.get("/:id", getIssueById);
 
-// comments (public issues only)
+/**
+ * Public issue comments
+ */
 router.post("/:id/comments", addComment);
 router.get("/:id/comments", getComments);
 
-module.exports = router;
+export default router;
