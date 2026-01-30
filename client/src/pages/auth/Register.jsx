@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { User, Mail, Lock, Building2, DoorOpen } from "lucide-react";
 import logoPrimary from "../../assets/images/logo-primary.svg";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../services/auth.service";
+
 
 const hostelOptions = [
   "Hostel A",
