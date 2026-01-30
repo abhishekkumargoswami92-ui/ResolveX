@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { StudentRoute, AdminRoute } from "./ProtectedRoutes";
+
 
 // Public
 import Landing from "./pages/public/Landing";
