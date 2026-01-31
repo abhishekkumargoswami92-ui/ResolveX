@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../../services/api";
+import api from "../../services/api.js";
 
 import {
   Clock,
@@ -16,8 +16,8 @@ import {
   AlertCircle,
 } from "lucide-react";
 
-import Navbar from "../../components/common/Navbar";
-import BackButton from "../../components/common/BackButton";
+import Navbar from "../../components/common/Navbar.jsx";
+import BackButton from "../../components/common/BackButton.jsx";
 
 const categoryColors = {
   Plumbing: "#38bdf8",
