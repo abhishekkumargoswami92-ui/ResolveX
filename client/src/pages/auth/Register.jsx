@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { User, Mail, Lock, Building2, DoorOpen } from "lucide-react";
 import logoPrimary from "../../assets/images/logo-primary.svg";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../services/auth.service";
+import { registerUser } from "../../services/auth.service.js";
 
 
 const navigate = useNavigate();
@@ -65,9 +65,9 @@ const Register = () => {
       name: form.fullName,
       email: form.email,
       password: form.password,
-      collegeName: "Your College Name", // you can make this dynamic later
+      collegeName: "Your College Name",
       location: {
-        campus: "Main Campus", // or derive later
+        campus: "Main Campus",
         block: form.hostel,
         room: form.roomNo,
       },
