@@ -7,7 +7,7 @@ import {
   Clock,
 } from "lucide-react";
 
-import Navbar from "../../components/common/Navbar";
+import Navbar from "../../components/common/Navbar.jsx";
 
 const cardButton = {
   marginTop: "18px",
