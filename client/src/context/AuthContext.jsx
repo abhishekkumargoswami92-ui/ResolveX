@@ -1,29 +1,14 @@
-import { createContext, useContext } from "react";
+// MOCK AUTH CONTEXT — SAFE, NO HOOKS, NO SIDE EFFECTS
 
-const AuthContext = createContext({
-  user: null,
-  isAuthenticated: false,
+export const AuthProvider = ({ children }) => children;
+
+export const useAuth = () => ({
+  user: {
+    name: "Demo User",
+    role: "student",
+  },
+  isAuthenticated: true,
   loading: false,
   login: () => {},
   logout: () => {},
 });
-
-export const AuthProvider = ({ children }) => {
-  return (
-    <AuthContext.Provider
-      value={{
-        user: null,
-        isAuthenticated: false,
-        loading: false,
-        login: () => {},
-        logout: () => {},
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
