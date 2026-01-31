@@ -1,15 +1,7 @@
-const App = () => {
-  return (
-    <div style={{ padding: "40px", color: "white" }}>
-      <h1 style={{ fontSize: "32px" }}>ResolveX</h1>
-      <p>Campus Issue Tracking System</p>
+import AppRoutes from "./routes";
 
-      <div style={{ marginTop: "20px" }}>
-        <button>Student Dashboard</button>
-        <button style={{ marginLeft: "10px" }}>Admin Dashboard</button>
-      </div>
-    </div>
-  );
+const App = () => {
+  return <AppRoutes />;
 };
 
 export default App;
