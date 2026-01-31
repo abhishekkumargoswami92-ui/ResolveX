@@ -48,10 +48,14 @@ export const register = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Registration failed" });
-  }
-};
+  console.error("REGISTER ERROR →", err);
+  res.status(500).json({
+    message: "Registration failed",
+    error: err.message
+  });
+}
+
+  };
 
 /**
  * POST /auth/login
