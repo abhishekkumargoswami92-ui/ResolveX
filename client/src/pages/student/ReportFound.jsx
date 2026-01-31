@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Navbar from "../../components/common/Navbar";
-import BackButton from "../../components/common/BackButton";
-import SubmitPopup from "../../components/common/SubmitPopup";
+import Navbar from "../../components/common/navbar.jsx";
+import BackButton from "../../components/common/BackButton.jsx";
+import SubmitPopup from "../../components/common/SubmitPopup.jsx";
 
 const field = {
   display: "flex",
