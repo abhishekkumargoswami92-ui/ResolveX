@@ -1,5 +1,4 @@
-import { Routes, Route } from "react-router-dom";
-import { StudentRoute, AdminRoute } from "./ProtectedRoutes";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // Public
 import Landing from "./pages/public/Landing.jsx";
@@ -39,160 +38,47 @@ const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* ================= STUDENT ROUTES ================= */}
-      <Route
-        path="/student/dashboard"
-        element={
-          <StudentRoute>
-            <StudentDashboard />
-          </StudentRoute>
-        }
-      />
-
-      <Route
-        path="/student/report"
-        element={
-          <StudentRoute>
-            <ReportIssue />
-          </StudentRoute>
-        }
-      />
-
-      <Route
-        path="/student/issues"
-        element={
-          <StudentRoute>
-            <MyIssues />
-          </StudentRoute>
-        }
-      />
-
-      <Route
-        path="/student/issues/:id"
-        element={
-          <StudentRoute>
-            <IssueDetail />
-          </StudentRoute>
-        }
-      />
-
-      <Route
-        path="/student/issues/feed"
-        element={
-          <StudentRoute>
-            <IssuesFeed />
-          </StudentRoute>
-        }
-      />
-
+      {/* ================= STUDENT ROUTES (MOCK, UNGUARDED) ================= */}
+      <Route path="/student/dashboard" element={<StudentDashboard />} />
+      <Route path="/student/report" element={<ReportIssue />} />
+      <Route path="/student/issues" element={<MyIssues />} />
+      <Route path="/student/issues/:id" element={<IssueDetail />} />
+      <Route path="/student/issues/feed" element={<IssuesFeed />} />
       <Route
         path="/student/announcements"
-        element={
-          <StudentRoute>
-            <StudentAnnouncements />
-          </StudentRoute>
-        }
+        element={<StudentAnnouncements />}
       />
-
-      <Route
-        path="/student/lost-found"
-        element={
-          <StudentRoute>
-            <LostAndFound />
-          </StudentRoute>
-        }
-      />
-
+      <Route path="/student/lost-found" element={<LostAndFound />} />
       <Route
         path="/student/lost-found/report-lost"
-        element={
-          <StudentRoute>
-            <ReportLost />
-          </StudentRoute>
-        }
+        element={<ReportLost />}
       />
-
       <Route
         path="/student/lost-found/report-found"
-        element={
-          <StudentRoute>
-            <ReportFound />
-          </StudentRoute>
-        }
+        element={<ReportFound />}
       />
+      <Route path="/student/account" element={<MyAccount />} />
 
-      <Route
-        path="/student/account"
-        element={
-          <StudentRoute>
-            <MyAccount />
-          </StudentRoute>
-        }
-      />
-
-      {/* ================= ADMIN ROUTES ================= */}
-      <Route
-        path="/admin/dashboard"
-        element={
-          <AdminRoute>
-            <AdminDashboard />
-          </AdminRoute>
-        }
-      />
-
-      <Route
-        path="/admin/manage-issues"
-        element={
-          <AdminRoute>
-            <ManageIssues />
-          </AdminRoute>
-        }
-      />
-
+      {/* ================= ADMIN ROUTES (MOCK, UNGUARDED) ================= */}
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/manage-issues" element={<ManageIssues />} />
       <Route
         path="/admin/manage-issues/:id"
-        element={
-          <AdminRoute>
-            <IssueDetailAdmin />
-          </AdminRoute>
-        }
+        element={<IssueDetailAdmin />}
       />
-
       <Route
         path="/admin/announcements"
-        element={
-          <AdminRoute>
-            <AdminAnnouncements />
-          </AdminRoute>
-        }
+        element={<AdminAnnouncements />}
       />
-
       <Route
         path="/admin/announcements/add"
-        element={
-          <AdminRoute>
-            <AddAnnouncement />
-          </AdminRoute>
-        }
+        element={<AddAnnouncement />}
       />
+      <Route path="/admin/analytics" element={<Analytics />} />
+      <Route path="/admin/lost-found" element={<LostAndFoundAdmin />} />
 
-      <Route
-        path="/admin/analytics"
-        element={
-          <AdminRoute>
-            <Analytics />
-          </AdminRoute>
-        }
-      />
-
-      <Route
-        path="/admin/lost-found"
-        element={
-          <AdminRoute>
-            <LostAndFoundAdmin />
-          </AdminRoute>
-        }
-      />
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
