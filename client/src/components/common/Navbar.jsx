@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogOut, UserCircle } from "lucide-react";
 import logoPrimary from "../../assets/images/logo-primary.svg";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // DEMO MODE LOGOUT
+    navigate("/");
+  };
+
   return (
     <header
       style={{
@@ -74,6 +81,7 @@ const Navbar = () => {
 
           {/* Logout */}
           <button
+            onClick={handleLogout}
             style={{
               display: "flex",
               alignItems: "center",
@@ -84,6 +92,7 @@ const Navbar = () => {
               cursor: "pointer",
               fontSize: "14px",
             }}
+            title="Logout"
           >
             <LogOut size={18} />
           </button>

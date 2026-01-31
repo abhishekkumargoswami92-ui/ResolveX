@@ -1,13 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User, Mail, Lock, Building2, DoorOpen } from "lucide-react";
 import logoPrimary from "../../assets/images/logo-primary.svg";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../services/auth.service.js";
-
-
-const navigate = useNavigate();
-
 
 const hostelOptions = [
   "Hostel A",
@@ -19,6 +13,8 @@ const hostelOptions = [
 ];
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     fullName: "",
     email: "",
@@ -37,54 +33,34 @@ const Register = () => {
   const isPasswordValid = (pwd) =>
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(pwd);
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
 
-  for (const key in form) {
-    if (!form[key]) {
-      setError("All fields are required");
+    for (const key in form) {
+      if (!form[key]) {
+        setError("All fields are required");
+        return;
+      }
+    }
+
+    if (!isPasswordValid(form.password)) {
+      setError(
+        "Password must be at least 8 characters and include uppercase, lowercase, and a number"
+      );
       return;
     }
-  }
 
-  if (!isPasswordValid(form.password)) {
-    setError(
-      "Password must be at least 8 characters and include uppercase, lowercase, and a number"
-    );
-    return;
-  }
+    if (form.password !== form.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
-  if (form.password !== form.confirmPassword) {
-    setError("Passwords do not match");
-    return;
-  }
-
-  try {
-    const payload = {
-      name: form.fullName,
-      email: form.email,
-      password: form.password,
-      collegeName: "Your College Name",
-      location: {
-        campus: "Main Campus",
-        block: form.hostel,
-        room: form.roomNo,
-      },
-    };
-
-    const data = await registerUser(payload);
-
-    // store auth
-    login(data);
-
-
-    navigate("/student/dashboard");
-  } catch (err) {
-    setError(err.response?.data?.message || "Registration failed");
-  }
-};
-
+    // 🔹 MOCK SUCCESS
+    setTimeout(() => {
+      navigate("/student/dashboard");
+    }, 600);
+  };
 
   return (
     <section className="section">
@@ -98,7 +74,6 @@ const Register = () => {
         }}
       >
         <div className="glass" style={{ maxWidth: "520px", width: "100%" }}>
-          {/* Logo */}
           <div style={{ textAlign: "center", marginBottom: "24px" }}>
             <img src={logoPrimary} alt="ResolveX" style={{ height: "48px" }} />
           </div>
@@ -109,7 +84,6 @@ const Register = () => {
           </p>
 
           <form onSubmit={handleSubmit} style={{ marginTop: "28px" }}>
-            {/* Full Name */}
             <div style={{ marginBottom: "16px" }}>
               <label>Full Name</label>
               <div className="input-box">
@@ -123,7 +97,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Email */}
             <div style={{ marginBottom: "16px" }}>
               <label>Email Address</label>
               <div className="input-box">
@@ -138,7 +111,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Hostel / Block (Dropdown + Search) */}
             <div style={{ marginBottom: "16px" }}>
               <label>Hostel Name / Block</label>
               <div className="input-box">
@@ -151,14 +123,13 @@ const Register = () => {
                   placeholder="Select or search hostel"
                 />
                 <datalist id="hostel-options">
-                  {hostelOptions.map((hostel) => (
-                    <option key={hostel} value={hostel} />
+                  {hostelOptions.map((h) => (
+                    <option key={h} value={h} />
                   ))}
                 </datalist>
               </div>
             </div>
 
-            {/* Room No */}
             <div style={{ marginBottom: "16px" }}>
               <label>Room No.</label>
               <div className="input-box">
@@ -172,7 +143,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Password */}
             <div style={{ marginBottom: "16px" }}>
               <label>Password</label>
               <div className="input-box">
@@ -187,7 +157,6 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Confirm Password */}
             <div style={{ marginBottom: "20px" }}>
               <label>Confirm Password</label>
               <div className="input-box">
@@ -202,25 +171,13 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Error */}
             {error && (
-              <p
-                style={{
-                  color: "#fca5a5",
-                  fontSize: "14px",
-                  marginBottom: "14px",
-                }}
-              >
+              <p style={{ color: "#fca5a5", fontSize: "14px", marginBottom: "14px" }}>
                 {error}
               </p>
             )}
 
-            {/* Submit */}
-            <button
-              type="submit"
-              className="btn-primary"
-              style={{ width: "100%" }}
-            >
+            <button type="submit" className="btn-primary" style={{ width: "100%" }}>
               Create Account
             </button>
           </form>

@@ -1,13 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../../services/api.js";
+import { useState } from "react";
 
 import {
   Clock,
   CheckCircle2,
   MessageSquare,
   Eye,
-  EyeOff,
   Droplets,
   Zap,
   Wifi,
@@ -19,14 +17,27 @@ import {
 import Navbar from "../../components/common/Navbar.jsx";
 import BackButton from "../../components/common/BackButton.jsx";
 
-const categoryColors = {
-  Plumbing: "#38bdf8",
-  Electrical: "#facc15",
-  Internet: "#a78bfa",
-  Furniture: "#2dd4bf",
-  Maintenance: "#fb923c",
-  Other: "#cbd5f5",
+/* MOCK ISSUE */
+const MOCK_ISSUE = {
+  id: "1",
+  category: "Plumbing",
+  description: "Water leakage near bathroom sink.",
+  priority: "High",
+  status: "In Progress",
+  visibility: "public",
+  statusHistory: [
+    { status: "Reported", timestamp: Date.now() - 86400000 },
+    { status: "In Progress", timestamp: Date.now() - 3600000 },
+  ],
 };
+
+const MOCK_COMMENTS = [
+  {
+    _id: "c1",
+    text: "Same issue in Room 203.",
+    createdAt: Date.now() - 7200000,
+  },
+];
 
 const iconMap = {
   Plumbing: Droplets,
@@ -39,66 +50,20 @@ const iconMap = {
 
 const IssueDetail = () => {
   const { id } = useParams();
-  const [issue, setIssue] = useState(null);
-  const [comments, setComments] = useState([]);
-
-  // 🔽 ADDED (only this)
+  const [issue] = useState(MOCK_ISSUE);
+  const [comments, setComments] = useState(MOCK_COMMENTS);
   const [newComment, setNewComment] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
-  useEffect(() => {
-    const fetchIssue = async () => {
-      try {
-        const issueRes = await api.get(`/issues/${id}`);
-        setIssue(issueRes.data);
-
-        if (issueRes.data.visibility === "public") {
-          const commentsRes = await api.get(`/issues/${id}/comments`);
-          setComments(commentsRes.data);
-        }
-      } catch (err) {
-        console.error("Failed to fetch issue");
-      }
-    };
-
-    fetchIssue();
-  }, [id]);
-
-  // 🔽 ADDED (only this)
-  const handleAddComment = async () => {
-    if (!newComment.trim()) return;
-
-    try {
-      setSubmitting(true);
-
-      const res = await api.post(`/issues/${id}/comments`, {
-        text: newComment,
-      });
-
-      setComments((prev) => [...prev, res.data]);
-      setNewComment("");
-    } catch (err) {
-      alert("Failed to add comment");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  if (!issue) {
-    return (
-      <>
-        <Navbar />
-        <section className="section">
-          <div className="container">
-            <p>Loading issue…</p>
-          </div>
-        </section>
-      </>
-    );
-  }
 
   const Icon = iconMap[issue.category] || AlertCircle;
-  const accent = categoryColors[issue.category];
+
+  const addComment = () => {
+    if (!newComment.trim()) return;
+    setComments([
+      ...comments,
+      { _id: Date.now(), text: newComment, createdAt: Date.now() },
+    ]);
+    setNewComment("");
+  };
 
   return (
     <>
@@ -113,7 +78,7 @@ const IssueDetail = () => {
 
           <div className="glass" style={{ padding: "22px" }}>
             <div style={{ display: "flex", gap: "16px" }}>
-              <Icon size={22} color={accent} />
+              <Icon size={22} />
               <div style={{ flex: 1 }}>
                 <h2>{issue.category}</h2>
                 <p>{issue.description}</p>
@@ -122,78 +87,59 @@ const IssueDetail = () => {
               <div style={{ textAlign: "right" }}>
                 <span className="badge">{issue.priority}</span>
                 <span className="badge secondary">{issue.status}</span>
-                {issue.visibility === "public" ? <Eye /> : <EyeOff />}
+                <Eye />
               </div>
             </div>
 
             <hr />
 
-            {issue.statusHistory.map((step, idx) => (
-              <div key={idx} style={{ display: "flex", gap: "12px" }}>
-                {step.status === issue.status ? (
+            {issue.statusHistory.map((s, i) => (
+              <div key={i} style={{ display: "flex", gap: "12px" }}>
+                {s.status === issue.status ? (
                   <CheckCircle2 color="#22c55e" />
                 ) : (
                   <Clock />
                 )}
                 <div>
-                  <strong>{step.status}</strong>
-                  <div>
-                    {new Date(step.timestamp).toLocaleString()}
-                  </div>
+                  <strong>{s.status}</strong>
+                  <div>{new Date(s.timestamp).toLocaleString()}</div>
                 </div>
               </div>
             ))}
 
-            {issue.visibility === "public" && (
-              <>
-                <hr />
-                <strong>
-                  <MessageSquare size={16} /> Comments
-                </strong>
+            <hr />
+            <strong>
+              <MessageSquare size={16} /> Comments
+            </strong>
 
-                {comments.map((c) => (
-                  <div key={c._id}>
-                    <p>{c.text}</p>
-                    <small>
-                      {new Date(c.createdAt).toLocaleString()}
-                    </small>
-                  </div>
-                ))}
+            {comments.map((c) => (
+              <div key={c._id}>
+                <p>{c.text}</p>
+                <small>{new Date(c.createdAt).toLocaleString()}</small>
+              </div>
+            ))}
 
-                {/* 🔽 ADDED (only this) */}
-                <div style={{ marginTop: "14px" }}>
-                  <input
-                    type="text"
-                    placeholder="Add relevant information…"
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    style={{
-                      width: "100%",
-                      height: "42px",
-                      borderRadius: "10px",
-                      paddingLeft: "12px",
-                      fontSize: "14px",
-                    }}
-                  />
-
-                  <button
-                    onClick={handleAddComment}
-                    disabled={submitting}
-                    style={{
-                      marginTop: "8px",
-                      padding: "8px 14px",
-                      borderRadius: "8px",
-                      background: "#22d3ee",
-                      border: "none",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                    }}
-                  >
-                    {submitting ? "Posting..." : "Post Comment"}
-                  </button>
-                </div>
-              </>
-            )}
+            <div style={{ marginTop: "14px" }}>
+              <input
+                type="text"
+                placeholder="Add relevant information…"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                style={{
+                  width: "100%",
+                  height: "42px",
+                  borderRadius: "10px",
+                  paddingLeft: "12px",
+                }}
+              />
+              <button
+                onClick={addComment}
+                className="btn-primary"
+                style={{ marginTop: "8px" }}
+              >
+                Post Comment
+              </button>
+            </div>
           </div>
         </div>
       </section>

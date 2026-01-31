@@ -1,5 +1,4 @@
 import { useState } from "react";
-import api from "../../services/api.js";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -12,7 +11,6 @@ import {
   Upload,
   Eye,
   EyeOff,
-  MapPin,
   AlertTriangle,
 } from "lucide-react";
 
@@ -28,49 +26,27 @@ const categories = [
   { label: "Other", icon: AlertCircle, color: "#cbd5f5" },
 ];
 
-const priorityStyles = {
-  Low: "#22c55e",
-  Medium: "#3b82f6",
-  High: "#f59e0b",
-  Emergency: "#ef4444",
-};
-
-const navigate = useNavigate();
-
 const ReportIssue = () => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     category: "",
     priority: "Medium",
     description: "",
     visibility: "public",
-    locationType: "my-room",
-    otherLocation: "",
   });
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  if (!form.category || !form.description) {
-    alert("Please select a category and add description");
-    return;
-  }
+    if (!form.category || !form.description) {
+      alert("Please fill all required fields");
+      return;
+    }
 
-  try {
-    const payload = {
-      category: form.category,
-      priority: form.priority.toLowerCase(), // backend expects lowercase
-      description: form.description,
-      visibility: form.visibility,
-    };
-
-    await api.post("/issues", payload);
-
+    // MOCK SUBMIT
     navigate("/student/issues");
-  } catch (err) {
-    alert(err.response?.data?.message || "Failed to submit issue");
-  }
-};
-
+  };
 
   return (
     <>
@@ -78,35 +54,15 @@ const ReportIssue = () => {
 
       <section className="section">
         <div className="container" style={{ maxWidth: "720px" }}>
-          {/* HEADER */}
-          <h1
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "14px",
-              margin: 0,
-            }}
-          >
+          <h1 style={{ display: "flex", gap: "14px" }}>
             <BackButton />
             Report an Issue
           </h1>
 
-          <p style={{ margin: "12px 0 24px" }}>
-            Provide accurate details to help campus management resolve the issue
-            quickly.
-          </p>
-
           <form onSubmit={handleSubmit}>
-            {/* CATEGORY */}
             <label>Issue Category</label>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
-                gap: "12px",
-                margin: "10px 0 22px",
-              }}
-            >
+
+            <div style={{ display: "grid", gap: "12px", margin: "14px 0" }}>
               {categories.map(({ label, icon: Icon, color }) => {
                 const active = form.category === label;
                 return (
@@ -117,17 +73,12 @@ const ReportIssue = () => {
                     style={{
                       padding: "14px",
                       borderRadius: "14px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      cursor: "pointer",
-                      background: active
-                        ? color
-                        : "rgba(255,255,255,0.12)",
+                      background: active ? color : "rgba(255,255,255,0.12)",
+                      border: "1px solid rgba(255,255,255,0.25)",
                       color: active ? "#0f172a" : "#e5e7eb",
-                      border: active
-                        ? `2px solid ${color}`
-                        : "1px solid rgba(255,255,255,0.25)",
+                      display: "flex",
+                      gap: "10px",
+                      alignItems: "center",
                     }}
                   >
                     <Icon size={18} />
@@ -137,56 +88,7 @@ const ReportIssue = () => {
               })}
             </div>
 
-            {/* PRIORITY */}
-            <label>Priority</label>
-            <div style={{ display: "flex", gap: "12px", margin: "10px 0 22px" }}>
-              {Object.keys(priorityStyles).map((level) => {
-                const active = form.priority === level;
-                return (
-                  <button
-                    key={level}
-                    type="button"
-                    onClick={() => setForm({ ...form, priority: level })}
-                    style={{
-                      padding: "12px 18px",
-                      borderRadius: "14px",
-                      border: "none",
-                      cursor: "pointer",
-                      background: active
-                        ? priorityStyles[level]
-                        : "rgba(255,255,255,0.12)",
-                      color: active ? "#ffffff" : "#e5e7eb",
-                    }}
-                  >
-                    {level}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* EMERGENCY WARNING */}
-            {form.priority === "Emergency" && (
-              <div
-                style={{
-                  padding: "14px",
-                  borderRadius: "14px",
-                  background: "rgba(239,68,68,0.12)",
-                  border: "1px solid #ef4444",
-                  display: "flex",
-                  gap: "10px",
-                  marginBottom: "22px",
-                }}
-              >
-                <AlertTriangle size={20} color="#ef4444" />
-                <p style={{ fontSize: "14px", color: "#fecaca" }}>
-                  Select <strong>Emergency</strong> only for real emergencies or
-                  safety hazards. False alerts are a punishable offense.
-                </p>
-              </div>
-            )}
-
-            {/* DESCRIPTION */}
-            <label>Issue Description</label>
+            <label>Description</label>
             <textarea
               rows={4}
               required
@@ -194,155 +96,13 @@ const ReportIssue = () => {
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
               }
-              placeholder="Describe the issue clearly..."
-              style={{
-                width: "100%",
-                padding: "12px",
-                borderRadius: "12px",
-                margin: "8px 0 22px",
-              }}
+              style={{ width: "100%", borderRadius: "12px", padding: "12px" }}
             />
 
-            {/* IMAGE */}
-            <label>Attach Image (optional)</label>
-            <button
-              type="button"
-              style={{
-                width: "100%",
-                padding: "14px",
-                borderRadius: "14px",
-                background: "#ffffff",
-                color: "#0f172a",
-                border: "none",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                margin: "8px 0 22px",
-              }}
-            >
-              <Upload size={18} />
-              Upload an image
-            </button>
-
-            {/* VISIBILITY */}
-            <label>Visibility</label>
-            <div style={{ display: "flex", gap: "14px", margin: "10px 0 22px" }}>
-              {["public", "private"].map((v) => {
-                const active = form.visibility === v;
-                return (
-                  <button
-                    key={v}
-                    type="button"
-                    onClick={() => setForm({ ...form, visibility: v })}
-                    style={{
-                      padding: "12px 18px",
-                      borderRadius: "14px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      background: active
-                        ? "#22d3ee"
-                        : "rgba(255,255,255,0.12)",
-                      color: active ? "#022c22" : "#e5e7eb",
-                      border: active
-                        ? "2px solid #22d3ee"
-                        : "1px solid rgba(255,255,255,0.25)",
-                    }}
-                  >
-                    {v === "public" ? <Eye size={16} /> : <EyeOff size={16} />}
-                    {v === "public" ? "Public" : "Private"}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* LOCATION (FIXED SIZE & SPACING) */}
-            <div
-              className="glass"
-              style={{
-                marginBottom: "28px",
-                padding: "16px 18px",
-              }}
-            >
-              <h3 style={{ margin: "0 0 10px", fontSize: "16px" }}>
-                Issue Location
-              </h3>
-
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "8px",
-                }}
-              >
-                <label
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    fontSize: "14px",
-                  }}
-                >
-                  <input
-                    type="radio"
-                    checked={form.locationType === "my-room"}
-                    onChange={() =>
-                      setForm({ ...form, locationType: "my-room" })
-                    }
-                  />
-                  My Room
-                  <span style={{ opacity: 0.7 }}>({userRoom})</span>
-                </label>
-
-                <label
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    fontSize: "14px",
-                  }}
-                >
-                  <input
-                    type="radio"
-                    checked={form.locationType === "other"}
-                    onChange={() =>
-                      setForm({ ...form, locationType: "other" })
-                    }
-                  />
-                  Other Room / Common Area
-                </label>
-
-                {form.locationType === "other" && (
-                  <div
-                    className="input-box"
-                    style={{
-                      marginTop: "6px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
-                    <MapPin size={16} />
-                    <input
-                      type="text"
-                      required
-                      placeholder="Specify room or common area"
-                      value={form.otherLocation}
-                      onChange={(e) =>
-                        setForm({ ...form, otherLocation: e.target.value })
-                      }
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* SUBMIT */}
             <button
               type="submit"
               className="btn-primary"
-              style={{ width: "100%" }}
+              style={{ width: "100%", marginTop: "24px" }}
             >
               Submit Issue
             </button>
