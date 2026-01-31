@@ -8,8 +8,8 @@ import {
   AlertTriangle,
 } from "lucide-react";
 
-import Navbar from "../../components/common/Navbar";
-import BackButton from "../../components/common/BackButton";
+import Navbar from "../../components/common/Navbar.jsx";
+import BackButton from "../../components/common/BackButton.jsx";
 
 /* Mock issues */
 const issues = [
