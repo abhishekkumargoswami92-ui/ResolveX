@@ -3,7 +3,8 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
-  return {
+  const ctx = useContext(AuthContext);
+  return ctx ?? {
     user: null,
     isAuthenticated: false,
     loading: false,
@@ -11,3 +12,5 @@ export const useAuth = () => {
     logout: () => {},
   };
 };
+
+ 
